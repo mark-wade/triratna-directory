@@ -20,9 +20,9 @@ export default function InfoPage() {
           >
             Dhammakumāra
           </Link>{" "}
-          in collaboration with the Order Office. The{" "}
+          using APIs provided by Dharmachakra on behalf of the Order Office. The{" "}
           <a
-            href="https://github.com/mark-wade/order-directory"
+            href="https://github.com/mark-wade/triratna-directory"
             target="_blank"
             rel="noreferrer"
             className="text-indigo-600"
