@@ -208,8 +208,6 @@ function expectNumberOfResults(expected: number) {
   }
 }
 
-// TODO: The effects, and maybe other tests
-
 function renderSearchableTable({
   queryString,
   filters,

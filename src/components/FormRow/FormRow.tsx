@@ -12,14 +12,13 @@ export default function FormRow({
   error?: string;
   children: React.ReactNode;
 }) {
-  // TODO: htmlFor and id (which should be set on the children)
   const id = _uniqueId();
   return (
     <FormRowContext value={{ id, error }}>
       <div className="col-span-full">
         {label && (
           <label
-            htmlFor=""
+            htmlFor={id}
             className="block text-sm/6 font-medium text-gray-900"
           >
             {label}

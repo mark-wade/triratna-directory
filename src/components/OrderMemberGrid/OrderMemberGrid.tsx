@@ -14,8 +14,7 @@ export default function OrderMemberGrid({
     <ul className="my-10 grid gap-x-4 gap-y-8 text-center grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-10">
       {oms.map(({ event, om, id }) => (
         <li key={uniqueId()}>
-          {/* TODO: Why does the view transition here scroll diagonally but it doesn't on the main list? */}
-          <Link to={"/order-members/" + id} viewTransition>
+          <Link to={"/order-members/" + id}>
             <OrderMemberPhoto
               name={id}
               orderMember={om}

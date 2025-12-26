@@ -54,15 +54,6 @@ function classNames(...classes: string[]) {
 export default function NavBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // TODO: See if we can figure out a way to have hitting the bottom nav
-  // do a view transition *only* if you are inside a sub-page of that nav - eg
-  // Order Members -> Locations = should not transition
-  // Order Members -> Order Members = should not transition
-  // Order Members -> A specific Order Member = should transition forward
-  // A specific Order Member -> Order Members = should transition backward
-
-  // TODO: About page is not currently accessible on mobile
-
   return (
     <div>
       {/* The sidebar that shows on smaller screens after the button is clicked */}
@@ -194,7 +185,7 @@ export default function NavBar() {
         </div>
       </div>
 
-      {/* The top bar that always shows on smaller screens - TODO: I'd like to move back here */}
+      {/* The top bar that always shows on smaller screens */}
       <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-gray-900 px-4 py-4 shadow-xs sm:px-6 lg:hidden">
         <div className="flex-1 text-sm/6 font-semibold text-white">
           Triratna Buddhist Order
@@ -202,7 +193,7 @@ export default function NavBar() {
         <ProfileDropdown menuAnchor="bottom end" />
       </div>
 
-      {/* The bottom bar that always shows on smaller screens - TODO: Is missing about page */}
+      {/* The bottom bar that always shows on smaller screens */}
       <div className="fixed lg:hidden bottom-0 z-40 bg-gray-100 w-full border-t border-gray-200 text-center text-xs pt-2 pb-(--bottom-bar-padding)">
         <nav aria-label="Tabs" className="grid grid-cols-4">
           {navigation.map((item) => (

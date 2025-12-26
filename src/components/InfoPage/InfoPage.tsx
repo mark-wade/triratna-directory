@@ -1,9 +1,6 @@
 import { Link } from "react-router";
 import Feedback from "../Feedback/Feedback";
 
-// TODO: Rethink this
-// TODO: That Github link is not live
-
 export default function InfoPage() {
   return (
     <div className="bg-white h-full">
