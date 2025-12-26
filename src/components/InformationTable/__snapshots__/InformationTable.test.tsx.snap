@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shows the provided children 1`] = `
+<DocumentFragment>
+  <div
+    class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
+  >
+    <div
+      class="border-t border-gray-100"
+    >
+      <dl
+        class="divide-y divide-gray-100"
+      >
+        <p>
+          Hello, world!
+        </p>
+      </dl>
+    </div>
+  </div>
+</DocumentFragment>
+`;

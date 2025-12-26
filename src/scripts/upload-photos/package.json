@@ -1,0 +1,7 @@
+{
+  "name": "triratna-order-directory-upload-images-script",
+  "type": "module",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.958.0"
+  }
+}

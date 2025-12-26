@@ -1,0 +1,32 @@
+{
+   "name": "Triratna Order",
+   "short_name": "Order",
+   "icons": [
+      {
+         "src": "/static/icons/192.png",
+         "type": "image/png",
+         "sizes": "192x192"
+      },
+      {
+         "src": "/static/icons/384.png",
+         "type": "image/png",
+         "sizes": "384x384"
+      },{
+         "src": "/static/icons/512.png",
+         "type": "image/png",
+         "sizes": "512x512",
+         "purpose": "any maskable"
+      },
+      {
+         "src": "/static/icons/1024.png",
+         "type": "image/png",
+         "sizes": "1024x1024",
+         "purpose": "any maskable"
+      }
+   ],
+   "start_url": "/order-members",
+   "display": "standalone",
+   "id": "triratna-directory",
+   "theme_color": "#101828",
+   "background_color": "#f3f4f6"
+}

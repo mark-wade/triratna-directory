@@ -1,0 +1,560 @@
+{
+  "Abhirati": {
+    "name": "Abhirati",
+    "type": "community",
+    "aliases": ["Abhirati, Old Rectory,Tittleshall, Norfolk, UK"],
+    "country": "England"
+  },
+  "Achalabhumi": {
+    "name": "Achalabhumi",
+    "type": "retreat_centre",
+    "aliases": ["Achalabhumi Retreat Center Bihali Amaravati", "Achalabhumi Retreat Center Bihali Dist Amaravati", "Achalabhumi Retreat Centre", "Achalabhumi Retreat centre Bihali Amaravati", "Achalabhumi Retreat Centre Bihali Amaravati"],
+    "country": "India"
+  },
+  "Adhisthana": {
+    "name": "Adhisthana",
+    "type": "retreat_centre",
+    "aliases": ["Adhisthana Retreat Centre", "Adhisthana retreat centre"],
+    "country": "England"
+  },
+  "Akashavana": {
+    "name": "Akashavana",
+    "type": "retreat_centre",
+    "aliases": ["Akasavana", "Akashavana Retreat Centre", "AKASHAVANA", "Akashavana "],
+    "country": "Spain"
+  },
+  "Anand Buddha Vihara": {
+    "name": "Anand Buddha Vihara",
+    "type": "community",
+    "aliases": [],
+    "country": "India"
+  },
+  "Aryaloka": {
+    "name": "Aryaloka",
+    "type": "retreat_centre",
+    "aliases": ["Aryaloka Buddhist Center", "Aryaloka Buddhist Centre", "Aryaloka Retreat Center", "Aryaloka, NH, USA", "Aryaloka, USA"],
+    "country": "United States"
+  },
+  "Aryatara": {
+    "name": "Aryatara",
+    "type": "community",
+    "aliases": ["Aryatara, Purley, Surrey, UK"],
+    "country": "England"
+  },
+  "Auckland Buddhist Centre": {
+    "name": "Auckland Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "New Zealand"
+  },
+  "Battle": {
+    "name": "Battle",
+    "type": "town_or_city",
+    "aliases": ["Battle, Sussex, UK"],
+    "country": "England"
+  },
+  "Bewdley": {
+    "name": "Bewdley",
+    "type": "town_or_city",
+    "aliases": ["Lokabandhu's woods nr. Bewdley, UK"],
+    "country": "England"
+  },
+  "Bhaja": {
+    "name": "Bhaja",
+    "type": "retreat_centre",
+    "aliases": ["Bhaja INDIA", "Bhaja Retreat Centre"],
+    "country": "India"
+  },
+  "Birmingham Buddhist Centre": {
+    "name": "Birmingham Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": ["Birmingham Buddhist Centre, UK"],
+    "country": "England"
+  },
+  "Bodh Gaya": {
+    "name": "Bodh Gaya",
+    "type": "town_or_city",
+    "aliases": ["Mahabodhi Temple, Bodh Gaya"],
+    "country": "India"
+  },
+  "Buddhistisches Tor Berlin": {
+    "name": "Buddhistisches Tor Berlin",
+    "type": "buddhist_centre",
+    "aliases": ["Buddhistisches Tor Berlin, DE"],
+    "country": "Germany"
+  },
+  "Berlin Women's Community": {
+    "name": "Berlin Women's Community",
+    "type": "community",
+    "aliases": ["Berlin women's community"],
+    "country": "Germany"
+  },
+  "Birmingham": {
+    "name": "Birmingham",
+    "type": "town_or_city",
+    "aliases": [],
+    "country": "England"
+  },
+  "Brancaster Staithe": {
+    "name": "Brancaster Staithe",
+    "type": "town_or_city",
+    "aliases": ["Brancaster Staithe, Norfolk, UK"],
+    "country": "England"
+  },
+  "Brighton Buddhist Centre": {
+    "name": "Brighton Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Bristol Buddhist Centre": {
+    "name": "Bristol Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Broomhouse Farm": {
+    "name": "Broomhouse Farm",
+    "type": "unknown",
+    "aliases": ["Broomhouse Farm, nr Brandon, Suffolk, UK", "Groom House Farm"],
+    "country": "England"
+  },
+  "Budakoda": {
+    "name": "Budakoda",
+    "type": "buddhist_centre",
+    "aliases": ["Budakoda Triratna Centre", "Tallinn Budakoda"],
+    "country": "Estonia"
+  },
+  "Buddhaloka": {
+    "name": "Buddhaloka",
+    "type": "buddhist_centre",
+    "aliases": ["Buddhaloka, Thames", "Buddhaloka, Thames "],
+    "country": "New Zealand"
+  },
+  "Cadzand": {
+    "name": "Cadzand",
+    "type": "town_or_city",
+    "aliases": ["Cadzand, NETHERLANDS"],
+    "country": "Netherlands"
+  },
+  "Cambridge Buddhist Centre": {
+    "name": "Cambridge Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": ["Cambridge Buddhist Centre "],
+    "country": "England"
+  },
+  "Chintamani": {
+    "name": "Chintamani",
+    "type": "retreat_centre",
+    "aliases": ["Centro de retiros Chintamani", "Chintamani retreat center", "Chintamani retreat centre", "Chintamani Retreat Centre", "Chintamani Retreat Centre, Mexico", "Chintámani Retreat Centre, Mexico", "Chintamani, Mexico", "Chintámani, México", "Chintamani, Morelos, Mexico", "Chintamani ", "Chintamani Retreat Centre "],
+    "country": "Mexico"
+  },
+  "Clevedon": {
+    "name": "Clevedon",
+    "type": "town_or_city",
+    "aliases": ["Clevedon, Auckland", "Clevedon, NEW ZEALAND"],
+    "country": "New Zealand"
+  },
+  "Colchester Buddhist Centre": {
+    "name": "Colchester Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Dehradun": {
+    "name": "Dehradun",
+    "type": "town_or_city",
+    "aliases": ["Deharadun", "Deharadun, India", "Gorkha Military School, Dehra dun"],
+    "country": "India"
+  },
+  "Dhanakosa": {
+    "name": "Dhanakosa",
+    "type": "retreat_centre",
+    "aliases": ["Dhanakosa Retreat Centre"],
+    "country": "Scotland"
+  },
+  "Dharmadhara": {
+    "name": "Dharmadhara",
+    "type": "retreat_centre",
+    "aliases": ["Dharmadhara Retreat Centre", "Dharmadhara Retreat Centre, California, US"],
+    "country": "United States"
+  },
+  "Dharmagiri": {
+    "name": "Dharmagiri",
+    "type": "retreat_centre",
+    "aliases": ["Dharmagiri Retreat Centre"],
+    "country": "Sweden"
+  },
+  "Dublin Buddhist Centre": {
+    "name": "Dublin Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "Ireland"
+  },
+  "Dunkeld": {
+    "name": "Dunkeld",
+    "type": "town_or_city",
+    "aliases": ["Dunkeld, Scotland"],
+    "country": "Scotland"
+  },
+  "Essen Buddhist Centre": {
+    "name": "Essen Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "Germany"
+  },
+  "Ghent": {
+    "name": "Ghent",
+    "type": "town_or_city",
+    "aliases": ["Gent, BEL"],
+    "country": "Belgium"
+  },
+  "Guhyaloka": {
+    "name": "Guhyaloka",
+    "type": "retreat_centre",
+    "aliases": ["Ghuyaloka", "Guhyaloka ", "Guhyaloka Retreat Centre", "Guhyaloka Rtereat Centre", "Gukhyaloka", "Guyhaloka"],
+    "country": "Spain"
+  },
+  "Glasgow Buddhist Centre": {
+    "name": "Glasgow Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "Scotland"
+  },
+  "Golden Bay": {
+    "name": "Golden Bay",
+    "type": "town_or_city",
+    "aliases": ["Golden Bay, New Zealand", "Shambhala Retreat Centre"],
+    "country": "New Zealand"
+  },
+  "Helsinki": {
+    "name": "Helsinki",
+    "type": "town_or_city",
+    "aliases": [],
+    "country": "Finland"
+  },
+  "Helsinki Buddhist Centre": {
+    "name": "Helsinki Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "Finland"
+  },
+  "Hsuan Tsang Retreat Center": {
+    "name": "Hsuan Tsang Retreat Center",
+    "type": "retreat_centre",
+    "aliases": ["Bor Dhoran Retreat Centre", "Bordharan retreat centre", "Bordharan Retreat Centre", "HRC Boradharan Wardha", "HRC Bordharan", "HRC Bordharan Dist Wardha", "HRC Bordharan Wardha", "HRC Bordharna Wardha", "HRC Bordharn Dist Wardha", "Hsuan Tsang Retreat Centre Bordharan", "Hsuen Tsang Retreat Centre", "Hsuen Tsang Retreat Centre, Bordharan", "Hsuen Tsang retreat centre, Bordharan, INDIA", "Huen Tsang Retreat Centre"],
+    "country": "India"
+  },
+  "Il Convento": {
+    "name": "Il Convento",
+    "type": "unknown",
+    "aliases": ["Il Convento, Batignano, Tuscany, ITALY"],
+    "country": "Italy"
+  },
+  "Ingleigh Barton": {
+    "name": "Ingleigh Barton",
+    "type": "unknown",
+    "aliases": ["Ingleigh Barton, Devon, GBR"],
+    "country": "England"
+  },
+  "Ipswich Buddhist Centre": {
+    "name": "Ipswich Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Jikoji Zen Center": {
+    "name": "Jikoji Zen Center",
+    "type": "unknown",
+    "aliases": ["Jikoji Zen Center, CA, USA"],
+    "country": "United States"
+  },
+  "Kalburgi": {
+    "name": "Kalburgi",
+    "type": "town_or_city",
+    "aliases": ["Siddharth Vihar Kalburgi Karnataka"],
+    "country": "India"
+  },
+  "Karla Camp": {
+    "name": "Karla Camp",
+    "type": "unknown",
+    "aliases": ["Karle"],
+    "country": "India"
+  },
+  "Keffolds": {
+    "name": "Keffolds",
+    "type": "unknown",
+    "aliases": [],
+    "country": "England"
+  },
+  "Kempsey": {
+    "name": "Kempsey",
+    "type": "town_or_city",
+    "aliases": ["Kempsey, Australia"],
+    "country": "Australia"
+  },
+  "London Buddhist Centre": {
+    "name": "London Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Manchester": {
+    "name": "Manchester",
+    "type": "town_or_city",
+    "aliases": ["Manchester "],
+    "country": "England"
+  },
+  "Manchester Buddhist Centre": {
+    "name": "Manchester Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": ["Manchester Centre"],
+    "country": "England"
+  },
+  "Martham": {
+    "name": "Martham",
+    "type": "town_or_city",
+    "aliases": ["Martham, Norfolk, UK", "Norfolk"],
+    "country": "England"
+  },
+  "Melbourne": {
+    "name": "Melbourne",
+    "type": "town_or_city",
+    "aliases": ["Melbourne, Australia ", "Three Cords Buddhist community, Melbourne, Australia"],
+    "country": "Australia"
+  },
+  "Melbourne Buddhist Centre": {
+    "name": "Melbourne Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "Australia"
+  },
+  "Metta Vihara": {
+    "name": "Metta Vihara",
+    "type": "retreat_centre",
+    "aliases": ["Metta Vihara Retreat Centre", "Metta Vihara, Holland", "Metta Vihara, Netherlands"],
+    "country": "Netherlands"
+  },
+  "Mexico City Buddhist Centre": {
+    "name": "Mexico City Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": ["Mexico city Buddhist Centre", "Mexico"],
+    "country": "Mexico"
+  },
+  "Mid-Essex Buddhist Centre": {
+    "name": "Mid-Essex Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": ["Mid Essex"],
+    "country": "England"
+  },
+  "Minden Buddhist Centre": {
+    "name": "Minden Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "Germany"
+  },
+  "Missoula": {
+    "name": "Missoula",
+    "type": "town_or_city",
+    "aliases": ["Missoula, MT"],
+    "country": "United States"
+  },
+  "Newcastle Buddhist Centre": {
+    "name": "Newcastle Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "North London Buddhist Centre": {
+    "name": "North London Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Norwich": {
+    "name": "Norwich",
+    "type": "town_or_city",
+    "aliases": ["cottage near Norwich"],
+    "country": "England"
+  },
+  "Norwich Buddhist Centre": {
+    "name": "Norwich Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Padmaloka": {
+    "name": "Padmaloka",
+    "type": "retreat_centre",
+    "aliases": ["Padmaloka retreat centre", "Padmaloka Retreat Centre"],
+    "country": "England"
+  },
+  "Pune": {
+    "name": "Pune",
+    "type": "town_or_city",
+    "aliases": ["Mahavihar Pune, India", "Mahavihar Pune, INDIA", "Pune, INDIA"],
+    "country": "India"
+  },
+  "Rivendell": {
+    "name": "Rivendell",
+    "type": "retreat_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Saddhamma Pradeep Retreat Centre": {
+    "name": "Saddhamma Pradeep Retreat Centre",
+    "type": "retreat_centre",
+    "aliases": ["Saddhama Pradeep Retreat Center Bhaje", "Saddhamma Pradeep Retreat Centre, Bhaja, India", "Saddhamma Pradip", "Saddhamma Pradip Reteat Center Bhaje", "Saddhamma Pradip Reteat Centre Bhaje", "Saddhamma Pradip Retreat Centre", "Saddhamma Pradipa", "Saddhmma Pradip Retreat Centre Bhaje", "Sadhamma Pradip Retreat Centre", "Sadhamma Pradip, Bhaja INDIA"],
+    "country": "India"
+  },
+  "San Benito Benedictine Monastery": {
+    "name": "San Benito Benedictine Monastery",
+    "type": "unknown",
+    "aliases": ["San Benito Benedictine Monastery, Mexico"],
+    "country": "Mexico"
+  },
+  "San Francisco Buddhist Center": {
+    "name": "San Francisco Buddhist Center",
+    "type": "buddhist_centre",
+    "aliases": ["San Francisco Buddhist Centre"],
+    "country": "United States"
+  },
+  "Schoorl": {
+    "name": "Schoorl",
+    "type": "town_or_city",
+    "aliases": ["Schoorl, NLD"],
+    "country": "Netherlands"
+  },
+  "Seaford": {
+    "name": "Seaford",
+    "type": "town_or_city",
+    "aliases": ["Seaford, Sussex, UK"],
+    "country": "England"
+  },
+  "Solihull": {
+    "name": "Solihull",
+    "type": "town_or_city",
+    "aliases": ["Solihull, UK"],
+    "country": "England"
+  },
+  "Sheffield Buddhist Centre": {
+    "name": "Sheffield Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Stockholm Buddhist Centre": {
+    "name": "Stockholm Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "Sweden"
+  },
+  "Street Farm": {
+    "name": "Street Farm",
+    "type": "unknown",
+    "aliases": [],
+    "country": "England"
+  },
+  "Sudarshanaloka": {
+    "name": "Sudarshanaloka",
+    "type": "retreat_centre",
+    "aliases": ["Sudarshanaloka Retreat Centre", "Sudarshanaloka, New Zealand", "Sudarshanaloka, NZL", "Sudarshananloka", "Sudharshanaloka"],
+    "country": "New Zealand"
+  },
+  "Sudarshanbhumi": {
+    "name": "Sudarshanbhumi",
+    "type": "retreat_centre",
+    "aliases": ["Sudarshanbhumi Retreat Center", "Sudarshanbhumi Retreat Centre"],
+    "country": "India"
+  },
+  "Suryavana": {
+    "name": "Suryavana",
+    "type": "retreat_centre",
+    "aliases": [],
+    "country": "Spain"
+  },
+  "Sydney Buddhist Centre": {
+    "name": "Sydney Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "Australia"
+  },
+  "Taraloka": {
+    "name": "Taraloka",
+    "type": "retreat_centre",
+    "aliases": ["Taraloka Retreat Centre"],
+    "country": "England"
+  },
+  "Tarnawa Gòrna": {
+    "name": "Tarnawa Gòrna",
+    "type": "unknown",
+    "aliases": ["Tarnawa Gòrna, Poland"],
+    "country": "Poland"
+  },
+  "Tiratanaloka": {
+    "name": "Tiratanaloka",
+    "type": "retreat_centre",
+    "aliases": ["Tiratanalika", "Tiratanaloka ", "Tiratanaloka retreat centre", "Tiratanaloka Retreat Centre", "Tiratanaloka, UK", "Tiratanaloka, Wales", "Tiratnaloka", "Tiratnaloka ", "Triratanaloka"],
+    "country": "Wales"
+  },
+  "Urgyen Sangharakshita Retreat Centre": {
+    "name": "Urgyen Sangharakshita Retreat Centre",
+    "type": "retreat_centre",
+    "aliases": ["Uragen Sangharkshita Meditation Centre Nanded", "Urgen Sangharakshita Dhyan Bhavana kendra Nanded", "Urgen Sangharakshita Meditation Center Nanded", "Urgen Sangharakshita Dhyan Bhavana kendra Nanded ", "Urgen Sangharakshita Meditation Center Nanded "],
+    "country": "India"
+  },
+  "Vajrasana": {
+    "name": "Vajrasana",
+    "type": "retreat_centre",
+    "aliases": [],
+    "country": "England"
+  },
+  "Valencia": {
+    "name": "Valencia",
+    "type": "town_or_city",
+    "aliases": [],
+    "country": "Spain"
+  },
+  "Valencia Buddhist Centre": {
+    "name": "Valencia Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "Spain"
+  },
+  "Vijayaloka": {
+    "name": "Vijayaloka",
+    "type": "retreat_centre",
+    "aliases": ["Vijayaloka Retreat Centre", "Vijayaloka, Sydney, AUSTRALIA"],
+    "country": "Australia"
+  },
+  "Vimaladhatu": {
+    "name": "Vimaladhatu",
+    "type": "retreat_centre",
+    "aliases": ["Vimaladhatu Retreat Centre, GERMANY"],
+    "country": "Germany"
+  },
+  "Wellington Buddhist Centre": {
+    "name": "Wellington Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": [],
+    "country": "New Zealand"
+  },
+  "Windhorse:Evolution": {
+    "name": "Windhorse:Evolution",
+    "type": "community",
+    "aliases": ["Windhorse:Evolution, Cambridge, UK"],
+    "country": "England"
+  },
+  "Wood Norton Hall": {
+    "name": "Wood Norton Hall",
+    "type": "unknown",
+    "aliases": ["Wood Norton Hall, Norfolk, UK"],
+    "country": "England"
+  },
+  "Wymondham College": {
+    "name": "Wymondham College",
+    "type": "unknown",
+    "aliases": ["Order Convention at Wymondham College, Norfolk, UK"],
+    "country": "England"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "triratna-order-directory-auth-lambda",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  }
+}

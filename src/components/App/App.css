@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+html,
+body {
+  height: 100%;
+}
+
+.fullheight {
+  height: 100%;
+}
+@media (width < 64rem) {
+  .fullheight {
+    height: calc(100% - 56px - env(safe-area-inset-bottom))
+  }
+}
+
+::view-transition-new(disabled),
+::view-transition-old(disabled) {
+  animation-duration: 0s;
+}
+.noViewTransition {
+  view-transition-name: disabled;
+}
+@media (width > 64rem) {  
+  main {
+    view-transition-name: disabled;
+  }
+}
+@media (width < 64rem) {  
+  main {
+    view-transition-name: main;
+  }
+
+  ::view-transition-new(main),
+  ::view-transition-old(main) {
+    animation-duration: 300ms;
+    animation-timing-function: ease-out;
+    animation-direction: normal;
+  }
+  ::view-transition-old(main) {
+    animation-name: slide-out;
+  }
+  ::view-transition-new(main) {
+    animation-name: slide-in;
+    mix-blend-mode: normal;
+  }
+  .back-transition::view-transition-new(main) {
+    animation-name: slide-out-reverse;
+  }
+  .back-transition::view-transition-old(main) {
+    animation-name: slide-in-reverse;
+    mix-blend-mode: normal;
+    z-index: 1;
+  }
+  @keyframes slide-out {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-20%);
+    }
+  }
+  @keyframes slide-out-reverse {
+    from {
+      transform: translateX(-20%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slide-in {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slide-in-reverse {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }      
+}

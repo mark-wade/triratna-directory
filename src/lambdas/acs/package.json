@@ -1,0 +1,8 @@
+{
+  "name": "triratna-order-directory-acs-lambda",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "query-string": "^9.3.1",
+    "saml2-js": "^4.0.4"
+  }
+}

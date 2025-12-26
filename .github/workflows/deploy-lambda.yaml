@@ -1,0 +1,72 @@
+name: Deploy AWS Lambda
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::783351365608:role/GithubDeployLambdaRole
+          aws-region: eu-west-2
+      - name: Build ACS function
+        run: |
+          cd src/lambdas/acs
+          npm install
+      - name: Deploy ACS Function
+        uses: aws-actions/aws-lambda-deploy@v1
+        with:
+          function-name: ACS
+          code-artifacts-dir: ./src/lambdas/acs
+      - name: Build Auth function
+        run: |
+          cd src/lambdas/auth
+          npm install
+      - name: Deploy Auth Function
+        uses: aws-actions/aws-lambda-deploy@v1
+        with:
+          function-name: Auth
+          code-artifacts-dir: ./src/lambdas/auth
+      - name: Build Feedback function
+        run: |
+          cd src/lambdas/feedback
+          npm install
+      - name: Deploy Feedback Function
+        uses: aws-actions/aws-lambda-deploy@v1
+        with:
+          function-name: Feedback
+          code-artifacts-dir: ./src/lambdas/feedback
+      - name: Build Logout function
+        run: |
+          cd src/lambdas/logout
+          npm install
+      - name: Deploy Logout Function
+        uses: aws-actions/aws-lambda-deploy@v1
+        with:
+          function-name: Logout
+          code-artifacts-dir: ./src/lambdas/logout
+      - name: Build OrderDirectory function
+        run: |
+          cd src/lambdas/data
+          npm install
+      - name: Deploy OrderDirectory Function
+        uses: aws-actions/aws-lambda-deploy@v1
+        with:
+          function-name: OrderDirectory
+          code-artifacts-dir: ./src/lambdas/data
+      - name: Build RefreshData function
+        run: |
+          cd src/lambdas/refresh-data
+          npm install
+      - name: Deploy RefreshData Function
+        uses: aws-actions/aws-lambda-deploy@v1
+        with:
+          function-name: RefreshData
+          code-artifacts-dir: ./src/lambdas/refresh-data

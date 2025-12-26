@@ -1,0 +1,3 @@
+:root {
+  --bottom-bar-padding: calc((var(--spacing) * 2) + env(safe-area-inset-bottom));
+}

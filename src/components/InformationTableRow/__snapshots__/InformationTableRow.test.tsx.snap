@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shows the provided label and value 1`] = `
+<DocumentFragment>
+  <div
+    class="px-4 py-4 sm:grid sm:grid-cols-3 lg:block xl:grid xl:grid-cols-5"
+  >
+    <dt
+      class="text-sm font-medium text-gray-900"
+    >
+      I am a label
+    </dt>
+    <dd
+      class="text-sm/6 text-gray-700 mt-1 sm:mt-0 sm:col-span-2 lg:mt-1 xl:mt-0 xl:col-span-4"
+    >
+      <p>
+        I am the value
+      </p>
+    </dd>
+  </div>
+</DocumentFragment>
+`;
