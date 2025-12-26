@@ -2,7 +2,7 @@
   "Abhirati": {
     "name": "Abhirati",
     "type": "community",
-    "aliases": ["Abhirati, Old Rectory,Tittleshall, Norfolk, UK"],
+    "aliases": ["Abhirati, Old Rectory,Tittleshall, Norfolk, UK", "Tittleshall"],
     "country": "England"
   },
   "Achalabhumi": {
@@ -17,6 +17,12 @@
     "aliases": ["Adhisthana Retreat Centre", "Adhisthana retreat centre"],
     "country": "England"
   },
+  "Aio-Wira Yoga Centre": {
+    "name": "Aio-Wira Yoga Centre",
+    "type": "unknown",
+    "aliases": ["Aio-Wira Yoga Centre, NZ"],
+    "country": "New Zealand"
+  },
   "Akashavana": {
     "name": "Akashavana",
     "type": "retreat_centre",
@@ -29,6 +35,12 @@
     "aliases": [],
     "country": "India"
   },
+  "Archway Buddhist Centre": {
+    "name": "Archway Buddhist Centre",
+    "type": "buddhist_centre",
+    "aliases": ["Archway Buddhist Centre"],
+    "country": "England"
+  },
   "Aryaloka": {
     "name": "Aryaloka",
     "type": "retreat_centre",
@@ -38,7 +50,7 @@
   "Aryatara": {
     "name": "Aryatara",
     "type": "community",
-    "aliases": ["Aryatara, Purley, Surrey, UK"],
+    "aliases": ["Aryatara, Purley, Surrey, UK", "Aryatara community", "Aryatara Community"],
     "country": "England"
   },
   "Auckland Buddhist Centre": {
@@ -161,6 +173,12 @@
     "aliases": [],
     "country": "England"
   },
+  "Court Lodge": {
+    "name": "Court Lodge",
+    "type": "unknown",
+    "aliases": ["Court Lodge"],
+    "country": "England"
+  },
   "Dehradun": {
     "name": "Dehradun",
     "type": "town_or_city",
@@ -203,6 +221,12 @@
     "aliases": [],
     "country": "Germany"
   },
+  "Four Winds Temple": {
+    "name": "Four Winds Temple",
+    "type": "unknown",
+    "aliases": ["Four Winds Sufi Farm", "Four Winds Temple", "Four Winds Temple, Surrey"],
+    "country": "England"
+  },
   "Ghent": {
     "name": "Ghent",
     "type": "town_or_city",
@@ -214,6 +238,12 @@
     "type": "retreat_centre",
     "aliases": ["Ghuyaloka", "Guhyaloka ", "Guhyaloka Retreat Centre", "Guhyaloka Rtereat Centre", "Gukhyaloka", "Guyhaloka"],
     "country": "Spain"
+  },
+  "Glasgow": {
+    "name": "Glasgow",
+    "type": "town_or_city",
+    "aliases": [],
+    "country": "Scotland"
   },
   "Glasgow Buddhist Centre": {
     "name": "Glasgow Buddhist Centre",
@@ -365,6 +395,12 @@
     "aliases": [],
     "country": "England"
   },
+  "Ngatiawa Camp": {
+    "name": "Ngatiawa Camp",
+    "type": "unknown",
+    "aliases": ["Ngatiawa Camp, NZ"],
+    "country": "New Zealand"
+  },
   "North London Buddhist Centre": {
     "name": "North London Buddhist Centre",
     "type": "buddhist_centre",
@@ -407,6 +443,12 @@
     "aliases": ["Saddhama Pradeep Retreat Center Bhaje", "Saddhamma Pradeep Retreat Centre, Bhaja, India", "Saddhamma Pradip", "Saddhamma Pradip Reteat Center Bhaje", "Saddhamma Pradip Reteat Centre Bhaje", "Saddhamma Pradip Retreat Centre", "Saddhamma Pradipa", "Saddhmma Pradip Retreat Centre Bhaje", "Sadhamma Pradip Retreat Centre", "Sadhamma Pradip, Bhaja INDIA"],
     "country": "India"
   },
+  "Sakura": {
+    "name": "Sakura",
+    "type": "buddhist_centre",
+    "aliases": ["Sakura"],
+    "country": "England"
+  },
   "San Benito Benedictine Monastery": {
     "name": "San Benito Benedictine Monastery",
     "type": "unknown",
@@ -442,6 +484,12 @@
     "type": "buddhist_centre",
     "aliases": [],
     "country": "England"
+  },
+  "Shivaji Fort": {
+    "name": "Shivaji Fort",
+    "type": "unknown",
+    "aliases": ["Shivaji Fort"],
+    "country": "India"
   },
   "Stockholm Buddhist Centre": {
     "name": "Stockholm Buddhist Centre",
@@ -500,7 +548,7 @@
   "Urgyen Sangharakshita Retreat Centre": {
     "name": "Urgyen Sangharakshita Retreat Centre",
     "type": "retreat_centre",
-    "aliases": ["Uragen Sangharkshita Meditation Centre Nanded", "Urgen Sangharakshita Dhyan Bhavana kendra Nanded", "Urgen Sangharakshita Meditation Center Nanded", "Urgen Sangharakshita Dhyan Bhavana kendra Nanded ", "Urgen Sangharakshita Meditation Center Nanded "],
+    "aliases": ["Uragen Sangharkshita Meditation Centre Nanded", "Urgen Sangharakshita Dhyan Bhavana kendra Nanded", "Urgen Sangharakshita Meditation Center Nanded", "Urgen Sangharakshita Dhyan Bhavana kendra Nanded ", "Urgen Sangharakshita Meditation Center Nanded ", "Urgyen Sangharakshita Meditation Centre, India"],
     "country": "India"
   },
   "Vajrasana": {
