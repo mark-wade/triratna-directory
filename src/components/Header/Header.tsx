@@ -20,7 +20,7 @@ export function Header({
           />
         </div>
       ) : imageFallback ? (
-        <div className="bg-gray-400 w-50 h-67 pt-33 rounded-lg text-center text-white text-xs">
+        <div className="bg-gray-400 text-center text-white text-xs rounded-lg hidden lg:block w-40 h-53 pt-26 xl:w-50 xl:h-67 xl:pt-33">
           {imageFallback}
         </div>
       ) : (
