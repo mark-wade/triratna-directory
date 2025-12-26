@@ -1,7 +1,7 @@
-import Chart from "react-apexcharts";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DataContext } from "../DataContext/DataContext";
 import { Gender } from "../../utilities/types";
+import ApexCharts from "apexcharts";
 
 export default function OrderMembersOverTimeChart() {
   function getTimelines() {
@@ -41,6 +41,8 @@ export default function OrderMembersOverTimeChart() {
 
   const { orderMembers } = useContext(DataContext);
 
+  const timelines = getTimelines();
+
   const options = {
     chart: {
       animations: {
@@ -53,6 +55,7 @@ export default function OrderMembersOverTimeChart() {
           download: false,
         },
       },
+      type: "bar",
       zoom: {
         enabled: false,
       },
@@ -68,6 +71,20 @@ export default function OrderMembersOverTimeChart() {
         vertical: 15,
       },
     },
+    series: [
+      {
+        name: "Dharmacharis",
+        data: getSeriesFromTimeline(timelines.Male),
+      },
+      {
+        name: "Dharmacharinis",
+        data: getSeriesFromTimeline(timelines.Female),
+      },
+      // {
+      //   name: "Non-Binary",
+      //   data: getSeriesFromTimeline(timelines.NonBinary),
+      // },
+    ],
     tooltip: {
       intersect: false,
       shared: true,
@@ -104,23 +121,16 @@ export default function OrderMembersOverTimeChart() {
     },
   };
 
-  const timelines = getTimelines();
-  const series = [
-    {
-      name: "Dharmacharis",
-      data: getSeriesFromTimeline(timelines.Male),
-    },
-    {
-      name: "Dharmacharinis",
-      data: getSeriesFromTimeline(timelines.Female),
-    },
-    // {
-    //   name: "Non-Binary",
-    //   data: getSeriesFromTimeline(timelines.NonBinary),
-    // },
-  ];
+  useEffect(() => {
+    const el = document.querySelector("#orderMembersOverTimeChart");
+    if (el) {
+      el.innerHTML = "";
+      const chart = new ApexCharts(el, options);
+      chart.render();
+    }
+  }, [options]);
 
-  return <Chart options={options} series={series} type="bar" />;
+  return <div id="orderMembersOverTimeChart"></div>; //<Chart options={options} series={series} type="bar" />;
 }
 
 function getSeriesFromTimeline(timeline: Record<string, number>) {

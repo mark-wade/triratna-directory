@@ -1,9 +1,9 @@
-import Chart from "react-apexcharts";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DataContext } from "../DataContext/DataContext";
 import { AreaName, AREAS } from "../../utilities/types";
 import { OrderMembersByAreaData } from "./OrderMembersByAreaChart.types";
 import { emptyOrderMembersByAreaData } from "./OrderMembersByAreaChart.utils";
+import ApexCharts from "apexcharts";
 
 function sumArray(array: number[]) {
   return array.reduce((partialSum, a) => partialSum + a, 0);
@@ -44,6 +44,7 @@ export default function OrderMembersByAreaChart({
           download: false,
         },
       },
+      type: "bar",
     },
     colors: ["#2d5cd4", "#d42522", "#35966a"],
     labels: areas.map(([, area]) => area.name),
@@ -84,22 +85,30 @@ export default function OrderMembersByAreaChart({
     yaxis: {
       tickAmount: 12,
     },
+    series: [
+      {
+        name: "Dharmacharis",
+        data: areas.map(([k]) => data[k as AreaName].Male),
+      },
+      {
+        name: "Dharmacharinis",
+        data: areas.map(([k]) => data[k as AreaName].Female),
+      },
+      // {
+      //   name: "Non-Binary",
+      //   data: areas.map(([k]) => data[k as AreaName].NonBinary),
+      // },
+    ],
   };
 
-  const series = [
-    {
-      name: "Dharmacharis",
-      data: areas.map(([k]) => data[k as AreaName].Male),
-    },
-    {
-      name: "Dharmacharinis",
-      data: areas.map(([k]) => data[k as AreaName].Female),
-    },
-    // {
-    //   name: "Non-Binary",
-    //   data: areas.map(([k]) => data[k as AreaName].NonBinary),
-    // },
-  ];
+  useEffect(() => {
+    const el = document.querySelector("#orderMembersByAreaChart");
+    if (el) {
+      el.innerHTML = "";
+      const chart = new ApexCharts(el, options);
+      chart.render();
+    }
+  }, [options]);
 
-  return <Chart options={options} series={series} type="bar" />;
+  return <div id="orderMembersByAreaChart"></div>; //<Chart options={options} series={series} type="bar" />;
 }
