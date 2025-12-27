@@ -1,4 +1,4 @@
-# Triratna Directory
+# triratna.directory
 
 ## Local Development
 
