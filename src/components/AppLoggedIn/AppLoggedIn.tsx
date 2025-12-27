@@ -22,6 +22,7 @@ import Feedback from "../Feedback/Feedback";
 import Stats from "../Stats/Stats";
 import InfoPage from "../InfoPage/InfoPage";
 import { useCookies } from "react-cookie";
+import NavWrapper from "../NavWrapper/NavWrapper";
 
 const SCHEMA_VERSION = "2025-12-25";
 
@@ -44,7 +45,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
       "popstate",
       function () {
         // Don't do this if back-transition is present, which would mean the user just clicked
-        // our own <BackButton />
+        // our own back button
         if (!document.documentElement.classList.contains("back-transition")) {
           const mainTag = document.getElementsByTagName("main");
           if (mainTag.length > 0) {
@@ -67,28 +68,74 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
         {
           path: "order-members",
           children: [
-            { index: true, element: <OrderMemberTable /> },
-            { path: ":name", element: <OrderMemberTable /> },
+            {
+              index: true,
+              element: <OrderMemberTable />,
+            },
+            {
+              path: ":name",
+              element: <OrderMemberTable />,
+            },
           ],
         },
         {
           path: "locations",
           children: [
-            { index: true, element: <LocationTable /> },
-            { path: ":name", element: <LocationTable /> },
+            {
+              index: true,
+              element: <LocationTable />,
+            },
+            {
+              path: ":name",
+              element: <LocationTable />,
+            },
           ],
         },
         {
           path: "history",
           children: [
-            { index: true, element: <TimeMachine /> },
-            { path: ":yearAsString", element: <TimeMachine /> },
+            {
+              index: true,
+              element: (
+                <NavWrapper>
+                  <TimeMachine />
+                </NavWrapper>
+              ),
+            },
+            {
+              path: ":yearAsString",
+              element: (
+                <NavWrapper>
+                  <TimeMachine />
+                </NavWrapper>
+              ),
+            },
           ],
         },
-        { path: "stats", element: <Stats /> },
-        { path: "about", element: <InfoPage /> },
-        { path: "feedback", element: <Feedback /> },
-        { path: "*", element: <PageNotFound /> },
+        {
+          path: "stats",
+          element: (
+            <NavWrapper>
+              <Stats />
+            </NavWrapper>
+          ),
+        },
+        {
+          path: "about",
+          element: (
+            <NavWrapper>
+              <InfoPage />
+            </NavWrapper>
+          ),
+        },
+        {
+          path: "*",
+          element: (
+            <NavWrapper>
+              <PageNotFound />
+            </NavWrapper>
+          ),
+        },
       ],
     },
   ]);
@@ -170,13 +217,12 @@ function AppMaitrijala() {
     <ErrorState statusCode={error} />
   ) : (
     <>
-      <NavBar />
-      <main className="fullheight lg:pl-20 pb-14 lg:pb-0">
-        {data ? (
-          <DataContext value={dataContext}>
-            <Outlet />
-          </DataContext>
-        ) : (
+      {data ? (
+        <DataContext value={dataContext}>
+          <Outlet />
+        </DataContext>
+      ) : (
+        <NavWrapper>
           <MasterDetailTable
             skeleton={true}
             data={[]}
@@ -185,8 +231,8 @@ function AppMaitrijala() {
             defaultSort={SortBy.ALPHABETICAL}
             filters={[]}
           />
-        )}
-      </main>
+        </NavWrapper>
+      )}
     </>
   );
 }

@@ -1,7 +1,10 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import Feedback from "../Feedback/Feedback";
 
 export default function InfoPage() {
+  const location = useLocation();
+  const previousNavs = location.state ?? [];
+
   return (
     <div className="bg-white h-full">
       <div className="p-5">
@@ -14,6 +17,7 @@ export default function InfoPage() {
             to="/order-members/Dhammakumara"
             className="text-indigo-600"
             viewTransition
+            state={[...previousNavs, "About"]}
           >
             Dhammakumāra
           </Link>{" "}

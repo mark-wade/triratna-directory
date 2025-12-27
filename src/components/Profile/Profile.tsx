@@ -6,13 +6,12 @@ import {
   OrderMember,
   OrderMemberEventOrdained,
 } from "../../utilities/types";
-import BackButton from "../BackButton/BackButton";
 import { DataContext } from "../DataContext/DataContext";
 import EagerLoadingTable from "../EagerLoadingTable/EagerLoadingTable";
 import { Header } from "../Header/Header";
 import { InformationTable } from "../InformationTable/InformationTable";
 import { InformationTableRow } from "../InformationTableRow/InformationTableRow";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import Feedback from "../Feedback/Feedback";
 import Feed from "../Feed/Feed";
 import {
@@ -26,6 +25,8 @@ export default function Profile({ name }: { name: string }) {
   const { source, orderMembers, locations } = useContext(DataContext);
   const om = orderMembers[name];
   const [todaysDate, setTodaysDate] = useState<Date>();
+  const location = useLocation();
+  const previousNavs = location.state ?? [];
 
   useEffect(() => {
     // Using the current date makes the function impure, so it needs to go in an effect
@@ -118,7 +119,11 @@ export default function Profile({ name }: { name: string }) {
           }
         >
           {ordainedDate ? (
-            <Link to={"/history/" + ordainedDate.getFullYear()}>
+            <Link
+              to={"/history/" + ordainedDate.getFullYear()}
+              viewTransition
+              state={[...previousNavs, om.name]}
+            >
               {formatDate(ordainedDate)}
               {om.status === "Active" && <> ({ordainedTimeText} ago)</>}
             </Link>
@@ -129,7 +134,11 @@ export default function Profile({ name }: { name: string }) {
         {resignedEvent && (
           <InformationTableRow label="Date Resigned">
             {resignedDate ? (
-              <Link to={"/history/" + resignedDate.getFullYear()}>
+              <Link
+                to={"/history/" + resignedDate.getFullYear()}
+                viewTransition
+                state={[...previousNavs, om.name]}
+              >
                 {formatDate(resignedDate)} (order age {ordainedTimeText})
               </Link>
             ) : (
@@ -140,7 +149,11 @@ export default function Profile({ name }: { name: string }) {
         {diedEvent && (
           <InformationTableRow label="Date Died">
             {diedDate ? (
-              <Link to={"/history/" + diedDate.getFullYear()}>
+              <Link
+                to={"/history/" + diedDate.getFullYear()}
+                viewTransition
+                state={[...previousNavs, om.name]}
+              >
                 {formatDate(diedDate)}
                 {om.status === "Deceased" && (
                   <> (order age {ordainedTimeText})</>
@@ -156,6 +169,8 @@ export default function Profile({ name }: { name: string }) {
             <Link
               className="text-indigo-600"
               to={"/order-members/?area=" + encodeURIComponent(om.area)}
+              viewTransition
+              state={[...previousNavs, om.name]}
             >
               {AREAS[om.area].name}
             </Link>
@@ -178,6 +193,7 @@ export default function Profile({ name }: { name: string }) {
                 className="text-indigo-600"
                 to={"/order-members/" + ordainedEvent.privatePreceptor}
                 viewTransition
+                state={[...previousNavs, om.name]}
               >
                 {orderMembers[ordainedEvent.privatePreceptor].name}
               </Link>
@@ -198,6 +214,7 @@ export default function Profile({ name }: { name: string }) {
                   className="text-indigo-600"
                   to={"/order-members/" + ordainedEvent.publicPreceptor}
                   viewTransition
+                  state={[...previousNavs, om.name]}
                 >
                   {orderMembers[ordainedEvent.publicPreceptor].name}
                 </Link>
@@ -213,6 +230,7 @@ export default function Profile({ name }: { name: string }) {
                 className="text-indigo-600"
                 to={"/locations/" + ordainedEvent.location}
                 viewTransition
+                state={[...previousNavs, om.name]}
               >
                 {locations[ordainedEvent.location].name},{" "}
                 {locations[ordainedEvent.location].country}
@@ -239,7 +257,11 @@ export default function Profile({ name }: { name: string }) {
       const date = new Date(maybeDate);
 
       return (
-        <Link to={"/history/" + date.getFullYear()}>
+        <Link
+          to={"/history/" + date.getFullYear()}
+          viewTransition
+          state={[...previousNavs, om.name]}
+        >
           {formatDate(date)}
           {timeAgo && <> ({yearsAndMonthsBetweenDates(date, timeAgo)} ago)</>}
           {orderAgeFrom && (
@@ -292,6 +314,7 @@ export default function Profile({ name }: { name: string }) {
                                       ordainedEvent.privatePreceptor
                                     }
                                     viewTransition
+                                    state={[...previousNavs, om.name]}
                                   >
                                     {ordainedEvent.privatePreceptor}
                                   </Link>
@@ -306,6 +329,7 @@ export default function Profile({ name }: { name: string }) {
                                       ordainedEvent.privatePreceptor
                                     }
                                     viewTransition
+                                    state={[...previousNavs, om.name]}
                                   >
                                     {ordainedEvent.privatePreceptor}
                                   </Link>{" "}
@@ -317,6 +341,7 @@ export default function Profile({ name }: { name: string }) {
                                       ordainedEvent.publicPreceptor
                                     }
                                     viewTransition
+                                    state={[...previousNavs, om.name]}
                                   >
                                     {ordainedEvent.publicPreceptor}
                                   </Link>{" "}
@@ -406,6 +431,8 @@ export default function Profile({ name }: { name: string }) {
             <Link
               className="text-indigo-600"
               to={"/order-members/?area=" + encodeURIComponent(om.area)}
+              viewTransition
+              state={[...previousNavs, om.name]}
             >
               {AREAS[om.area].name}
             </Link>
@@ -419,7 +446,6 @@ export default function Profile({ name }: { name: string }) {
 
   return (
     <>
-      <BackButton to="/order-members" />
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <Header
           title={om.name}

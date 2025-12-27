@@ -5,6 +5,7 @@ import { AREAS, SortBy, TableRowData } from "../../utilities/types";
 import { DataContext } from "../DataContext/DataContext";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import MasterDetailTable from "../MasterDetailTable/MasterDetailTable";
+import NavWrapper from "../NavWrapper/NavWrapper";
 
 export default function OrderMemberTable() {
   const { source, orderMembers, orderMemberRows } = useContext(DataContext);
@@ -149,35 +150,37 @@ export default function OrderMemberTable() {
   });
 
   return (
-    <MasterDetailTable
-      active={name}
-      key="order-members"
-      data={
-        inYear
-          ? updateOrderMemberRowsForYear(orderMemberRows, inYear)
-          : orderMemberRows
-      }
-      element={element}
-      sortOptions={[
-        {
-          by: SortBy.ALPHABETICAL,
-          title: "Name",
-        },
-        {
-          by: SortBy.OLDEST,
-          title: "Date Ordained (oldest first)",
-        },
-        {
-          by: SortBy.NEWEST,
-          title: "Date Ordained (newest first)",
-        },
-        {
-          by: SortBy.BUBBLE,
-          title: "Most Disciples",
-        },
-      ]}
-      defaultSort={SortBy.ALPHABETICAL}
-      filters={filters}
-    />
+    <NavWrapper title={name ? orderMembers[name].name : undefined}>
+      <MasterDetailTable
+        active={name}
+        key="order-members"
+        data={
+          inYear
+            ? updateOrderMemberRowsForYear(orderMemberRows, inYear)
+            : orderMemberRows
+        }
+        element={element}
+        sortOptions={[
+          {
+            by: SortBy.ALPHABETICAL,
+            title: "Name",
+          },
+          {
+            by: SortBy.OLDEST,
+            title: "Date Ordained (oldest first)",
+          },
+          {
+            by: SortBy.NEWEST,
+            title: "Date Ordained (newest first)",
+          },
+          {
+            by: SortBy.BUBBLE,
+            title: "Most Disciples",
+          },
+        ]}
+        defaultSort={SortBy.ALPHABETICAL}
+        filters={filters}
+      />
+    </NavWrapper>
   );
 }

@@ -5,7 +5,6 @@ import {
   OrderMember,
   OrderMemberEventOrdained,
 } from "../../utilities/types";
-import BackButton from "../BackButton/BackButton";
 import { DataContext } from "../DataContext/DataContext";
 import { Header } from "../Header/Header";
 import EagerLoadingTable from "../EagerLoadingTable/EagerLoadingTable";
@@ -16,7 +15,6 @@ export default function LocationProfile({ name }: { name: string }) {
   const location = locations[name];
   return (
     <>
-      <BackButton to="/locations" />
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <Header title={location.name} />
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg mb-5">

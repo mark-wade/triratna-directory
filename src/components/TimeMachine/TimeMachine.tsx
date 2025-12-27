@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
 import { useContext, useEffect } from "react";
 import { DataContext } from "../DataContext/DataContext";
 import {
@@ -21,6 +21,8 @@ export default function TimeMachine() {
   const year = parseInt(
     yearAsString ? yearAsString : `${new Date().getFullYear()}`
   );
+  const location = useLocation();
+  const previousNavs = location.state ?? [];
 
   useEffect(() => {
     function handleKeypress(e: KeyboardEvent): void {
@@ -29,13 +31,16 @@ export default function TimeMachine() {
         const direction = e.code === "ArrowRight" ? 1 : -1;
         const newYear = year + direction;
         if (newYear >= 1968 && newYear <= new Date().getFullYear()) {
-          navigate("/history/" + newYear);
+          navigate("/history/" + newYear, {
+            replace: true,
+            state: location.state,
+          });
         }
       }
     }
     document.addEventListener("keydown", handleKeypress);
     return () => document.removeEventListener("keydown", handleKeypress);
-  }, [navigate, year]);
+  }, [location.state, navigate, year]);
 
   if (isNaN(year) || year < 1968 || year > new Date().getFullYear()) {
     return <PageNotFound />;
@@ -161,7 +166,11 @@ export default function TimeMachine() {
                   </div>
                 ) : (
                   <div className="size-8 mr-8 text-indigo-600">
-                    <Link to={"/history/" + (year - 1)}>
+                    <Link
+                      to={"/history/" + (year - 1)}
+                      replace
+                      state={location.state}
+                    >
                       <ArrowLeftIcon />
                     </Link>
                   </div>
@@ -173,7 +182,11 @@ export default function TimeMachine() {
                   </div>
                 ) : (
                   <div className="size-8 ml-8 text-indigo-600">
-                    <Link to={"/history/" + (year + 1)}>
+                    <Link
+                      to={"/history/" + (year + 1)}
+                      replace
+                      state={location.state}
+                    >
                       <ArrowRightIcon />
                     </Link>
                   </div>
@@ -187,7 +200,10 @@ export default function TimeMachine() {
                   max={new Date().getFullYear()}
                   step={1}
                   onChange={(e) => {
-                    navigate(`/history/${e.target.value}`);
+                    navigate(`/history/${e.target.value}`, {
+                      replace: true,
+                      state: location.state,
+                    });
                   }}
                   value={year}
                 />
@@ -224,6 +240,7 @@ export default function TimeMachine() {
                   link: `/order-members/?in=${year}&status=Resigned`,
                 },
               ]}
+              navTitle={year.toString()}
             />
           </div>
         </div>
@@ -245,14 +262,18 @@ export default function TimeMachine() {
                         <h3 className="text-base font-semibold text-gray-900">
                           {formatDate(new Date(date), false)} at{" "}
                           {location ? (
-                            <Link to={"/locations/" + location} viewTransition>
+                            <Link
+                              to={"/locations/" + location}
+                              viewTransition
+                              state={[...previousNavs, year.toString()]}
+                            >
                               {location}
                             </Link>
                           ) : (
                             <>an unknown location</>
                           )}
                         </h3>
-                        <OrderMemberGrid oms={oms} />
+                        <OrderMemberGrid oms={oms} navTitle={year.toString()} />
                       </div>
                     ))}
                   </div>
@@ -270,7 +291,10 @@ export default function TimeMachine() {
           </h3>
           <div className="overflow-hidden sm:rounded-lg bg-white shadow-sm mb-5">
             <div className="bg-white px-4 py-5 sm:px-6">
-              <OrderMemberGrid oms={omsDiedThisYear} />
+              <OrderMemberGrid
+                oms={omsDiedThisYear}
+                navTitle={year.toString()}
+              />
             </div>
           </div>
         </div>
@@ -283,7 +307,10 @@ export default function TimeMachine() {
           </h3>
           <div className="overflow-hidden rounded-lg bg-white shadow-sm mb-5">
             <div className="bg-white px-4 py-5 sm:px-6">
-              <OrderMemberGrid oms={omsLeftThisYear} />
+              <OrderMemberGrid
+                oms={omsLeftThisYear}
+                navTitle={year.toString()}
+              />
             </div>
           </div>
         </div>

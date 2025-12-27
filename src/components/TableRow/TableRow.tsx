@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { TableRowData } from "../../utilities/types";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export default function TableRow({
   row,
@@ -11,6 +11,9 @@ export default function TableRow({
   active: string | undefined;
   queryString?: string;
 }) {
+  const location = useLocation();
+  const previousNavs = location.state ?? [];
+
   return (
     <div
       key={row.key}
@@ -41,6 +44,7 @@ export default function TableRow({
                 to={row.link + (queryString ? `?${queryString}` : "")}
                 key={row.key}
                 viewTransition
+                state={[...previousNavs, ""]}
               >
                 <span className="absolute inset-x-0 -top-px bottom-0" />
                 {row.title}
