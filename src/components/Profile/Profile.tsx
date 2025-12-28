@@ -490,7 +490,10 @@ export default function Profile({ name }: { name: string }) {
                   Order Member
                   {Object.keys(privatePreceptorTo).length === 1 ? "" : "s"}
                 </div>
-                <EagerLoadingTable data={privatePreceptorTo} />
+                <EagerLoadingTable
+                  data={privatePreceptorTo}
+                  navTitle={om.name}
+                />
               </div>
             </div>
           )}
@@ -502,7 +505,11 @@ export default function Profile({ name }: { name: string }) {
                   Order Member
                   {Object.keys(publicPreceptorTo).length === 1 ? "" : "s"}
                 </div>
-                <EagerLoadingTable data={publicPreceptorTo} queryString={""} />
+                <EagerLoadingTable
+                  data={publicPreceptorTo}
+                  queryString={""}
+                  navTitle={om.name}
+                />
               </div>
             </div>
           )}

@@ -6,11 +6,13 @@ export default function EagerLoadingTable({
   refs,
   active,
   queryString,
+  navTitle,
 }: {
   data: TableRowData[];
   refs?: () => Map<string, HTMLElement>;
   active?: string;
   queryString?: string;
+  navTitle: string;
 }) {
   return (
     <div className="divide-y divide-gray-100">
@@ -21,6 +23,7 @@ export default function EagerLoadingTable({
           refs={refs}
           active={active}
           queryString={queryString}
+          navTitle={navTitle}
         />
       ))}
     </div>

@@ -6,10 +6,12 @@ export default function TableRow({
   row,
   active,
   queryString,
+  navTitle,
 }: {
   row: TableRowData;
   active: string | undefined;
   queryString?: string;
+  navTitle?: string;
 }) {
   const location = useLocation();
   const previousNavs = location.state ?? [];
@@ -44,7 +46,7 @@ export default function TableRow({
                 to={row.link + (queryString ? `?${queryString}` : "")}
                 key={row.key}
                 viewTransition
-                state={[...previousNavs, ""]}
+                state={[...previousNavs, navTitle ?? ""]}
               >
                 <span className="absolute inset-x-0 -top-px bottom-0" />
                 {row.title}

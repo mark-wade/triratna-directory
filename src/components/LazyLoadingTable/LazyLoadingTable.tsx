@@ -9,11 +9,13 @@ export default function LazyLoadingTable({
   active,
   queryString,
   scrolledTo,
+  navTitle,
 }: {
   data: TableRowData[];
   active?: string;
   queryString?: string;
   scrolledTo: string | undefined;
+  navTitle: string;
 }) {
   const listRef = createRef<FixedSizeList>();
 
@@ -34,7 +36,12 @@ export default function LazyLoadingTable({
       role="listitem"
       className={index !== 0 ? "border-t border-gray-100" : ""}
     >
-      <TableRow row={data[index]} active={active} queryString={queryString} />
+      <TableRow
+        row={data[index]}
+        active={active}
+        queryString={queryString}
+        navTitle={navTitle}
+      />
     </div>
   );
 

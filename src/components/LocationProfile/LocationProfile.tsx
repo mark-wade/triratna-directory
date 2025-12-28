@@ -20,6 +20,7 @@ export default function LocationProfile({ name }: { name: string }) {
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg mb-5">
           <EagerLoadingTable
             data={getOrderMembersOrdainedInLocation(name, orderMembers, source)}
+            navTitle={location.name}
           />
         </div>
         <div className="text-center my-4">
