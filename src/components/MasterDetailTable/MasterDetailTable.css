@@ -1,0 +1,9 @@
+.master-detail-table {
+  height: 100vh;
+}
+
+@media (width < 64rem) {
+  .master-detail-table {
+    height: calc(100vh - 56px - 64px - env(safe-area-inset-bottom))
+  }
+}

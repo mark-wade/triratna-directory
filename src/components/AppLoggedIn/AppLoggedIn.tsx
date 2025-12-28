@@ -18,7 +18,6 @@ import {
 } from "../../utilities/tableConverters";
 import LocationTable from "../LocationTable/LocationTable";
 import TimeMachine from "../TimeMachine/TimeMachine";
-import Feedback from "../Feedback/Feedback";
 import Stats from "../Stats/Stats";
 import InfoPage from "../InfoPage/InfoPage";
 import { useCookies } from "react-cookie";
@@ -105,7 +104,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
             {
               path: ":yearAsString",
               element: (
-                <NavWrapper>
+                <NavWrapper className="bg-gray-100">
                   <TimeMachine />
                 </NavWrapper>
               ),
@@ -115,7 +114,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
         {
           path: "stats",
           element: (
-            <NavWrapper>
+            <NavWrapper className="bg-gray-100">
               <Stats />
             </NavWrapper>
           ),

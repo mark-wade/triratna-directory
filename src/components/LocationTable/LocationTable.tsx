@@ -18,7 +18,10 @@ export default function LocationTable() {
     )
   ) : null;
   return (
-    <NavWrapper title={name ? locations[name].name : undefined}>
+    <NavWrapper
+      title={name ? locations[name].name : undefined}
+      className="bg-gray-100"
+    >
       <MasterDetailTable
         key="locations"
         data={locationRows}

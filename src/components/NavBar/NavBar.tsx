@@ -117,7 +117,7 @@ export default function NavBar({ title }: { title?: string }) {
             : title
             ? "grid-cols-3"
             : "grid-cols-1") +
-          " grid sticky top-0 z-40 bg-gray-900 px-4 py-4 shadow-xs sm:px-6 lg:hidden"
+          " grid fixed w-full top-0 z-40 bg-gray-900 px-4 py-4 shadow-xs sm:px-6 lg:hidden"
         }
       >
         {backTitle !== undefined && (

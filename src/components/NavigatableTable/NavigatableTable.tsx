@@ -7,10 +7,12 @@ export default function NavigatableTable({
   data,
   queryString,
   scrolledTo,
+  topOffset,
 }: {
   data: TableRowData[];
   queryString: string;
   scrolledTo: string | undefined;
+  topOffset: number;
 }) {
   const location = useLocation();
 
@@ -42,6 +44,7 @@ export default function NavigatableTable({
       active={name}
       queryString={queryString}
       scrolledTo={scrolledTo}
+      topOffset={topOffset}
     />
   );
 }

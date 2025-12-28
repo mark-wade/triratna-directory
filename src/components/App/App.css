@@ -6,13 +6,8 @@ body {
 }
 
 .fullheight {
-  height: 100%;
-}
-@media (width < 64rem) {
-  .fullheight {
-    height: calc(100% - 56px - env(safe-area-inset-bottom))
-  }
-}
+  min-height: 100%;
+} 
 
 ::view-transition-new(disabled),
 ::view-transition-old(disabled) {
@@ -28,6 +23,7 @@ body {
 }
 @media (width < 64rem) {  
   main {
+    padding-top: 64px;
     view-transition-name: main;
   }
 

@@ -6,6 +6,7 @@ import {
   Filter,
 } from "../../utilities/types";
 import SearchableTable from "../SearchableTable/SearchableTable";
+import "./MasterDetailTable.css";
 
 export default function MasterDetailTable({
   active,
@@ -40,11 +41,11 @@ export default function MasterDetailTable({
   }
 
   return (
-    <div className="flex h-full">
+    <div className="flex master-detail-table">
       <div
         className={
           (element ? "flex-0 lg:flex-initial" : "flex-1 lg:flex-initial") +
-          " overflow-auto w-md"
+          " overflow-auto w-md bg-white"
         }
       >
         <SearchableTable

@@ -150,7 +150,10 @@ export default function OrderMemberTable() {
   });
 
   return (
-    <NavWrapper title={name ? orderMembers[name].name : undefined}>
+    <NavWrapper
+      title={name ? orderMembers[name].name : undefined}
+      className="bg-gray-100"
+    >
       <MasterDetailTable
         active={name}
         key="order-members"

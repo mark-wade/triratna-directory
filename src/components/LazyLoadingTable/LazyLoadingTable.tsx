@@ -10,12 +10,14 @@ export default function LazyLoadingTable({
   queryString,
   scrolledTo,
   navTitle,
+  topOffset,
 }: {
   data: TableRowData[];
   active?: string;
   queryString?: string;
   scrolledTo: string | undefined;
   navTitle: string;
+  topOffset: number;
 }) {
   const listRef = createRef<FixedSizeList>();
 
@@ -47,17 +49,19 @@ export default function LazyLoadingTable({
 
   return (
     <AutoSizer>
-      {({ height, width }) => (
-        <FixedSizeList
-          ref={listRef}
-          height={height - 56}
-          itemCount={data.length}
-          itemSize={73}
-          width={width}
-        >
-          {Row}
-        </FixedSizeList>
-      )}
+      {({ height, width }) => {
+        return (
+          <FixedSizeList
+            ref={listRef}
+            height={height - topOffset}
+            itemCount={data.length}
+            itemSize={73}
+            width={width}
+          >
+            {Row}
+          </FixedSizeList>
+        );
+      }}
     </AutoSizer>
   );
 }

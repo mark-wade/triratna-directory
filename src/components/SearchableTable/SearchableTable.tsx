@@ -7,7 +7,7 @@ import {
 } from "../../utilities/types.tsx";
 import { useSearchParams } from "react-router";
 import { arrayContainsAny, arraysEqual } from "../../utilities/utilities.ts";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { tokenisedName } from "../../utilities/search.ts";
 import SearchBar from "../SearchBar/SearchBar.tsx";
 import FiltersDialog from "../FiltersDialog/FiltersDialog.tsx";
@@ -38,6 +38,8 @@ export default function SearchableTable({
   const [sort, setSort] = useState(defaultSort);
   const [searchParams, setSearchParams] = useSearchParams();
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
+  const [searchBarHeight, setSearchBarHeight] = useState(0);
+  const searchBarRef = useRef<HTMLDivElement>(null);
 
   // Reset the search query every time the search params change, otherwise
   // if you search for an OM, and then click on their Area, you'll still
@@ -163,9 +165,15 @@ export default function SearchableTable({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scrolledTo, setSearchQuery]);
 
+  useEffect(() => {
+    if (searchBarRef.current) {
+      setSearchBarHeight(searchBarRef.current.clientHeight);
+    }
+  }, []);
+
   return (
     <>
-      <div className="sticky top-0 z-40 bg-white shadow-xs">
+      <div className="sticky top-0 z-40 bg-white shadow-xs" ref={searchBarRef}>
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
@@ -206,6 +214,7 @@ export default function SearchableTable({
           data={rows}
           queryString={searchParams.toString()}
           scrolledTo={searchQuery ? undefined : scrolledTo}
+          topOffset={searchBarHeight}
         />
       )}
     </>
