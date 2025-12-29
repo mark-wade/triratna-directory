@@ -4,6 +4,6 @@
 
 @media (width < 64rem) {
   .master-detail-table {
-    height: calc(100vh - 56px - 64px - env(safe-area-inset-bottom))
+    height: calc(100dvh - 56px - 64px - env(safe-area-inset-top) - env(safe-area-inset-bottom))
   }
 }

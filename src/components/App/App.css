@@ -23,7 +23,8 @@ body {
 }
 @media (width < 64rem) {  
   main {
-    padding-top: 64px;
+    padding-top: calc(64px + env(safe-area-inset-top));
+    padding-bottom: calc(54px + env(safe-area-inset-bottom));
     view-transition-name: main;
   }
 
