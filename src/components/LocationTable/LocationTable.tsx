@@ -23,6 +23,7 @@ export default function LocationTable() {
       className="bg-gray-100"
     >
       <MasterDetailTable
+        active={name}
         key="locations"
         data={locationRows}
         element={element}
