@@ -169,7 +169,7 @@ export default function SearchableTable({
     if (searchBarRef.current) {
       setSearchBarHeight(searchBarRef.current.clientHeight);
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <>
