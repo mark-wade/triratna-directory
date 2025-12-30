@@ -23,7 +23,7 @@ import InfoPage from "../InfoPage/InfoPage";
 import { useCookies } from "react-cookie";
 import NavWrapper from "../NavWrapper/NavWrapper";
 
-const SCHEMA_VERSION = "2025-12-25";
+const SCHEMA_VERSION = "2025-12-30";
 
 function DefaultPage() {
   let navigate = useNavigate();
