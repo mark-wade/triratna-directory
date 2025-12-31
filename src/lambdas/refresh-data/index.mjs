@@ -20,7 +20,7 @@ export const handler = async (event) => {
 
   for (const om of raw.data) {
     // Get photo
-    const photoFilename = getPhotoFilenameForOrderMember(om.name);
+    const photoFilename = getPhotoFilenameForOrderMember(om.id);
     if (photos.includes(photoFilename)) {
       om.image = photoFilename;
     } else {
