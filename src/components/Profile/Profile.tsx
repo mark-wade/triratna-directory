@@ -1,5 +1,9 @@
 import { useContext, useState, useEffect } from "react";
-import { yearsAndMonthsBetweenDates, formatDate } from "../../utilities/dates";
+import {
+  yearsAndMonthsBetweenDates,
+  formatDate,
+  dateStringToDate,
+} from "../../utilities/dates";
 import { orderMemberToTableRow } from "../../utilities/tableConverters";
 import {
   AREAS,
@@ -69,27 +73,29 @@ export default function Profile({ name }: { name: string }) {
     }) as OrderMemberEventOrdained | undefined;
     const ordainedDate =
       ordainedEvent && ordainedEvent.date
-        ? new Date(ordainedEvent.date)
+        ? dateStringToDate(ordainedEvent.date)
         : undefined;
 
     const diedEvent = om.events.find((event) => {
       return event.type === "died";
     });
     const diedDate =
-      diedEvent && diedEvent.date ? new Date(diedEvent.date) : undefined;
+      diedEvent && diedEvent.date
+        ? dateStringToDate(diedEvent.date)
+        : undefined;
     const resignedEvent = om.events.find((event) => {
       return event.type === "resigned";
     });
     const resignedDate =
       resignedEvent && resignedEvent.date
-        ? new Date(resignedEvent.date)
+        ? dateStringToDate(resignedEvent.date)
         : undefined;
     const removedEvent = om.events.find((event) => {
       return event.type === "removed";
     });
     const removedDate =
       removedEvent && removedEvent.date
-        ? new Date(removedEvent.date)
+        ? dateStringToDate(removedEvent.date)
         : undefined;
     function getEndDate() {
       if (resignedEvent) {
@@ -254,7 +260,7 @@ export default function Profile({ name }: { name: string }) {
         return <>Unknown Date</>;
       }
 
-      const date = new Date(maybeDate);
+      const date = dateStringToDate(maybeDate);
 
       return (
         <Link
@@ -367,7 +373,7 @@ export default function Profile({ name }: { name: string }) {
                           event.date,
                           undefined,
                           lastOrdained && lastOrdained.date
-                            ? new Date(lastOrdained.date)
+                            ? dateStringToDate(lastOrdained.date)
                             : undefined
                         ),
                         description: "Died",
@@ -380,7 +386,7 @@ export default function Profile({ name }: { name: string }) {
                           event.date,
                           undefined,
                           lastOrdained && lastOrdained.date
-                            ? new Date(lastOrdained.date)
+                            ? dateStringToDate(lastOrdained.date)
                             : undefined
                         ),
                         description: "Resigned",
@@ -393,7 +399,7 @@ export default function Profile({ name }: { name: string }) {
                           event.date,
                           undefined,
                           lastOrdained && lastOrdained.date
-                            ? new Date(lastOrdained.date)
+                            ? dateStringToDate(lastOrdained.date)
                             : undefined
                         ),
                         description: "Removed",
@@ -406,7 +412,7 @@ export default function Profile({ name }: { name: string }) {
                           event.date,
                           undefined,
                           lastOrdained && lastOrdained.date
-                            ? new Date(lastOrdained.date)
+                            ? dateStringToDate(lastOrdained.date)
                             : undefined
                         ),
                         description: "Suspended",

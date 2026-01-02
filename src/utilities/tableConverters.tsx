@@ -1,4 +1,4 @@
-import { formatDate } from "./dates";
+import { dateStringToDate, formatDate } from "./dates";
 import {
   DataSource,
   OrderMember,
@@ -22,7 +22,7 @@ export function orderMemberToTableRow(
       : orderMember.events[lastOrdainedEventIndex];
   const lastOrdainedDate =
     lastOrdainedEvent && lastOrdainedEvent.date
-      ? new Date(lastOrdainedEvent.date)
+      ? dateStringToDate(lastOrdainedEvent.date)
       : null;
   const leftOrderEvent = orderMember.events
     .slice(lastOrdainedEventIndex)
@@ -53,7 +53,7 @@ export function orderMemberToTableRow(
           <>
             &mdash;
             {leftOrderEvent && leftOrderEvent.date
-              ? formatDate(new Date(leftOrderEvent.date))
+              ? formatDate(dateStringToDate(leftOrderEvent.date))
               : "Unknown"}
           </>
         )}

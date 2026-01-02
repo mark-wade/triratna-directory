@@ -10,7 +10,7 @@ import {
 import PageNotFound from "../PageNotFound/PageNotFound";
 import "./TimeMachine.css";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { formatDate } from "../../utilities/dates";
+import { dateStringToDate, formatDate } from "../../utilities/dates";
 import OrderMemberGrid from "../OrderMemberGrid/OrderMemberGrid";
 import StatsBox from "../StatsBox/StatsBox";
 
@@ -57,7 +57,7 @@ export default function TimeMachine() {
         ({ event }) =>
           eventTypes.includes(event.type) &&
           event.date &&
-          new Date(event.date).getFullYear() === year
+          dateStringToDate(event.date).getFullYear() === year
       )
       .sort(({ om: a }, { om: b }) => a.name.localeCompare(b.name))
       .sort(({ event: a }, { event: b }) => {
@@ -115,7 +115,7 @@ export default function TimeMachine() {
       let wasFormer = false;
       let wasDeceased = false;
       for (const event of om.events) {
-        if (event.date && new Date(event.date).getFullYear() <= year) {
+        if (event.date && dateStringToDate(event.date).getFullYear() <= year) {
           switch (event.type) {
             case "ordained":
               hadBeenActive = true;
@@ -260,7 +260,7 @@ export default function TimeMachine() {
                     {Object.entries(locations).map(([location, oms]) => (
                       <div key={"ordained-" + date + "-" + location}>
                         <h3 className="text-base font-semibold text-gray-900">
-                          {formatDate(new Date(date), false)} at{" "}
+                          {formatDate(dateStringToDate(date), false)} at{" "}
                           {location ? (
                             <Link
                               to={"/locations/" + location}

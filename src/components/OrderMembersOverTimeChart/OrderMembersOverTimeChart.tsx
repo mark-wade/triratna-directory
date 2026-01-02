@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { DataContext } from "../DataContext/DataContext";
 import { Gender } from "../../utilities/types";
 import ApexCharts from "apexcharts";
+import { dateStringToDate } from "../../utilities/dates";
 
 export default function OrderMembersOverTimeChart() {
   function getTimelines() {
@@ -24,12 +25,20 @@ export default function OrderMembersOverTimeChart() {
           switch (event.type) {
             // We don't do suspended/reinstated since we consider that still an Order member
             case "ordained":
-              addToTimeline(om.gender, normalizeDate(new Date(event.date)), 1);
+              addToTimeline(
+                om.gender,
+                normalizeDate(dateStringToDate(event.date)),
+                1
+              );
               break;
             case "died":
             case "resigned":
             case "removed":
-              addToTimeline(om.gender, normalizeDate(new Date(event.date)), -1);
+              addToTimeline(
+                om.gender,
+                normalizeDate(dateStringToDate(event.date)),
+                -1
+              );
               break;
           }
         }
@@ -136,7 +145,7 @@ export default function OrderMembersOverTimeChart() {
 function getSeriesFromTimeline(timeline: Record<string, number>) {
   let current = 0;
   const seriesData: { x: string; y: number }[] = [];
-  const date = new Date("1968-04-07");
+  const date = dateStringToDate("1968-04-07");
   const now = new Date();
   while (date < now) {
     const dateAsString = normalizeDate(date);

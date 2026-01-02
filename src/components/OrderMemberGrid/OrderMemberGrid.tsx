@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router";
 import { OrderMember, OrderMemberEvent } from "../../utilities/types";
 import OrderMemberPhoto from "../OrderMemberPhoto/OrderMemberPhoto";
-import { formatDate } from "../../utilities/dates";
+import { dateStringToDate, formatDate } from "../../utilities/dates";
 import { uniqueId } from "lodash";
 
 export default function OrderMemberGrid({
@@ -33,7 +33,7 @@ export default function OrderMemberGrid({
             <p className="mt-3 text-gray-900">{om.name}</p>
             {event.date && (
               <p className="text-sm/6 text-gray-600">
-                {formatDate(new Date(event.date))}
+                {formatDate(dateStringToDate(event.date))}
               </p>
             )}
           </Link>

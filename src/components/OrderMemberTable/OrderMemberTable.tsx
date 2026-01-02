@@ -6,6 +6,7 @@ import { DataContext } from "../DataContext/DataContext";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import MasterDetailTable from "../MasterDetailTable/MasterDetailTable";
 import NavWrapper from "../NavWrapper/NavWrapper";
+import { dateStringToDate } from "../../utilities/dates";
 
 export default function OrderMemberTable() {
   const { source, orderMembers, orderMemberRows } = useContext(DataContext);
@@ -47,13 +48,13 @@ export default function OrderMemberTable() {
         if (
           diedEvent &&
           diedEvent.date &&
-          new Date(diedEvent.date).getFullYear() <= year
+          dateStringToDate(diedEvent.date).getFullYear() <= year
         ) {
           row.filterValues.status = ["Deceased"];
         } else if (
           resignedEvent &&
           resignedEvent.date &&
-          new Date(resignedEvent.date).getFullYear() <= year
+          dateStringToDate(resignedEvent.date).getFullYear() <= year
         ) {
           row.filterValues.status = ["Resigned"];
         }
