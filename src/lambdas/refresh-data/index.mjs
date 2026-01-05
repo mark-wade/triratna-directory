@@ -19,6 +19,16 @@ export const handler = async (event) => {
   const photos = await getAllPhotoFilenamesFromS3();
 
   for (const om of raw.data) {
+    if (om.name === "NameWithheld") {
+      continue;
+    }
+    if (om.privatePreceptor === "NameWithheld") {
+      om.privatePreceptor = null;
+    }
+    if (om.publicPreceptor === "NameWithheld") {
+      om.publicPreceptor = null;
+    }
+    
     // Get photo
     const photoFilename = getPhotoFilenameForOrderMember(om.id);
     if (photos.includes(photoFilename)) {
