@@ -60,7 +60,8 @@ export function orderMemberToTableRow(
       </>
     ),
     image: orderMember.image
-      ? (process.env.PHOTOS_BASE_URL ?? "https://photos.triratna.directory") +
+      ? (process.env.PHOTOS_BASE_URL ??
+          "https://triratna-directory-order-photos.s3.eu-west-2.amazonaws.com") +
         "/" +
         orderMember.image
       : null,

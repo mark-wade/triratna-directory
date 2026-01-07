@@ -458,7 +458,7 @@ export default function Profile({ name }: { name: string }) {
           image={
             om.image
               ? (process.env.PHOTOS_BASE_URL ??
-                  "https://photos.triratna.directory") +
+                  "https://triratna-directory-order-photos.s3.eu-west-2.amazonaws.com") +
                 "/" +
                 om.image
               : undefined
