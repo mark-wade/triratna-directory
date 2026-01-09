@@ -2,11 +2,13 @@ export function Header({
   image,
   imageFallback,
   title,
+  subtitle,
   children,
 }: {
   image?: string;
   imageFallback?: string;
   title: string;
+  subtitle?: string;
   children?: React.ReactNode;
 }) {
   return (
@@ -29,6 +31,9 @@ export function Header({
       <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
         <p className="font-bold text-gray-900 text-2xl sm:text-4xl xl:text-5xl">
           {title}
+          {subtitle && (
+            <span className="text-xl font-normal"> ({subtitle})</span>
+          )}
         </p>
         {children}
       </div>

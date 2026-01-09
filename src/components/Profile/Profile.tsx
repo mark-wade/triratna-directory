@@ -455,6 +455,7 @@ export default function Profile({ name }: { name: string }) {
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <Header
           title={om.name}
+          subtitle={om.pronouns}
           image={
             om.image
               ? (process.env.PHOTOS_BASE_URL ??

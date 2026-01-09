@@ -46,6 +46,7 @@ export interface OrderMember {
   name: string;
   meaning?: string;
   gender: Gender | null;
+  pronouns?: string;
   status: Status;
   area: AreaName | null;
   events: OrderMemberEvent[];

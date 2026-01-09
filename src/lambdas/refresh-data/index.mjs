@@ -10,6 +10,7 @@ export const handler = async (event) => {
   };
 
   const omPhotos = await readJsonFromS3("photos.json");
+  const augmentations = await readJsonFromS3("augmentations.json");
   
   for (const om of raw.data) {
     if (om.name === "NameWithheld") {
@@ -35,7 +36,10 @@ export const handler = async (event) => {
       }
       return event;
     });
-    data.orderMembers[om.id] = om;
+    data.orderMembers[om.id] = {
+      ...om,
+      ...augmentations[om.id] ?? {}
+    };
 
     // Add any missing locations
     for (const event of om.events) {
