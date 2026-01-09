@@ -6,17 +6,17 @@ import { dateStringToDate } from "../../utilities/dates";
 
 export default function OrderMembersOverTimeChart() {
   function getTimelines() {
-    let timelines: Record<Gender, Record<string, number>> = {
+    let timelines: Record<Gender | "Unknown", Record<string, number>> = {
       Male: {},
       Female: {},
-      //NonBinary: {},
+      Unknown: {},
     };
 
-    function addToTimeline(g: Gender, date: string, change: number) {
-      if (timelines[g][date] === undefined) {
-        timelines[g][date] = 0;
+    function addToTimeline(g: Gender | null, date: string, change: number) {
+      if (timelines[g ?? "Unknown"][date] === undefined) {
+        timelines[g ?? "Unknown"][date] = 0;
       }
-      timelines[g][date] += change;
+      timelines[g ?? "Unknown"][date] += change;
     }
 
     for (const [, om] of Object.entries(orderMembers)) {
@@ -52,35 +52,8 @@ export default function OrderMembersOverTimeChart() {
 
   const timelines = getTimelines();
 
-  const options = {
-    chart: {
-      animations: {
-        enabled: false,
-      },
-      fontFamily: `ui-sans-serif, system-ui, sans-serif`,
-      stacked: true,
-      toolbar: {
-        tools: {
-          download: false,
-        },
-      },
-      type: "bar",
-      zoom: {
-        enabled: false,
-      },
-    },
-    colors: ["#2d5cd4", "#d42522", "#35966a"],
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      fontFamily: `ui-sans-serif, system-ui, sans-serif`,
-      itemMargin: {
-        horizontal: 10,
-        vertical: 15,
-      },
-    },
-    series: [
+  useEffect(() => {
+    const series = [
       {
         name: "Dharmacharis",
         data: getSeriesFromTimeline(timelines.Male),
@@ -93,51 +66,87 @@ export default function OrderMembersOverTimeChart() {
       //   name: "Non-Binary",
       //   data: getSeriesFromTimeline(timelines.NonBinary),
       // },
-    ],
-    tooltip: {
-      intersect: false,
-      shared: true,
-      x: {
-        format: "yyyy",
-        formatter: function (
-          value: number,
-          {
-            series,
-            dataPointIndex,
-          }: { series: number[][]; dataPointIndex: number }
-        ) {
-          if (series === undefined) {
-            return "";
-          }
+    ];
+    const unknownSeries = getSeriesFromTimeline(timelines.Unknown);
+    if (unknownSeries.find(({ y }) => y > 0)) {
+      series.push({
+        name: "Unknown",
+        data: unknownSeries,
+      });
+    }
 
-          const date = new Date(value);
-          const total = series.reduce(
-            (accumulator, currentValue) =>
-              accumulator + currentValue[dataPointIndex],
-            0
-          );
-          return `${date.getUTCFullYear()}: ${new Intl.NumberFormat(
-            "en-GB"
-          ).format(total)} order members`;
+    const options = {
+      chart: {
+        animations: {
+          enabled: false,
+        },
+        fontFamily: `ui-sans-serif, system-ui, sans-serif`,
+        stacked: true,
+        toolbar: {
+          tools: {
+            download: false,
+          },
+        },
+        type: "bar",
+        zoom: {
+          enabled: false,
         },
       },
-    },
-    xaxis: {
-      type: "datetime" as "datetime",
-    },
-    yaxis: {
-      tickAmount: 12,
-    },
-  };
+      colors: ["#2d5cd4", "#d42522", "#4a5565", "#35966a"],
+      dataLabels: {
+        enabled: false,
+      },
+      legend: {
+        fontFamily: `ui-sans-serif, system-ui, sans-serif`,
+        itemMargin: {
+          horizontal: 10,
+          vertical: 15,
+        },
+      },
+      series,
+      tooltip: {
+        intersect: false,
+        shared: true,
+        x: {
+          format: "yyyy",
+          formatter: function (
+            value: number,
+            {
+              series,
+              dataPointIndex,
+            }: { series: number[][]; dataPointIndex: number }
+          ) {
+            if (series === undefined) {
+              return "";
+            }
 
-  useEffect(() => {
+            const date = new Date(value);
+            const total = series.reduce(
+              (accumulator, currentValue) =>
+                accumulator + currentValue[dataPointIndex],
+              0
+            );
+            return `${date.getUTCFullYear()}: ${new Intl.NumberFormat(
+              "en-GB"
+            ).format(total)} order members`;
+          },
+        },
+      },
+      xaxis: {
+        type: "datetime" as "datetime",
+      },
+      yaxis: {
+        tickAmount: 12,
+      },
+    };
+
     const el = document.querySelector("#orderMembersOverTimeChart");
     if (el) {
       el.innerHTML = "";
       const chart = new ApexCharts(el, options);
       chart.render();
     }
-  }, [options]);
+  }, [timelines]);
 
   return <div id="orderMembersOverTimeChart"></div>; //<Chart options={options} series={series} type="bar" />;
 }

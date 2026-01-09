@@ -45,9 +45,9 @@ export type Status = "Active" | "Deceased" | "Resigned";
 export interface OrderMember {
   name: string;
   meaning?: string;
-  gender: Gender;
+  gender: Gender | null;
   status: Status;
-  area: AreaName;
+  area: AreaName | null;
   events: OrderMemberEvent[];
   image: string | null;
 }
