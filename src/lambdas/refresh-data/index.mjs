@@ -22,6 +22,12 @@ export const handler = async (event) => {
     
     // Dealias locations
     om.events = om.events.map(event => {
+      if (event.privatePreceptor === "NameWithheld") {
+        event.privatePreceptor = null;
+      }
+      if (event.publicPreceptor === "NameWithheld") {
+        event.publicPreceptor = null;
+      }
       if (event.location) {
         if (event.location === "null") {
           event.location = null;

@@ -188,7 +188,9 @@ export default function Profile({ name }: { name: string }) {
           <InformationTableRow
             label={
               ordainedEvent &&
-              ordainedEvent.privatePreceptor !== ordainedEvent.publicPreceptor
+              (!ordainedEvent.privatePreceptor ||
+                ordainedEvent.privatePreceptor !==
+                  ordainedEvent.publicPreceptor)
                 ? "Private Preceptor"
                 : "Preceptor"
             }
@@ -213,7 +215,9 @@ export default function Profile({ name }: { name: string }) {
           </InformationTableRow>
         )}
         {ordainedEvent &&
-          ordainedEvent.privatePreceptor !== ordainedEvent.publicPreceptor && (
+          (!ordainedEvent.publicPreceptor ||
+            ordainedEvent.privatePreceptor !==
+              ordainedEvent.publicPreceptor) && (
             <InformationTableRow label="Public Preceptor">
               {orderMembers[ordainedEvent.publicPreceptor] ? (
                 <Link
@@ -225,7 +229,11 @@ export default function Profile({ name }: { name: string }) {
                   {orderMembers[ordainedEvent.publicPreceptor].name}
                 </Link>
               ) : (
-                <>{ordainedEvent.publicPreceptor}</>
+                <>
+                  {ordainedEvent.publicPreceptor
+                    ? ordainedEvent.publicPreceptor
+                    : "Unknown"}
+                </>
               )}
             </InformationTableRow>
           )}
