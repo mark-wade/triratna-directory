@@ -5,7 +5,7 @@ import {
   Outlet,
 } from "react-router";
 import NavBar from "../NavBar/NavBar";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DataResponse, DataSource, SortBy } from "../../utilities/types";
 import ErrorState from "../ErrorState/ErrorState";
 import OrderMemberTable from "../OrderMemberTable/OrderMemberTable";
@@ -156,12 +156,8 @@ function AppMaitrijala() {
   const [data, setData] = useState<DataResponse>();
   const [error, setError] = useState<number>();
 
-  useEffect(() => {
+  const refreshData = useCallback(() => {
     const cachedData = localStorage.getItem("cacheData");
-    if (cachedData) {
-      setData(JSON.parse(cachedData));
-    }
-
     const cacheSchemaVersion = localStorage.getItem("cacheSchemaVersion");
     const cacheTime = localStorage.getItem("cacheTime");
     const cacheTimeout = new Date();
@@ -202,6 +198,25 @@ function AppMaitrijala() {
         });
     }
   }, [cookies.jwt]);
+
+  useEffect(() => {
+    const cachedData = localStorage.getItem("cacheData");
+    if (cachedData) {
+      setData(JSON.parse(cachedData));
+    }
+    refreshData();
+  }, [refreshData]);
+
+  useEffect(() => {
+    function handleVisibilityChange() {
+      if (document.visibilityState === "visible") {
+        refreshData();
+      }
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [refreshData]);
 
   // We calculate the rows here rather than in <OrderMemberTable /> because it's expensive and otherwise
   // there will be a lag every time you switch to that tab
