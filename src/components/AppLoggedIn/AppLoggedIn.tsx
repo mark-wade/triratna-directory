@@ -76,6 +76,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
               element: <OrderMemberTable />,
             },
           ],
+          errorElement: <RouterError />,
         },
         {
           path: "locations",
@@ -89,6 +90,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
               element: <LocationTable />,
             },
           ],
+          errorElement: <RouterError />,
         },
         {
           path: "history",
@@ -110,6 +112,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
               ),
             },
           ],
+          errorElement: <RouterError />,
         },
         {
           path: "stats",
@@ -118,6 +121,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
               <Stats />
             </NavWrapper>
           ),
+          errorElement: <RouterError />,
         },
         {
           path: "about",
@@ -126,6 +130,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
               <InfoPage />
             </NavWrapper>
           ),
+          errorElement: <RouterError />,
         },
         {
           path: "*",
@@ -140,6 +145,10 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
   ]);
 
   return <RouterProvider router={router} />;
+}
+
+function RouterError() {
+  return <ErrorState statusCode={500} />;
 }
 
 function AppMaitrijala() {
