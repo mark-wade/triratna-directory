@@ -152,6 +152,21 @@ export default function Profile({ name }: { name: string }) {
             )}
           </InformationTableRow>
         )}
+        {removedEvent && (
+          <InformationTableRow label="Date Removed">
+            {removedDate ? (
+              <Link
+                to={"/history/" + removedDate.getFullYear()}
+                viewTransition
+                state={[...previousNavs, om.name]}
+              >
+                {formatDate(removedDate)} (order age {ordainedTimeText})
+              </Link>
+            ) : (
+              <>Unknown</>
+            )}
+          </InformationTableRow>
+        )}
         {diedEvent && (
           <InformationTableRow label="Date Died">
             {diedDate ? (

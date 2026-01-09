@@ -26,7 +26,10 @@ export function orderMemberToTableRow(
       : null;
   const leftOrderEvent = orderMember.events
     .slice(lastOrdainedEventIndex)
-    .findLast((event) => ["died", "resigned", "removed"].includes(event.type));
+    .findLast(
+      (event) =>
+        event.date && ["died", "resigned", "removed"].includes(event.type)
+    );
 
   const orderMemberEvents = Object.values(orderMembers).flatMap(
     (om) => om.events

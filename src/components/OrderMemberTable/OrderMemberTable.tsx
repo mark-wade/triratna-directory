@@ -45,6 +45,9 @@ export default function OrderMemberTable() {
         const resignedEvent = orderMembers[row.key].events.find(
           (event) => event.type === "resigned"
         );
+        const removedEvent = orderMembers[row.key].events.find(
+          (event) => event.type === "removed"
+        );
         if (
           diedEvent &&
           diedEvent.date &&
@@ -57,6 +60,12 @@ export default function OrderMemberTable() {
           dateStringToDate(resignedEvent.date).getFullYear() <= year
         ) {
           row.filterValues.status = ["Resigned"];
+        } else if (
+          removedEvent &&
+          removedEvent.date &&
+          dateStringToDate(removedEvent.date).getFullYear() <= year
+        ) {
+          row.filterValues.status = ["Removed"];
         }
         return row;
       });
@@ -67,7 +76,7 @@ export default function OrderMemberTable() {
       key: "status",
       name: "Status",
       type: "multi" as "multi",
-      defaultValue: ["Active", "Deceased", "Resigned"],
+      defaultValue: ["Active", "Deceased", "Resigned", "Removed"],
       options: [
         {
           value: "Active",
@@ -80,6 +89,10 @@ export default function OrderMemberTable() {
         {
           value: "Resigned",
           name: inYear ? `Resigned in or before ${inYear}` : "Resigned",
+        },
+        {
+          value: "Removed",
+          name: inYear ? `Removed in or before ${inYear}` : "Removed",
         },
       ],
       forceShowActive: inYear ? true : false,

@@ -237,7 +237,7 @@ export default function TimeMachine() {
                   value: totals.resigned,
                   valueChange: omsLeftThisYear.length,
                   valueChangeClassName: "text-rose-600",
-                  link: `/order-members/?in=${year}&status=Resigned`,
+                  link: `/order-members/?in=${year}&status=Resigned&status=Removed`,
                 },
               ]}
               navTitle={year.toString()}

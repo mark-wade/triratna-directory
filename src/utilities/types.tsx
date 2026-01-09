@@ -40,7 +40,7 @@ export const AREAS: Record<AreaName, Area> = {
   },
 };
 
-export type Status = "Active" | "Deceased" | "Resigned";
+export type Status = "Active" | "Deceased" | "Resigned" | "Removed";
 
 export interface OrderMember {
   name: string;
