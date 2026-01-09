@@ -171,7 +171,7 @@ export default function Profile({ name }: { name: string }) {
           </InformationTableRow>
         )}
         <InformationTableRow label="Area">
-          {AREAS[om.area] ? (
+          {om.area && AREAS[om.area] ? (
             <Link
               className="text-indigo-600"
               to={"/order-members/?area=" + encodeURIComponent(om.area)}
