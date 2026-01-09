@@ -1,12 +1,4 @@
-import { S3Client, ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
-import { readFile } from 'fs/promises';
-import { createHash } from 'node:crypto';
-
-const locationsJSON = JSON.parse(
-  await readFile(
-    new URL('./locations.json', import.meta.url)
-  )
-);
+import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const s3 = new S3Client({ region: "eu-west-2" });
 
@@ -14,28 +6,18 @@ export const handler = async (event) => {
   const raw = await getDataFromMaitrijala();
   const data = {
     orderMembers: {},
-    locations: locationsJSON
+    locations: await readJsonFromS3("locations.json")
   };
-  const photos = await getAllPhotoFilenamesFromS3();
 
+  const omPhotos = await readJsonFromS3("photos.json");
+  
   for (const om of raw.data) {
     if (om.name === "NameWithheld") {
       continue;
     }
-    if (om.privatePreceptor === "NameWithheld") {
-      om.privatePreceptor = null;
-    }
-    if (om.publicPreceptor === "NameWithheld") {
-      om.publicPreceptor = null;
-    }
     
     // Get photo
-    const photoFilename = getPhotoFilenameForOrderMember(om.id);
-    if (photos.includes(photoFilename)) {
-      om.image = photoFilename;
-    } else {
-      om.image = null;
-    }
+    om.image = omPhotos[om.id] ?? null;
     
     // Dealias locations
     om.events = om.events.map(event => {
@@ -70,11 +52,7 @@ export const handler = async (event) => {
     }
   }
 
-  await s3.send(new PutObjectCommand({
-    Bucket: process.env.DATA_S3_BUCKET,
-    Key: "data.json",
-    Body: JSON.stringify(data),
-  }));
+  await writeJsonToS3("data.json", data);
   
   return;
 };
@@ -101,33 +79,19 @@ async function getDataFromMaitrijala() {
   return await dataResponse.json();
 }
 
-async function getAllPhotoFilenamesFromS3() {
-  let photos = [];
-
-  let listObjectsCommand = new ListObjectsV2Command({
-    Bucket: process.env.PHOTOS_S3_BUCKET,
-  });
-  let isTruncated = false;
-
-  do {
-    const listObjectsResponse = await s3.send(listObjectsCommand);
-    for (const item of listObjectsResponse.Contents) {
-      photos.push(item.Key);
-    }
-    isTruncated = listObjectsResponse.IsTruncated;
-    listObjectsCommand = new ListObjectsV2Command({
-      Bucket: process.env.PHOTOS_S3_BUCKET,
-      ContinuationToken: listObjectsResponse.NextContinuationToken,
-    });
-  } while (isTruncated);
-
-  return photos;
+async function readJsonFromS3(key) {
+  const response = await s3.send(new GetObjectCommand({
+    Bucket: process.env.DATA_S3_BUCKET,
+    Key: key,
+  }));
+  const str = await response.Body.transformToString();
+  return JSON.parse(str);
 }
 
-function getPhotoFilenameForOrderMember(name) {
-  const normalisedName = name.replace(/^./, name[0].toUpperCase());
-
-  return createHash('sha256')
-      .update(normalisedName + process.env.PHOTO_SALT)
-      .digest('hex') + ".jpg";
+async function writeJsonToS3(key, data) {
+  await s3.send(new PutObjectCommand({
+    Bucket: process.env.DATA_S3_BUCKET,
+    Key: key,
+    Body: JSON.stringify(data),
+  }));
 }

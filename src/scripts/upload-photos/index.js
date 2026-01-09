@@ -1,41 +1,47 @@
-// node --env-file=.env index.js
-
 import fs from 'fs';
 import { createHash } from 'node:crypto';
-import { S3Client, ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
+import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 
 const s3 = new S3Client({ region: "eu-west-2" });
-const photos = await getAllPhotoFilenamesFromS3();
+const hashesOnS3 = await getMd5HashesOfAllPhotosOnS3();
+const photoFilenames = await readJsonFromS3("photos.json");
 
-const files = await fs.promises.readdir(process.env.PHOTOS_DIR);
+const files = await fs.promises.readdir(process.argv[2]);
 for( const file of files ) {
-  const omName = file.replace(/\.jpg$/, '');
-  const saltedHash = createHash('sha256')
-    .update(omName + process.env.SALT)
-    .digest('hex');
-  const filename = saltedHash + '.jpg';
+  if (file.endsWith(".jpg")) {
+    const omName = file.replace(/\.jpg$/, '');
 
-  console.log(`${file} is hashed as ${filename}`);
+    const fileMd5 = await getFileMd5(process.argv[2] + "/" + file);
 
-  const fileMd5 = await getFileMd5(process.env.PHOTOS_DIR + "/" + file);
+    if (!photoFilenames[omName] || !hashesOnS3[photoFilenames[omName]] || hashesOnS3[photoFilenames[omName]] !== fileMd5) {
+      console.log(`Uploading ${file}`);
 
-  if (photos[filename] && photos[filename] === fileMd5) {
-    console.log(`${filename} already exists in S3 and contents match, skipping`);
-  } else {
-    console.log(`Uploading ${filename}...`);
-    await s3.send(new PutObjectCommand({
-      Bucket: process.env.PHOTOS_S3_BUCKET,
-      Key: filename,
-      Body: fs.createReadStream(process.env.PHOTOS_DIR + "/" + file),
-    }));
+      photoFilenames[omName] = crypto.randomUUID() + ".jpg";
+
+      await s3.send(new PutObjectCommand({
+        Bucket: "triratna-directory-order-photos",
+        Key: photoFilenames[omName],
+        Body: fs.createReadStream(process.argv[2] + "/" + file),
+      }));
+    }    
   }
 }
 
-async function getAllPhotoFilenamesFromS3() {
+writeJsonToS3("photos.json", photoFilenames);
+
+const lambda = new LambdaClient({ region: "eu-west-2" });
+await lambda.send(new InvokeCommand({
+  FunctionName: "RefreshData",
+  InvocationType: "Event",
+  Payload: JSON.stringify({}),
+}));
+
+async function getMd5HashesOfAllPhotosOnS3() {
   let photos = {};
 
   let listObjectsCommand = new ListObjectsV2Command({
-    Bucket: process.env.PHOTOS_S3_BUCKET,
+    Bucket: "triratna-directory-order-photos",
   });
   let isTruncated = false;
 
@@ -46,7 +52,7 @@ async function getAllPhotoFilenamesFromS3() {
     }
     isTruncated = listObjectsResponse.IsTruncated;
     listObjectsCommand = new ListObjectsV2Command({
-      Bucket: process.env.PHOTOS_S3_BUCKET,
+      Bucket: "triratna-directory-order-photos",
       ContinuationToken: listObjectsResponse.NextContinuationToken,
     });
   } while (isTruncated);
@@ -67,4 +73,21 @@ async function getFileMd5(filePath) {
       resolve(hash.digest('hex'));
     });
   });
+}
+
+async function readJsonFromS3(key) {
+  const response = await s3.send(new GetObjectCommand({
+    Bucket: 'triratna-directory-data',
+    Key: key,
+  }));
+  const str = await response.Body.transformToString();
+  return JSON.parse(str);
+}
+
+async function writeJsonToS3(key, data) {
+  await s3.send(new PutObjectCommand({
+    Bucket: 'triratna-directory-data',
+    Key: key,
+    Body: JSON.stringify(data),
+  }));
 }
