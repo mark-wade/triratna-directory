@@ -6,13 +6,13 @@ export function tokenisedName(name: string) {
     name = name.toLowerCase();
 
     // Remove all non-alpha characters
-    name = name.replace(/[^a-z]/g, "");
+    name = name.replaceAll(/[^a-z]/g, "");
 
     // Standardise spellings of certain words
-    name = name.replace('dhamma', 'dharma');
+    name = name.replaceAll('dhamma', 'dharma');
 
     // Remove all "h"s (which covers most other situations)
-    name = name.replace('h', '');
+    name = name.replaceAll('h', '');
 
     return name;
 }
