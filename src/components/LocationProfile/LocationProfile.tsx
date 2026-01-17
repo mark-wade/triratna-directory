@@ -7,8 +7,8 @@ import {
 } from "../../utilities/types";
 import { DataContext } from "../DataContext/DataContext";
 import { Header } from "../Header/Header";
-import EagerLoadingTable from "../EagerLoadingTable/EagerLoadingTable";
 import Feedback from "../Feedback/Feedback";
+import OrderMemberGrid from "../OrderMemberGrid/OrderMemberGrid";
 
 export default function LocationProfile({ name }: { name: string }) {
   const { source, orderMembers, locations } = useContext(DataContext);
@@ -17,10 +17,11 @@ export default function LocationProfile({ name }: { name: string }) {
     <>
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <Header title={location.name} />
-        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg mb-5">
-          <EagerLoadingTable
-            data={getOrderMembersOrdainedInLocation(name, orderMembers, source)}
+        <div className="bg-white shadow-sm sm:rounded-lg mb-5">
+          <OrderMemberGrid
+            oms={getOrderMembersOrdainedInLocation(name, orderMembers, source)}
             navTitle={location.name}
+            condensed={true}
           />
         </div>
         <div className="text-center my-4">
@@ -60,6 +61,5 @@ function getOrderMembersOrdainedInLocation(
         return -1;
       }
       return new Date(a.date).valueOf() - new Date(b.date).valueOf();
-    })
-    .map(({ om, id }) => orderMemberToTableRow(id, om, orderMembers, source));
+    });
 }

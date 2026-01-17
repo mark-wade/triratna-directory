@@ -7,16 +7,25 @@ import { uniqueId } from "lodash";
 export default function OrderMemberGrid({
   oms,
   navTitle,
+  condensed = false,
 }: {
   oms: { event: OrderMemberEvent; om: OrderMember; id: string }[];
   navTitle: string;
+  condensed: boolean;
 }) {
   const location = useLocation();
   const previousNavs = location.state ?? [];
 
   let i = 0;
   return (
-    <ul className="my-10 grid gap-x-4 gap-y-8 text-center grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-10">
+    <ul
+      className={
+        "py-10 grid gap-x-4 gap-y-8 text-center " +
+        (condensed
+          ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5"
+          : "grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-10")
+      }
+    >
       {oms.map(({ event, om, id }) => (
         <li key={uniqueId()}>
           <Link
