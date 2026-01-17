@@ -4,7 +4,14 @@ import { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand } fr
 import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 
 const s3 = new S3Client({ region: "eu-west-2" });
-const hashesOnS3 = await getMd5HashesOfAllPhotosOnS3();
+let hashesOnS3;
+try {
+ hashesOnS3 = await getMd5HashesOfAllPhotosOnS3();
+} catch (error) {
+  console.error("Error connecting to AWS. Try aws login");
+  process.exit(1);
+}
+
 const photoFilenames = await readJsonFromS3("photos.json");
 
 const files = await fs.promises.readdir(process.argv[2]);
