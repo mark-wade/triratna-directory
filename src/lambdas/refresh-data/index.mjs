@@ -3,14 +3,15 @@ import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3
 const s3 = new S3Client({ region: "eu-west-2" });
 
 export const handler = async (event) => {
+  const augmentations = await readJsonFromS3("augmentations.json");
+
   const raw = await getDataFromMaitrijala();
   const data = {
-    orderMembers: {},
+    orderMembers: augmentations,
     locations: await readJsonFromS3("locations.json")
   };
 
   const omPhotos = await readJsonFromS3("photos.json");
-  const augmentations = await readJsonFromS3("augmentations.json");
   
   for (const om of raw.data) {
     if (om.name === "NameWithheld") {
