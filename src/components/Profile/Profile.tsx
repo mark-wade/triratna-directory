@@ -348,9 +348,9 @@ export default function Profile({ name }: { name: string }) {
                                     {ordainedEvent.privatePreceptor}
                                   </Link>
                                 </>
-                              ) : (
+                              ) : ordainedEvent.privatePreceptor ? (
                                 <>
-                                  by{" "}
+                                  privately by{" "}
                                   <Link
                                     className="text-indigo-600"
                                     to={
@@ -362,7 +362,7 @@ export default function Profile({ name }: { name: string }) {
                                   >
                                     {ordainedEvent.privatePreceptor}
                                   </Link>{" "}
-                                  privately and{" "}
+                                  and publicly by{" "}
                                   <Link
                                     className="text-indigo-600"
                                     to={
@@ -374,13 +374,39 @@ export default function Profile({ name }: { name: string }) {
                                   >
                                     {ordainedEvent.publicPreceptor}
                                   </Link>{" "}
-                                  publicly
+                                </>
+                              ) : (
+                                <>
+                                  publicly by{" "}
+                                  <Link
+                                    className="text-indigo-600"
+                                    to={
+                                      "/order-members/" +
+                                      ordainedEvent.publicPreceptor
+                                    }
+                                    viewTransition
+                                    state={[...previousNavs, om.name]}
+                                  >
+                                    {ordainedEvent.publicPreceptor}
+                                  </Link>{" "}
                                 </>
                               )}
                             </>
                             <>
                               {ordainedEvent.location ? (
-                                <> at {ordainedEvent.location}</>
+                                <>
+                                  {" "}
+                                  at{" "}
+                                  <Link
+                                    className="text-indigo-600"
+                                    to={"/locations/" + ordainedEvent.location}
+                                    viewTransition
+                                    state={[...previousNavs, om.name]}
+                                  >
+                                    {locations[ordainedEvent.location].name},{" "}
+                                    {locations[ordainedEvent.location].country}
+                                  </Link>
+                                </>
                               ) : (
                                 <>, location unknown</>
                               )}
