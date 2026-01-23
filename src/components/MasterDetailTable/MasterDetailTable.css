@@ -1,5 +1,5 @@
 .master-detail-table {
-  height: 100vh;
+  height: 100dvh;
 }
 
 @media (width < 64rem) {
