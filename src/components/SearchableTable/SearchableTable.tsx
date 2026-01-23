@@ -8,7 +8,7 @@ import {
 import { useSearchParams } from "react-router";
 import { arrayContainsAny, arraysEqual } from "../../utilities/utilities.ts";
 import { useEffect, useRef, useState } from "react";
-import { tokenisedName } from "../../utilities/search.ts";
+import { searchQueryMatches } from "../../utilities/search.ts";
 import SearchBar from "../SearchBar/SearchBar.tsx";
 import FiltersDialog from "../FiltersDialog/FiltersDialog.tsx";
 import SkeletonTable from "../SkeletonTable/SkeletonTable.tsx";
@@ -96,9 +96,6 @@ export default function SearchableTable({
     onFilterOrSearchChange();
   }
 
-  const tokenisedSearchQuery = searchQuery
-    ? tokenisedName(searchQuery)
-    : undefined;
   const rows = data
     .filter((row) => {
       for (const filter of filters) {
@@ -114,8 +111,8 @@ export default function SearchableTable({
       }
 
       if (
-        tokenisedSearchQuery &&
-        !tokenisedName(row.title).includes(tokenisedSearchQuery)
+        searchQuery &&
+        !searchQueryMatches(searchQuery, row.title)
       ) {
         return false;
       }
@@ -169,7 +166,7 @@ export default function SearchableTable({
     if (searchBarRef.current) {
       setSearchBarHeight(searchBarRef.current.clientHeight);
     }
-  }, [searchParams, tokenisedSearchQuery]);
+  }, [searchParams, searchQuery]);
 
   return (
     <>
