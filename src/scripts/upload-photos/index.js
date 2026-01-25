@@ -6,7 +6,7 @@ import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 const s3 = new S3Client({ region: "eu-west-2" });
 let hashesOnS3;
 try {
- hashesOnS3 = await getMd5HashesOfAllPhotosOnS3();
+  hashesOnS3 = await getMd5HashesOfAllPhotosOnS3();
 } catch (error) {
   console.error("Error connecting to AWS. Try aws login");
   process.exit(1);
@@ -15,7 +15,7 @@ try {
 const photoFilenames = await readJsonFromS3("photos.json");
 
 const files = await fs.promises.readdir(process.argv[2]);
-for( const file of files ) {
+for (const file of files) {
   if (file.endsWith(".jpg")) {
     const omName = file.replace(/\.jpg$/, '');
 
@@ -27,11 +27,12 @@ for( const file of files ) {
       photoFilenames[omName] = crypto.randomUUID() + ".jpg";
 
       await s3.send(new PutObjectCommand({
-        Bucket: "triratna-directory-order-photos",
-        Key: photoFilenames[omName],
         Body: fs.createReadStream(process.argv[2] + "/" + file),
+        Bucket: "triratna-directory-order-photos",
+        CacheControl: "public, max-age=31536000, immutable",
+        Key: photoFilenames[omName],
       }));
-    }    
+    }
   }
 }
 
