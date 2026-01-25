@@ -24,6 +24,7 @@ import {
   MinusIcon,
   PlusIcon,
 } from "@heroicons/react/20/solid";
+import { ProfileContactDetails } from "../ProfileContactDetails/ProfileContactDetails";
 
 export default function Profile({ name }: { name: string }) {
   const { source, orderMembers, locations } = useContext(DataContext);
@@ -499,6 +500,9 @@ export default function Profile({ name }: { name: string }) {
     );
   }
 
+  const dfString = localStorage.getItem("darkFeatures");
+  const df = dfString ? JSON.parse(dfString) : {};
+
   return (
     <>
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -525,6 +529,9 @@ export default function Profile({ name }: { name: string }) {
             </p>
           )}
         </Header>
+        {df.contact && om.status === "Active" && (
+          <ProfileContactDetails om={om} />
+        )}
         {om.events.filter((event) => event.type === "ordained").length === 1 ? (
           <ProfileDetailsSimple om={om} />
         ) : (

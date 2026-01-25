@@ -51,6 +51,7 @@ export interface OrderMember {
   area: AreaName | null;
   events: OrderMemberEvent[];
   image: string | null;
+  contact?: ContactDetails;
 }
 export type OrderMemberEventType =
   | "ordained"
@@ -79,6 +80,23 @@ export interface OrdinationLocation {
     | "town_or_city"
     | "unknown";
   country?: string;
+}
+
+export interface ContactDetails {
+  address: Address | null;
+  personalEmail: string | null;
+  workEmail: string | null;
+  mobilePhone: string | null;
+  homePhone: string | null;
+  workPhone: string | null;
+}
+
+export interface Address {
+  addressLines: string[] | null;
+  city: string | null;
+  state: string | null;
+  postcode: string | null;
+  country: string | null;
 }
 
 export interface SortOption {

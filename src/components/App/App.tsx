@@ -19,9 +19,20 @@ export default function App() {
 
 function AppLoginNegotiation() {
   const [searchParams, setSearchParams] = useState<URLSearchParams>();
+
   useEffect(() => {
     setSearchParams(new URLSearchParams(window.location.search));
   }, []);
+
+  useEffect(() => {
+    if (searchParams?.has("df")) {
+      const dfString = localStorage.getItem("darkFeatures");
+      const df = dfString ? JSON.parse(dfString) : {};
+      df[searchParams.get("df") ?? ''] = true;
+      localStorage.setItem("darkFeatures", JSON.stringify(df));
+      window.location.href = "/";
+    }
+  })
 
   return searchParams !== undefined ? (
     searchParams?.has("loginError") ? (
