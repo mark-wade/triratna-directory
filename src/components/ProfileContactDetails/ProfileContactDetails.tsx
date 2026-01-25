@@ -1,3 +1,4 @@
+import { APIProvider, Map, Marker, useMapsLibrary } from '@vis.gl/react-google-maps';
 import * as countryCodes from "country-codes-list";
 import { titleCase } from "title-case";
 import { CountryCode, parsePhoneNumberWithError } from "libphonenumber-js";
@@ -5,6 +6,7 @@ import { formatAddress } from 'localized-address-format';
 import { Address, OrderMember } from "../../utilities/types";
 import { InformationTableRow } from "../InformationTableRow/InformationTableRow";
 import { InformationTable } from "../InformationTable/InformationTable";
+import { useEffect, useState } from 'react';
 
 export function ProfileContactDetails({ om }: { om: OrderMember }) {
   if (!om.contact) {
@@ -12,45 +14,43 @@ export function ProfileContactDetails({ om }: { om: OrderMember }) {
   }
 
   return (
-    <InformationTable className="mb-4">
-      {om.contact.personalEmail && (
-        <InformationTableRow label={om.contact.workEmail ? "Personal Email" : "Email"}>
-          <a className="text-indigo-600" href={"mailto:" + om.contact.personalEmail}>{om.contact.personalEmail}</a>
-        </InformationTableRow>      
-      )}
-      {om.contact.workEmail && (
-        <InformationTableRow label="Work Email">
-          <a className="text-indigo-600" href={"mailto:" + om.contact.workEmail}>{om.contact.workEmail}</a>
-        </InformationTableRow>      
-      )}
-      {om.contact.mobilePhone && (
-        <InformationTableRow label={om.contact.homePhone || om.contact.workPhone ? "Mobile Phone" : "Phone"}>
-          <PhoneNumberDisplay phoneNumber={om.contact.mobilePhone} country={om.contact.address?.country ?? undefined} />
-        </InformationTableRow>      
-      )}
-      {om.contact.homePhone && (
-        <InformationTableRow label="Home Phone">
-          <PhoneNumberDisplay phoneNumber={om.contact.homePhone} country={om.contact.address?.country ?? undefined} />
-        </InformationTableRow>      
-      )}
-      {om.contact.workPhone && (
-        <InformationTableRow label="Work Phone">
-          <PhoneNumberDisplay phoneNumber={om.contact.workPhone} country={om.contact.address?.country ?? undefined} />
-        </InformationTableRow>      
-      )}
-      {om.contact.address && (
-        <InformationTableRow label="Address">
-          <AddressDisplay address={om.contact.address} />
-        </InformationTableRow>      
-      )}
-    </InformationTable>
+    <>
+      <InformationTable className="mb-4">
+        {om.contact.personalEmail && (
+          <InformationTableRow label={om.contact.workEmail ? "Personal Email" : "Email"}>
+            <a className="text-indigo-600" href={"mailto:" + om.contact.personalEmail}>{om.contact.personalEmail}</a>
+          </InformationTableRow>
+        )}
+        {om.contact.workEmail && (
+          <InformationTableRow label="Work Email">
+            <a className="text-indigo-600" href={"mailto:" + om.contact.workEmail}>{om.contact.workEmail}</a>
+          </InformationTableRow>
+        )}
+        {om.contact.mobilePhone && (
+          <InformationTableRow label={om.contact.homePhone || om.contact.workPhone ? "Mobile Phone" : "Phone"}>
+            <PhoneNumberDisplay phoneNumber={om.contact.mobilePhone} country={om.contact.address?.country ?? undefined} />
+          </InformationTableRow>
+        )}
+        {om.contact.homePhone && (
+          <InformationTableRow label="Home Phone">
+            <PhoneNumberDisplay phoneNumber={om.contact.homePhone} country={om.contact.address?.country ?? undefined} />
+          </InformationTableRow>
+        )}
+        {om.contact.workPhone && (
+          <InformationTableRow label="Work Phone">
+            <PhoneNumberDisplay phoneNumber={om.contact.workPhone} country={om.contact.address?.country ?? undefined} />
+          </InformationTableRow>
+        )}
+        {om.contact.address && (
+          <InformationTableRow label="Address">
+            <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY ?? ''}>
+              <AddressDisplay address={om.contact.address} />
+            </APIProvider>
+          </InformationTableRow>
+        )}
+      </InformationTable>
+    </>
   );
-}
-
-const countryCodesByName = countryCodes.customList('countryNameEn', '{countryCode}');
-function countryToCountryCode(country: string) {
-  const normalisedCountryName = titleCase(country.toLowerCase());
-  return normalisedCountryName in countryCodesByName ? countryCodesByName[normalisedCountryName] : undefined;
 }
 
 function PhoneNumberDisplay({ phoneNumber, country }: { phoneNumber: string, country?: string; }) {
@@ -72,13 +72,51 @@ function PhoneNumberDisplay({ phoneNumber, country }: { phoneNumber: string, cou
 function AddressDisplay({ address }: { address: Address }) {
   const formattedAddress = formatAddress({
     postalCountry: address.country ? countryToCountryCode(address.country) : undefined,
-    administrativeArea : address.state ?? undefined,
+    administrativeArea: address.state ?? undefined,
     locality: address.city ?? undefined,
     postalCode: address.postcode ?? undefined,
-    addressLines : address.addressLines ?? undefined
-  }).join('\n');
+    addressLines: address.addressLines ?? undefined
+  });
+  if (address.country) {
+    formattedAddress.push(address.country);
+  }
+  const addressString = formattedAddress.join('\n');
 
-  return (
-    <div style={{whiteSpace: "pre-wrap"}}>{formattedAddress}<br />{address.country}</div>
+  const [coordinates, setCoordinates] = useState<google.maps.LatLngLiteral | undefined>(undefined);
+  const geocodingLibrary = useMapsLibrary('geocoding');
+  useEffect(() => {
+    if (addressString && geocodingLibrary) {
+      const geocoder = new geocodingLibrary.Geocoder();
+      geocoder.geocode({ address: addressString }, (results, status) => {
+        if (status === 'OK' && results) {
+          setCoordinates({ lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() });
+        }
+      });
+    }
+  }, [addressString, geocodingLibrary]);
+
+  return coordinates ? (
+    <>
+      <div style={{ whiteSpace: "pre-wrap" }}>{addressString}</div>
+      <div className="pt-3">
+        <Map
+          style={{ width: '100%', height: 300 }}
+          defaultCenter={{ lat: coordinates.lat, lng: coordinates.lng }}
+          defaultZoom={6}
+          gestureHandling='none'
+          disableDefaultUI
+        >
+          <Marker position={{ lat: coordinates.lat, lng: coordinates.lng }} />
+        </Map>
+      </div>
+    </>
+  ) : (
+    <div style={{ whiteSpace: "pre-wrap" }}>{addressString}</div>
   );
+}
+
+const countryCodesByName = countryCodes.customList('countryNameEn', '{countryCode}');
+function countryToCountryCode(country: string) {
+  const normalisedCountryName = titleCase(country.toLowerCase());
+  return normalisedCountryName in countryCodesByName ? countryCodesByName[normalisedCountryName] : undefined;
 }
