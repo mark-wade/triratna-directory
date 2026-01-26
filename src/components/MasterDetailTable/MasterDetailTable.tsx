@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   TableRowData,
   SortOption,
@@ -27,6 +27,7 @@ export default function MasterDetailTable({
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [scrolledTo, setScrolledTo] = useState<string | undefined>(undefined);
+  const detailView = useRef<HTMLDivElement>(null);
 
   // Whenever an entry is loaded, scroll to that entry
   // (eg on initial page load if loading URL /order-members/someone)
@@ -39,6 +40,14 @@ export default function MasterDetailTable({
   function resetScroll() {
     setScrolledTo("");
   }
+
+  // Whenever the detail element changes, scroll to the top. Otherwise, if you
+  // are viewing an Order member and slightly scrolled down, then you click on
+  // their preceptor, the scroll stays scrolled down even though you have
+  // navigated to a new page
+  useEffect(() => {
+    detailView.current?.scrollTo(0, 0);
+  }, [element]);
 
   return (
     <div className="flex master-detail-table">
@@ -61,6 +70,7 @@ export default function MasterDetailTable({
         />
       </div>
       <div
+        ref={detailView}
         className={
           (element ? "flex-1" : "flex-0 lg:flex-1") +
           " overflow-auto bg-gray-100"
