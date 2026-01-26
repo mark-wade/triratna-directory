@@ -2,7 +2,7 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import { TableRowData } from "../../utilities/types";
 import TableRow from "../TableRow/TableRow";
 import { FixedSizeList } from "react-window";
-import { createRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function LazyLoadingTable({
   data,
@@ -19,7 +19,42 @@ export default function LazyLoadingTable({
   navTitle: string;
   topOffset: number;
 }) {
-  const listRef = createRef<FixedSizeList>();
+  return (
+    <AutoSizer>
+      {({ height, width }) => <LazyLoadingTableWithSize
+        height={height}
+        width={width}
+        data={data}
+        active={active}
+        queryString={queryString}
+        scrolledTo={scrolledTo}
+        navTitle={navTitle}
+        topOffset={topOffset}
+      />}
+    </AutoSizer>
+  );
+}
+
+function LazyLoadingTableWithSize({
+  height,
+  width,
+  data,
+  active,
+  queryString,
+  scrolledTo,
+  navTitle,
+  topOffset,
+}: {
+  height: number;
+  width: number;
+  data: TableRowData[];
+  active?: string;
+  queryString?: string;
+  scrolledTo: string | undefined;
+  navTitle: string;
+  topOffset: number;
+}) {
+  const listRef = useRef<FixedSizeList>(null);
 
   useEffect(() => {
     if (scrolledTo === "") {
@@ -31,6 +66,7 @@ export default function LazyLoadingTable({
       }
     }
   }, [data, listRef, scrolledTo]);
+
 
   const Row = ({ index, style }: { index: number; style: any }) => (
     <div
@@ -48,20 +84,14 @@ export default function LazyLoadingTable({
   );
 
   return (
-    <AutoSizer>
-      {({ height, width }) => {
-        return (
-          <FixedSizeList
-            ref={listRef}
-            height={height - topOffset}
-            itemCount={data.length}
-            itemSize={73}
-            width={width}
-          >
-            {Row}
-          </FixedSizeList>
-        );
-      }}
-    </AutoSizer>
+    <FixedSizeList
+      ref={listRef}
+      height={height - topOffset}
+      itemCount={data.length}
+      itemSize={73}
+      width={width}
+    >
+      {Row}
+    </FixedSizeList>
   );
 }
