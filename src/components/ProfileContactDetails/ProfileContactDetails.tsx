@@ -101,12 +101,12 @@ function AddressDisplay({ address }: { address: Address }) {
       <div className="pt-3">
         <Map
           style={{ width: '100%', height: 300 }}
-          defaultCenter={{ lat: coordinates.lat, lng: coordinates.lng }}
+          center={coordinates}
           defaultZoom={6}
           gestureHandling='none'
           disableDefaultUI
         >
-          <Marker position={{ lat: coordinates.lat, lng: coordinates.lng }} />
+          <Marker position={coordinates} />
         </Map>
       </div>
     </>
