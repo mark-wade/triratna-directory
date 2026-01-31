@@ -11,6 +11,7 @@
     "upload-photos": "node src/scripts/upload-photos/index.js"
   },
   "dependencies": {
+    "@googlemaps/markerclusterer": "^2.6.2",
     "@headlessui/react": "^2.2.2",
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/postcss": "^4.1.3",

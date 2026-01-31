@@ -4,7 +4,6 @@ import {
   RouterProvider,
   Outlet,
 } from "react-router";
-import NavBar from "../NavBar/NavBar";
 import { useCallback, useEffect, useState } from "react";
 import { DataResponse, DataSource, SortBy } from "../../utilities/types";
 import ErrorState from "../ErrorState/ErrorState";
@@ -22,6 +21,7 @@ import Stats from "../Stats/Stats";
 import InfoPage from "../InfoPage/InfoPage";
 import { useCookies } from "react-cookie";
 import NavWrapper from "../NavWrapper/NavWrapper";
+import OrderMemberMap from "../OrderMemberMap/OrderMemberMap";
 
 const SCHEMA_VERSION = "2025-12-30";
 
@@ -59,6 +59,9 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
     );
   });
 
+  const dfString = localStorage.getItem("darkFeatures");
+  const df = dfString ? JSON.parse(dfString) : {};
+
   const router = createBrowserRouter([
     {
       Component: AppMaitrijala,
@@ -76,6 +79,15 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
               element: <OrderMemberTable />,
             },
           ],
+          errorElement: <RouterError />,
+        },
+        {
+          path: "map",
+          element: df.contact ? (
+            <NavWrapper className="bg-gray-100">
+              <OrderMemberMap />
+            </NavWrapper>
+          ) : <PageNotFound />,
           errorElement: <RouterError />,
         },
         {
@@ -225,14 +237,14 @@ function AppMaitrijala() {
     orderMembers: data ? data.orderMembers : {},
     orderMemberRows: data
       ? Object.entries(data.orderMembers).map(([k, v]) =>
-          orderMemberToTableRow(k, v, data.orderMembers, "maitrijala")
-        )
+        orderMemberToTableRow(k, v, data.orderMembers, "maitrijala")
+      )
       : [],
     locations: data ? data.locations : {},
     locationRows: data
       ? Object.entries(data?.locations).map(([k, v]) =>
-          locationToTableRow(k, v, data?.orderMembers)
-        )
+        locationToTableRow(k, v, data?.orderMembers)
+      )
       : [],
   };
 

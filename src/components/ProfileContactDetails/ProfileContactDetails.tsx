@@ -1,12 +1,11 @@
 import { APIProvider, Map, Marker, useMapsLibrary } from '@vis.gl/react-google-maps';
-import * as countryCodes from "country-codes-list";
-import { titleCase } from "title-case";
 import { CountryCode, parsePhoneNumberWithError } from "libphonenumber-js";
 import { formatAddress } from 'localized-address-format';
 import { Address, OrderMember } from "../../utilities/types";
 import { InformationTableRow } from "../InformationTableRow/InformationTableRow";
 import { InformationTable } from "../InformationTable/InformationTable";
 import { useEffect, useState } from 'react';
+import { countryToCountryCode } from '../../utilities/geolocation';
 
 export function ProfileContactDetails({ om }: { om: OrderMember }) {
   if (!om.contact) {
@@ -113,13 +112,4 @@ function AddressDisplay({ address }: { address: Address }) {
   ) : (
     <div style={{ whiteSpace: "pre-wrap" }}>{addressString}</div>
   );
-}
-
-const countryCodesByName = countryCodes.customList('countryNameEn', '{countryCode}');
-function countryToCountryCode(country: string) {
-  const normalisedCountryName = titleCase(country.toLowerCase());
-  if (normalisedCountryName === 'United States') {
-    return 'US'; // It's in the list as "United States of America"
-  }
-  return normalisedCountryName in countryCodesByName ? countryCodesByName[normalisedCountryName] : undefined;
 }
