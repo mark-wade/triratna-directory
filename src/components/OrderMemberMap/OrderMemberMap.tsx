@@ -18,6 +18,7 @@ type OrderMemberGeoLocation = {
 }
 
 // TODO: Fix the height
+// TODO: The images take too long to load for this to be practical without some kind of fallback while they're loading
 function OrderMemberMapMap() {
   const [cookies] = useCookies(["jwt"]);
   const [data, setData] = useState<OrderMemberGeoLocation[] | null>(null);
