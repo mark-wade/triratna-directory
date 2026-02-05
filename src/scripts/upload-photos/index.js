@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { createHash } from 'node:crypto';
-import { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 
 const s3 = new S3Client({ region: "eu-west-2" });
@@ -15,6 +15,7 @@ try {
 const photoFilenames = await readJsonFromS3("photos.json");
 
 const files = await fs.promises.readdir(process.argv[2]);
+const seenOmNames = [];
 for (const file of files) {
   if (file.endsWith(".jpg")) {
     const omName = file.replace(/\.jpg$/, '');
@@ -33,6 +34,21 @@ for (const file of files) {
         Key: photoFilenames[omName],
       }));
     }
+
+    seenOmNames.push(omName);
+  }
+}
+
+for (const [omName, filename] of Object.entries(photoFilenames)) {
+  if (filename !== null && !seenOmNames.includes(omName)) {
+    console.log(`Deleting ${omName}`);
+
+    photoFilenames[omName] = null;
+
+    await s3.send(new DeleteObjectCommand({
+      Bucket: "triratna-directory-order-photos",
+      Key: filename,
+    }));
   }
 }
 

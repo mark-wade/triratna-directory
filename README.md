@@ -38,7 +38,7 @@ By default, running the frontend locally will connect to the live backend, and t
 
 ### Upload Photos
 
-To upload photos, you will need a directory on your machine containing the photos you want to upload, with each file being the name of an Order member with ".jpg" extension (for example "Dhammakumara.jpg"). You can keep all the entire directory of photos together and the script will automatically only upload the ones that have changed.
+To upload photos, you will need a directory on your machine containing all the Order photos, with each file being the name of an Order member with ".jpg" extension (for example "Dhammakumara.jpg"). You must keep all the entire directory of photos together - the script will automatically only upload the ones that have changed and delete any that have been removed.
 
 Then simply run this command, with the last argument being the path to that directory:
 
