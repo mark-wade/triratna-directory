@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import {
   useNavigate,
   createBrowserRouter,
@@ -83,7 +84,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
         },
         {
           path: "map",
-          element: df.contact ? (
+          element: df.map ? (
             <NavWrapper className="bg-gray-100">
               <OrderMemberMap />
             </NavWrapper>
@@ -232,8 +233,10 @@ function AppMaitrijala() {
 
   // We calculate the rows here rather than in <OrderMemberTable /> because it's expensive and otherwise
   // there will be a lag every time you switch to that tab
+  const decodedJwt = jwt.decode(cookies.jwt);
   const dataContext: DataContextValue = {
     source: "maitrijala",
+    authenticatedUser: decodedJwt?.sub as string,
     orderMembers: data ? data.orderMembers : {},
     orderMemberRows: data
       ? Object.entries(data.orderMembers).map(([k, v]) =>

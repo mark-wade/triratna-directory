@@ -21,11 +21,13 @@ export default function Feedback({
   defaultType,
   defaultData,
   defaultDataValue,
+  children
 }: {
   className?: string;
   defaultType?: FeedbackType;
   defaultData?: ReportDataType;
   defaultDataValue?: string;
+  children?: React.ReactNode;
 }) {
   const { source, orderMembers, locations } = useContext(DataContext);
   const [cookies] = useCookies(["jwt"]);
@@ -85,10 +87,10 @@ export default function Feedback({
   }
 
   return (
-    <div>
+    <>
       <button onClick={() => setOpenClosed(true)} className={className}>
-        Give Feedback
-      </button>
+        {children ? children : "Give Feedback"}
+      </button>      
       <SidebarDialog
         title="Give Us Feedback"
         open={open}
@@ -255,6 +257,6 @@ export default function Feedback({
           </Form>
         )}
       </SidebarDialog>
-    </div>
+    </>
   );
 }
