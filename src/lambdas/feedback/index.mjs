@@ -27,20 +27,17 @@ export const handler = async (event) => {
     }
     if (body.type === "data") {
       if (!["om", "location"].includes(body.data)) {
-        return {
-          statusCode: 400,
-          headers: {},
-          body: JSON.stringify({ message: "Invalid data" }),
-        };
+        subjectLine = "Reporting Issue";
+      } else {
+        if (!body.dataValue) {
+          return {
+            statusCode: 400,
+            headers: {},
+            body: JSON.stringify({ message: "No entity provided" }),
+          };
+        }
+        subjectLine = "Reporting Issue about " + body.dataValue;
       }
-      if (!body.dataValue) {
-        return {
-          statusCode: 400,
-          headers: {},
-          body: JSON.stringify({ message: "No entity provided" }),
-        };
-      }
-      subjectLine = "Reporting Issue about " + body.dataValue;
     }
 
     const command = new SendEmailCommand({
