@@ -27,7 +27,7 @@ export default function NavigatableTable({
         const direction = e.code === "ArrowDown" ? 1 : -1;
         const newRow = data[currentRowIndex + direction];
         if (newRow !== undefined) {
-          navigate(newRow.link, {
+          navigate(newRow.link + "?" + queryString, {
             replace: true,
             state: location.state,
           });
