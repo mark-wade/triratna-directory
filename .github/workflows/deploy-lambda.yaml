@@ -25,6 +25,7 @@ jobs:
         with:
           function-name: ACS
           code-artifacts-dir: ./src/lambdas/acs
+          runtime: nodejs24.x
       - name: Build Auth function
         run: |
           cd src/lambdas/auth
@@ -34,6 +35,7 @@ jobs:
         with:
           function-name: Auth
           code-artifacts-dir: ./src/lambdas/auth
+          runtime: nodejs24.x
       - name: Build Feedback function
         run: |
           cd src/lambdas/feedback
@@ -43,6 +45,7 @@ jobs:
         with:
           function-name: Feedback
           code-artifacts-dir: ./src/lambdas/feedback
+          runtime: nodejs24.x
       - name: Build Logout function
         run: |
           cd src/lambdas/logout
@@ -52,6 +55,7 @@ jobs:
         with:
           function-name: Logout
           code-artifacts-dir: ./src/lambdas/logout
+          runtime: nodejs24.x
       - name: Build OrderDirectory function
         run: |
           cd src/lambdas/data
@@ -61,6 +65,7 @@ jobs:
         with:
           function-name: OrderDirectory
           code-artifacts-dir: ./src/lambdas/data
+          runtime: nodejs24.x
       - name: Build RefreshData function
         run: |
           cd src/lambdas/refresh-data
@@ -70,3 +75,4 @@ jobs:
         with:
           function-name: RefreshData
           code-artifacts-dir: ./src/lambdas/refresh-data
+          runtime: nodejs24.x
