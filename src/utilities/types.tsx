@@ -49,6 +49,7 @@ export interface OrderMember {
   pronouns?: string;
   status: Status;
   area: AreaName | null;
+  sadhana?: string;
   events: OrderMemberEvent[];
   image: string | null;
   contact?: ContactDetails;

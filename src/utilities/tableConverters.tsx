@@ -1,4 +1,5 @@
 import { dateStringToDate, formatDate } from "./dates";
+import { normaliseSadhanaName } from "./sadhanas";
 import {
   DataSource,
   OrderMember,
@@ -75,6 +76,7 @@ export function orderMemberToTableRow(
       gender: [orderMember.gender],
       area: [orderMember.area],
       status: [orderMember.status],
+      sadhana: orderMember.sadhana ? orderMember.sadhana.split(",").map((sadhana) => normaliseSadhanaName(sadhana.trim())).filter((sadhana) => sadhana !== null) : [],
       preceptors:
         disciplesPrivate && disciplesPublic
           ? ["private", "public"]

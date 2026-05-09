@@ -28,6 +28,7 @@ import { ProfileContactDetails } from "../ProfileContactDetails/ProfileContactDe
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
 import { DialogTitle } from "@headlessui/react";
+import { normaliseSadhanaName } from "../../utilities/sadhanas";
 
 export default function Profile({ name }: { name: string }) {
   const { source, authenticatedUser, orderMembers, locations } = useContext(DataContext);
@@ -120,6 +121,12 @@ export default function Profile({ name }: { name: string }) {
         ? yearsAndMonthsBetweenDates(ordainedDate, endDate)
         : null
       : null;
+
+    const sadhanas = om.sadhana ? om.sadhana?.split(",")
+      .filter((sadhana) => sadhana !== undefined && sadhana !== null)
+      .map((sadhana) => normaliseSadhanaName(sadhana.trim()))
+      .filter((sadhana) => sadhana !== null)
+    : [];
 
     return (
       <InformationTable>
@@ -255,7 +262,24 @@ export default function Profile({ name }: { name: string }) {
                 </>
               )}
             </InformationTableRow>
+          )
+        }
+        <InformationTableRow label="Sadhana (at ordination)">
+          {sadhanas ? sadhanas.map((sadhana) => (
+            <div key={sadhana}>
+                <Link
+                className="text-indigo-600"
+                to={"/order-members/?sadhana=" + encodeURIComponent(sadhana)}
+                viewTransition
+                state={[...previousNavs, om.name]}
+              >
+                {sadhana}
+              </Link>
+            </div>
+          )) : (
+            <>Unknown</>
           )}
+        </InformationTableRow>
         {om.name !== "Sangharakshita" && (
           <InformationTableRow label="Place Ordained">
             {ordainedEvent?.location ? (

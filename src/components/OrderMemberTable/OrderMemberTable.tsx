@@ -7,9 +7,10 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import MasterDetailTable from "../MasterDetailTable/MasterDetailTable";
 import NavWrapper from "../NavWrapper/NavWrapper";
 import { dateStringToDate } from "../../utilities/dates";
+import { normaliseSadhanaName } from "../../utilities/sadhanas";
 
 export default function OrderMemberTable() {
-  const { source, orderMembers, orderMemberRows } = useContext(DataContext);
+  const { orderMembers, orderMemberRows } = useContext(DataContext);
   const { name } = useParams<{ name: string }>();
   const [searchParams] = useSearchParams();
 
@@ -71,6 +72,16 @@ export default function OrderMemberTable() {
       });
   }
 
+  const sadhanas = [
+    ...new Set(
+      Object.values(orderMembers)
+        .flatMap((om) => om.sadhana?.split(","))
+        .filter((sadhana) => sadhana !== undefined && sadhana !== null)
+        .map((sadhana) => normaliseSadhanaName(sadhana.trim()))
+        .filter((sadhana) => sadhana !== null)
+    ),
+  ].sort();
+
   const filters = [
     {
       key: "status",
@@ -121,9 +132,7 @@ export default function OrderMemberTable() {
         // },
       ],
     },
-  ];
-  if (source === "maitrijala") {
-    filters.push({
+    {
       key: "area",
       name: "Area",
       type: "single" as "single",
@@ -140,28 +149,45 @@ export default function OrderMemberTable() {
           };
         }),
       ],
-    });
-  }
-  filters.push({
-    key: "preceptors",
-    name: "Preceptors",
-    type: "single" as "single",
-    defaultValue: "",
-    options: [
-      {
-        value: "",
-        name: "Show All",
-      },
-      {
-        value: "private",
-        name: "Private Preceptors",
-      },
-      {
-        value: "public",
-        name: "Public Preceptors",
-      },
-    ],
-  });
+    },
+    {
+      key: "sadhana",
+      name: "Sadhana (at ordination)",
+      type: "single" as "single",
+      defaultValue: "",
+      options: 
+      [
+        {
+          value: "",
+          name: "Show All",
+        },
+        ...sadhanas.map((sadhana) => ({
+          value: sadhana,
+          name: sadhana,
+        })),
+      ],
+    },
+    {
+      key: "preceptors",
+      name: "Preceptors",
+      type: "single" as "single",
+      defaultValue: "",
+      options: [
+        {
+          value: "",
+          name: "Show All",
+        },
+        {
+          value: "private",
+          name: "Private Preceptors",
+        },
+        {
+          value: "public",
+          name: "Public Preceptors",
+        },
+      ],
+    }
+  ];
 
   return (
     <NavWrapper
