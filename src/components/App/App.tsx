@@ -19,6 +19,7 @@ export default function App() {
 
 function AppLoginNegotiation() {
   const [searchParams, setSearchParams] = useState<URLSearchParams>();
+  const [, setCookie] = useCookies(["iosLogin"]);
 
   useEffect(() => {
     setSearchParams(new URLSearchParams(window.location.search));
@@ -30,6 +31,13 @@ function AppLoginNegotiation() {
       const df = dfString ? JSON.parse(dfString) : {};
       df[searchParams.get("df") ?? ''] = true;
       localStorage.setItem("darkFeatures", JSON.stringify(df));
+      window.location.href = "/";
+    }
+  })
+
+  useEffect(() => {
+    if (searchParams?.has("iosLogin")) {
+      setCookie("iosLogin", true);
       window.location.href = "/";
     }
   })
@@ -53,7 +61,7 @@ function AppLoginNegotiation() {
 }
 
 function AppLoginRedirector() {
-  const [cookies] = useCookies(["jwt"]);
+  const [cookies, , removeCookie] = useCookies(["jwt", "iosLogin"]);
   const [error, setError] = useState<Error | undefined>(undefined);
   const isLoggedIn = cookies.jwt !== undefined;
 
@@ -66,7 +74,11 @@ function AppLoginRedirector() {
           window.location.href = login_url;
         }
       });
+    } else if (cookies.iosLogin) {
+      removeCookie("iosLogin");
+      window.location.href = "triratna-order://auth?token=" + cookies.jwt;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   return error ? (
