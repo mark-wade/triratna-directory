@@ -1,0 +1,9 @@
+.order-member-map {
+  height: 100dvh;
+}
+
+@media (width < 64rem) {
+  .order-member-map {
+    height: calc(100dvh - 56px - 64px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+}

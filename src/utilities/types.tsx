@@ -75,11 +75,11 @@ export interface OrderMemberEventOrdained extends OrderMemberEvent {
 export interface OrdinationLocation {
   name: string;
   type:
-    | "retreat_centre"
-    | "buddhist_centre"
-    | "community"
-    | "town_or_city"
-    | "unknown";
+  | "retreat_centre"
+  | "buddhist_centre"
+  | "community"
+  | "town_or_city"
+  | "unknown";
   country?: string;
 }
 
@@ -98,6 +98,12 @@ export interface Address {
   state: string | null;
   postcode: string | null;
   country: string | null;
+  position?: Position;
+}
+
+export interface Position {
+  lat: number;
+  lng: number;
 }
 
 export interface SortOption {
