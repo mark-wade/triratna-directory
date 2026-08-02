@@ -137,7 +137,7 @@ export default function Profile({ name }: { name: string }) {
         >
           {ordainedDate ? (
             <Link
-              to={"/history/" + ordainedDate.getFullYear()}
+              to={"/history/" + ordainedDate.getFullYear() + ( ordainedEvent ? ( "#" + ordainedEvent.date + ( ordainedEvent.location ? "-" + ordainedEvent.location.toLowerCase().replaceAll(" ", "-") : '' ) ) : '' )}
               viewTransition
               state={[...previousNavs, om.name]}
             >

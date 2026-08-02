@@ -42,6 +42,19 @@ export default function TimeMachine() {
     return () => document.removeEventListener("keydown", handleKeypress);
   }, [location.state, navigate, year]);
 
+  useEffect(() => {
+    if (!location.hash) {
+      return;
+    }
+    const id = decodeURIComponent(location.hash.slice(1));
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView();
+    }
+  // We only want to run this effect once
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (isNaN(year) || year < 1968 || year > new Date().getFullYear()) {
     return <PageNotFound />;
   }
@@ -258,10 +271,10 @@ export default function TimeMachine() {
                 ([date, locations]) => (
                   <div key={"ordained-" + date}>
                     {Object.entries(locations).map(([location, oms]) => (
-                      <div key={"ordained-" + date + "-" + location}>
+                      <div key={"ordained-" + date + "-" + location} id={date + ( location && location !== "null" ? "-" + location.toLowerCase().replaceAll(" ", "-") : '' )}>
                         <h3 className="text-base font-semibold text-gray-900">
                           {formatDate(dateStringToDate(date), false)} at{" "}
-                          {location ? (
+                          {location && location !== "null" ? (
                             <Link
                               to={"/locations/" + location}
                               viewTransition
