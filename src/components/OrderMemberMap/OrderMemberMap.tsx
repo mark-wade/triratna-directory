@@ -8,7 +8,7 @@ import { useMap } from "@vis.gl/react-google-maps";
 import { DataContext } from "../DataContext/DataContext";
 
 type OrderMemberWithGeoLocation = {
-  name: string;
+  id: string;
   location: google.maps.LatLngLiteral;
 }
 
@@ -35,7 +35,7 @@ export default function OrderMemberMap() {
     }).then((json) => {
       setOrderMembersToShowOnMap(json.filter(om => {
         return om !== null;
-      }).sort((a, b) => a.name.localeCompare(b.name)) as OrderMemberWithGeoLocation[]);
+      }).sort((a, b) => a.id.localeCompare(b.id)) as OrderMemberWithGeoLocation[]);
     });
   }, [cookies.jwt]);
 
@@ -58,8 +58,7 @@ export default function OrderMemberMap() {
               {orderMembersToShowOnMap.map((om) => (
                 <MapMarker
                   key={++keyCounter}
-                  id={om.name}
-                  title={om.name}
+                  id={om.id}
                   position={om.location}
                 >
                   <div className="h-6 w-6 leading-6 rounded-full bg-gray-600 text-center text-white" />
@@ -135,29 +134,29 @@ function VisibleOrderMembersList({
               <li key={++keyCounter}>
                 <div className="relative flex justify-between gap-x-6 p-3 hover:bg-gray-50">
                   <div className="flex min-w-0 items-center gap-x-4">
-                    {orderMembers[om.name]?.image ? (
+                    {orderMembers[om.id]?.image ? (
                       <img
-                        alt={om.name}
-                        src={(process.env.PHOTOS_BASE_URL ?? "https://triratna-directory-order-photos.s3.eu-west-2.amazonaws.com") + "/" + orderMembers[om.name]?.image}
+                        alt={orderMembers[om.id]?.name}
+                        src={(process.env.PHOTOS_BASE_URL ?? "https://triratna-directory-order-photos.s3.eu-west-2.amazonaws.com") + "/" + orderMembers[om.id]?.image}
                         className="size-12 flex-none rounded-md bg-gray-50 object-cover"
                         loading="lazy"
                       />
                     ) : (
                       <span className="inline-flex size-12 items-center justify-center rounded-full bg-gray-500">
                         <span className="text-lg font-medium text-white">
-                          {om.name[0]}
+                          {orderMembers[om.id]?.name[0]}
                         </span>
                       </span>
                     )}
                     <div className="min-w-0 flex-auto">
                       <p className="text-sm/6 font-semibold text-gray-900">
                         <Link
-                          to={`/order-members/${om.name}`}
+                          to={`/order-members/${om.id}`}
                           viewTransition
                           state={[...previousNavs, "Map"]}
                         >
                           <span className="absolute inset-x-0 -top-px bottom-0" />
-                          {om.name}
+                          {orderMembers[om.id]?.name}
                         </Link>
                       </p>
                     </div>

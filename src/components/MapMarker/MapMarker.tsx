@@ -3,9 +3,8 @@ import { AdvancedMarker } from "@vis.gl/react-google-maps";
 import { MapContext } from "../Map/MapContext";
 import { ReactNode, useCallback, useContext } from "react";
 
-export default function MapMarker({ id, title, position, children }: {
+export default function MapMarker({ id, position, children }: {
   id: string;
-  title: string;
   position: google.maps.LatLngLiteral;
   children: ReactNode | (() => ReactNode);
 }) {
@@ -19,7 +18,6 @@ export default function MapMarker({ id, title, position, children }: {
 
   return (
     <AdvancedMarker
-      title={title}
       position={position}
       ref={ref}
     >
