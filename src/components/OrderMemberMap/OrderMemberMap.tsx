@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import GoogleMap from "../Map/Map";
 import MapMarker from "../MapMarker/MapMarker";
 import "./OrderMemberMap.css";
@@ -56,19 +56,49 @@ export default function OrderMemberMap() {
                 onVisibleChange={setOrderMembersCurrentlyVisibleOnMap}
               />
               {orderMembersToShowOnMap.map((om) => (
-                <MapMarker
+                <ZoomableMapMarker
                   key={++keyCounter}
                   id={om.id}
                   position={om.location}
                 >
                   <div className="h-6 w-6 leading-6 rounded-full bg-gray-600 text-center text-white" />
-                </MapMarker>
+                </ZoomableMapMarker>
               ))}
             </>
           )}
         </GoogleMap>
       </div>
     </div>
+  );
+}
+
+const MARKER_FOCUS_ZOOM = 14;
+
+function ZoomableMapMarker({
+  id,
+  position,
+  children,
+}: {
+  id: string;
+  position: google.maps.LatLngLiteral;
+  children: ReactNode;
+}) {
+  const map = useMap();
+
+  const handleClick = useCallback(() => {
+    if (!map) return;
+
+    map.panTo(position);
+    const currentZoom = map.getZoom() ?? 4;
+    if (currentZoom < MARKER_FOCUS_ZOOM) {
+      map.setZoom(MARKER_FOCUS_ZOOM);
+    }
+  }, [map, position]);
+
+  return (
+    <MapMarker id={id} position={position} onClick={handleClick}>
+      {children}
+    </MapMarker>
   );
 }
 
