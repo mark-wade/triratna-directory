@@ -13,6 +13,7 @@ type OrderMemberWithGeoLocation = {
 }
 
 export default function OrderMemberMap() {
+  const { orderMembers } = useContext(DataContext);
   const [cookies] = useCookies(["jwt"]);
   const [orderMembersToShowOnMap, setOrderMembersToShowOnMap] = useState<OrderMemberWithGeoLocation[] | null>(null);
   const [orderMembersCurrentlyVisibleOnMap, setOrderMembersCurrentlyVisibleOnMap] = useState<OrderMemberWithGeoLocation[]>([]);
@@ -34,7 +35,7 @@ export default function OrderMemberMap() {
       return response.json();
     }).then((json) => {
       setOrderMembersToShowOnMap(json.filter(om => {
-        return om !== null;
+        return om !== null && orderMembers[om.id]?.status === "Active";
       }).sort((a, b) => a.id.localeCompare(b.id)) as OrderMemberWithGeoLocation[]);
     });
   }, [cookies.jwt]);
