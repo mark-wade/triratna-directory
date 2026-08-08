@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export function Header({
   image,
   imageFallback,
@@ -11,15 +13,27 @@ export function Header({
   subtitle?: string;
   children?: React.ReactNode;
 }) {
+  const [loadedSrc, setLoadedSrc] = useState<string | undefined>(undefined);
+  const loaded = loadedSrc === image;
+
   return (
     <div className="sm:flex sm:space-x-5 pb-5 sm:pt-5 items-center">
       {image ? (
         <div className="shrink-0">
-          <img
-            alt={title}
-            src={image}
-            className="mx-auto sm:w-50 lg:w-40 xl:w-50 sm:rounded-lg"
-          />
+          <div className="relative mx-auto w-40 h-53 sm:w-50 lg:w-40 xl:w-50 xl:h-67">
+            {!loaded && (
+              <div className="absolute inset-0 animate-pulse bg-gray-200 sm:rounded-lg"></div>
+            )}
+            <img
+              alt={title}
+              src={image}
+              onLoad={() => setLoadedSrc(image)}
+              className={
+                "w-full h-full object-cover sm:rounded-lg" +
+                (loaded ? "" : " invisible")
+              }
+            />
+          </div>
         </div>
       ) : imageFallback ? (
         <div className="bg-gray-400 text-center text-white text-xs rounded-lg hidden lg:block w-40 h-53 pt-26 xl:w-50 xl:h-67 xl:pt-33">
