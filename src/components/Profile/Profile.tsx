@@ -551,7 +551,7 @@ export default function Profile({ name }: { name: string }) {
             </p>
           ) : (
             <p className="text-sm text-grey-300">
-              <em>(meaning of name not known)</em>
+              <em>(meaning of name not recorded)</em>
             </p>
           )}
           {(authenticatedUser === om.contact?.personalEmail || authenticatedUser === om.contact?.workEmail) && (
