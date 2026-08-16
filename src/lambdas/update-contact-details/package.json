@@ -1,0 +1,6 @@
+{
+  "name": "triratna-order-directory-update-contact-details-lambda",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  }
+}

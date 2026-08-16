@@ -76,3 +76,13 @@ jobs:
           function-name: RefreshData
           code-artifacts-dir: ./src/lambdas/refresh-data
           runtime: nodejs24.x
+      - name: Build UpdateContactDetails function
+        run: |
+          cd src/lambdas/update-contact-details
+          npm install
+      - name: Deploy UpdateContactDetails Function
+        uses: aws-actions/aws-lambda-deploy@v1
+        with:
+          function-name: UpdateContactDetails
+          code-artifacts-dir: ./src/lambdas/update-contact-details
+          runtime: nodejs24.x
