@@ -30,7 +30,7 @@ export default function SidebarDialog({
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="-mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+              className="-mr-2 flex size-10 cursor-pointer items-center justify-center rounded-md bg-white p-2 text-gray-400"
             >
               <span className="sr-only">Close menu</span>
               <XMarkIcon aria-hidden="true" className="size-6" />

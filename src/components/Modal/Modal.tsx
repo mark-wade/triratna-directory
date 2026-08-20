@@ -24,10 +24,10 @@ export default function Modal({ open, setOpen, children }: {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600 dark:bg-gray-800 dark:hover:text-gray-300 dark:focus:outline-white"
+                className="cursor-pointer rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600 dark:bg-gray-800 dark:hover:text-gray-300 dark:focus:outline-white"
               >
                 <span className="sr-only">Close</span>
-                <XMarkIcon aria-hidden="true" className="size-6 cursor-pointer" />
+                <XMarkIcon aria-hidden="true" className="size-6" />
               </button>
             </div>
             <div className="sm:flex sm:items-start">

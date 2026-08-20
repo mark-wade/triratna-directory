@@ -87,7 +87,10 @@ export default function Feedback({
 
   return (
     <>
-      <button onClick={() => setOpenClosed(true)} className={className}>
+      <button
+        onClick={() => setOpenClosed(true)}
+        className={"cursor-pointer " + (className ?? "")}
+      >
         {children ? children : "Give Feedback"}
       </button>      
       <SidebarDialog

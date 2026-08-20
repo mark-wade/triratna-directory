@@ -64,7 +64,7 @@ export default function FiltersDialog({
             className="border-t border-gray-200 px-4 py-6"
           >
             <h3 className="-mx-2 -my-3 flow-root">
-              <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400">
+              <DisclosureButton className="group flex w-full cursor-pointer items-center justify-between bg-white px-2 py-3 text-sm text-gray-400">
                 <span className="font-medium text-gray-900">{filter.name}</span>
                 <span className="ml-6 flex items-center">
                   <ChevronDownIcon
@@ -163,7 +163,7 @@ export default function FiltersDialog({
             className="border-t border-gray-200 px-4 py-6"
           >
             <h3 className="-mx-2 -my-3 flow-root">
-              <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400">
+              <DisclosureButton className="group flex w-full cursor-pointer items-center justify-between bg-white px-2 py-3 text-sm text-gray-400">
                 <span className="font-medium text-gray-900">Sort By</span>
                 <span className="ml-6 flex items-center">
                   <ChevronDownIcon

@@ -606,7 +606,7 @@ export default function Profile({ name }: { name: string }) {
         </div>
         <div className="text-center my-4">
           <Feedback
-            className="text-gray-400 text-xs cursor-pointer"
+            className="text-gray-400 text-xs"
             defaultType="data"
             defaultData="om"
             defaultDataValue={name}

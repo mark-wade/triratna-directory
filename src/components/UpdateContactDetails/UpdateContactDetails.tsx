@@ -101,7 +101,7 @@ export default function UpdateContactDetails({
     <>
       <Button
         buttonStyle="primary"
-        className="mt-4 px-3 py-2 cursor-pointer"
+        className="mt-4 px-3 py-2"
         onClick={() => setOpenClosed(true)}
       >
         Update Profile

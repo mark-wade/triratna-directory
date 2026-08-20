@@ -34,6 +34,8 @@ export default function Button({
 
   if (state !== "active" && state !== undefined) {
     className += " cursor-not-allowed";
+  } else {
+    className += " cursor-pointer";
   }
 
   return (

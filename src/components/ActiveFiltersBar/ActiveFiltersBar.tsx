@@ -63,7 +63,7 @@ export default function ActiveFiltersBar({
                           }`}
                           type="button"
                           onClick={() => clearFilter(activeFilter, value)}
-                          className="ml-1 inline-flex size-4 shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500"
+                          className="ml-1 inline-flex size-4 shrink-0 cursor-pointer rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500"
                         >
                           <svg
                             fill="none"
