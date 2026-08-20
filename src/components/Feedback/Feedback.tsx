@@ -12,7 +12,6 @@ import Alert from "../Alert/Alert";
 import { FeedbackType, ReportDataType, FormState } from "./Feedback.types";
 import { submitFeedback } from "./Feedback.utils";
 import SidebarDialog from "../Drawer/Drawer";
-import { photoForOrderMember } from "../../utilities/photos";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 
@@ -97,7 +96,7 @@ export default function Feedback({
         setOpen={setOpenClosed}
       >
         {formState === "done" ? (
-          <div className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl p-10">
+          <div className="flex min-h-0 flex-1 flex-col divide-y divide-gray-200 bg-white shadow-xl p-10">
             <div className="my-auto">
               <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon
@@ -124,7 +123,7 @@ export default function Feedback({
           </div>
         ) : (
           <Form
-            className="flex h-full flex-col divide-y divide-gray-200"
+            className="flex min-h-0 flex-1 flex-col divide-y divide-gray-200"
             onSubmit={onSubmit}
           >
             <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">

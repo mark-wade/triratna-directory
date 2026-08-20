@@ -15,12 +15,14 @@ export default function FormSelect({
   options,
   value,
   setValue,
+  images,
 }: {
   name: string;
   label: string;
   options: FormSelectOption[];
   value?: string;
   setValue?: (v: string) => void;
+  images?: boolean;
 }) {
   const [selected, setSelected] = useState(value);
   const selectedOption = options.find((option) => option.key === selected);
@@ -41,7 +43,7 @@ export default function FormSelect({
       <div className="relative mt-2">
         <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
           <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-            {selectedOption && <FormSelectImage option={selectedOption} />}
+            {selectedOption && images && <FormSelectImage option={selectedOption} />}
             <span className="block truncate">
               {selectedOption ? selectedOption.label : ""}
             </span>
@@ -63,7 +65,7 @@ export default function FormSelect({
               className="group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
             >
               <div className="flex items-center">
-                <FormSelectImage option={option} />
+                {images && <FormSelectImage option={option} />}
                 <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
                   {option.label}
                 </span>

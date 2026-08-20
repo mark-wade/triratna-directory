@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import jwt from 'jsonwebtoken';
 
 const s3 = new S3Client({ region: "eu-west-2" });
@@ -6,6 +6,13 @@ const s3 = new S3Client({ region: "eu-west-2" });
 const EMAIL_FIELDS = ["personalEmail", "workEmail"];
 const PHONE_FIELDS = ["mobilePhone", "homePhone", "workPhone"];
 const ADDRESS_STRING_FIELDS = ["city", "state", "postcode", "country"];
+const EMPTY_ADDRESS = {
+  addressLines: null,
+  city: null,
+  state: null,
+  postcode: null,
+  country: null,
+};
 
 class ValidationError extends Error {}
 
@@ -26,16 +33,18 @@ export const handler = async (event) => {
       throw error;
     }
 
-    const dbId = await getDbIdForEmail(email);
-    if (!dbId) {
+    const found = await findOrderMemberForEmail(email);
+    if (!found) {
       return response(403, "No Order member record was found for the signed in user");
     }
 
-    const apiResponse = await updateOrderMember(dbId, contactDetails);
+    const apiResponse = await updateOrderMember(found.orderMember.dbId, contactDetails);
     if (!apiResponse.ok) {
       console.log(`Order office API responded ${apiResponse.status}: ${await apiResponse.text()}`);
       return response(502, "The contact details could not be updated");
     }
+
+    await patchDataFile(found, contactDetails);
 
     return {
       statusCode: 200,
@@ -155,20 +164,58 @@ function stringOrNull(value, field) {
 
 // The signed in user is the Order member whose contact details include the email address they
 // signed in with, which is the same way the frontend decides whose profile someone can edit
-async function getDbIdForEmail(email) {
+async function findOrderMemberForEmail(email) {
   const s3Response = await s3.send(new GetObjectCommand({
     Bucket: process.env.DATA_S3_BUCKET,
     Key: "data.json",
   }));
   const data = JSON.parse(await s3Response.Body.transformToString());
 
-  const orderMember = Object.values(data.orderMembers).find((om) =>
+  const entry = Object.entries(data.orderMembers).find(([, om]) =>
     [om.contact?.personalEmail, om.contact?.workEmail].some(
       (contactEmail) => contactEmail && contactEmail.toLowerCase() === email.toLowerCase()
     )
   );
 
-  return orderMember?.dbId ?? null;
+  return entry && entry[1].dbId
+    ? { data, key: entry[0], orderMember: entry[1] }
+    : null;
+}
+
+// data.json is otherwise only rebuilt from the order office API every few hours, so apply the
+// change to it ourselves to save the member waiting that long to see it
+async function patchDataFile({ data, key, orderMember }, contactDetails) {
+  try {
+    // orderMember is a reference into data, so this updates the document we are about to write
+    orderMember.contact = mergeContactDetails(orderMember.contact, contactDetails);
+
+    await s3.send(new PutObjectCommand({
+      Bucket: process.env.DATA_S3_BUCKET,
+      Key: "data.json",
+      Body: JSON.stringify(data),
+    }));
+  } catch (error) {
+    // The order office already has the change, so this isn't worth failing the request over - it
+    // only means the directory won't show it until the next rebuild
+    console.log(`Could not patch data.json for ${key}`, error);
+  }
+}
+
+// The update only carries the details that changed, so everything else - including the parts of
+// the address that weren't touched - has to be carried over as it is
+function mergeContactDetails(contact, contactDetails) {
+  const { address, ...rest } = contactDetails;
+  const merged = { ...(contact ?? {}), ...rest };
+
+  // An address that isn't mentioned at all is left alone, whereas an explicitly null one is
+  // being cleared
+  if ("address" in contactDetails) {
+    merged.address = address === null
+      ? null
+      : { ...EMPTY_ADDRESS, ...(contact?.address ?? {}), ...address };
+  }
+
+  return merged;
 }
 
 async function updateOrderMember(dbId, contactDetails) {

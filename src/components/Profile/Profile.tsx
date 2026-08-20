@@ -25,9 +25,7 @@ import {
   PlusIcon,
 } from "@heroicons/react/20/solid";
 import { ProfileContactDetails } from "../ProfileContactDetails/ProfileContactDetails";
-import Button from "../Button/Button";
-import Modal from "../Modal/Modal";
-import { DialogTitle } from "@headlessui/react";
+import UpdateContactDetails from "../UpdateContactDetails/UpdateContactDetails";
 import { normaliseSadhanaName } from "../../utilities/sadhanas";
 
 export default function Profile({ name }: { name: string }) {
@@ -527,8 +525,6 @@ export default function Profile({ name }: { name: string }) {
     );
   }
 
-  const [updateDetailsOpen, setUpdateDetailsOpen] = useState(false);
-
   return (
     <>
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -554,48 +550,10 @@ export default function Profile({ name }: { name: string }) {
               <em>(meaning of name not recorded)</em>
             </p>
           )}
-          {(authenticatedUser === om.contact?.personalEmail || authenticatedUser === om.contact?.workEmail) && (
-            <>
-              <Button buttonStyle="primary" className="mt-4 px-3 py-2 cursor-pointer" onClick={() => setUpdateDetailsOpen(true)}>Update Profile</Button>
-              <Modal open={updateDetailsOpen} setOpen={setUpdateDetailsOpen}>
-                <div className="mb-4">
-                  <DialogTitle as="h3" className="text-base font-semibold text-gray-900 dark:text-white">
-                    Email, phone number, or address
-                  </DialogTitle>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500 dark:text-gray-400 pb-2">
-                      To update your contact details, or to opt out of having your contact details displayed on the directory, visit <a href="https://thebuddhistcentre.com/user" target="_blank" className="text-indigo-600">my order info</a>.
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      After you have updated your details, it will take several hours for the changes to be reflected in the directory.
-                    </p>
-                  </div>
-                </div>
-                <div className="mb-4">
-                  <DialogTitle as="h3" className="text-base font-semibold text-gray-900 dark:text-white">
-                    Photo
-                  </DialogTitle>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500 dark:text-gray-400 pb-2">
-                      To update your photo, email a high-resolution, uncropped colour photo to <a href={"mailto:shabda@triratnaorder.org?subject=" + encodeURIComponent(om.name + "+P")} className="text-indigo-600">shabda@triratnaorder.org</a> with your name in the subject line followed by +P. Ideally, your photo should have a pale background.
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      After you have updated your photo, it will take several weeks for it to be updated in the directory.
-                    </p>
-                  </div>
-                </div>
-                <div className="">
-                  <DialogTitle as="h3" className="text-base font-semibold text-gray-900 dark:text-white">
-                    Other
-                  </DialogTitle>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500 dark:text-gray-400 pb-2">
-                      If there are any mistakes in your other details, <Feedback className="text-indigo-600 cursor-pointer" defaultType="data" defaultData="om" defaultDataValue={name}>let us know</Feedback>.
-                    </p>
-                  </div>
-                </div>
-              </Modal>
-            </>
+          {[om.contact?.personalEmail, om.contact?.workEmail].some(
+            (email) => email && email.toLowerCase() === authenticatedUser?.toLowerCase()
+          ) && (
+            <UpdateContactDetails om={om} name={name} />
           )}
         </Header>
         {om.status === "Active" && (

@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import {
+  ContactDetails,
   DataSource,
   OrderMember,
   OrdinationLocation,
@@ -13,6 +14,9 @@ export interface DataContextValue {
   orderMemberRows: TableRowData[];
   locations: Record<string, OrdinationLocation>;
   locationRows: TableRowData[];
+  // Lets a member's own changes show up straight away rather than waiting for the cached data to
+  // be refetched
+  updateOrderMemberContact: (name: string, contact: ContactDetails) => void;
 }
 
 export const DataContext = createContext<DataContextValue>({
@@ -22,4 +26,5 @@ export const DataContext = createContext<DataContextValue>({
   orderMemberRows: [],
   locations: {},
   locationRows: [],
+  updateOrderMemberContact: () => {},
 });

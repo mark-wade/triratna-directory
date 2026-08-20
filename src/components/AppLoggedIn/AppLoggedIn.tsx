@@ -7,6 +7,11 @@ import {
 } from "react-router";
 import { useCallback, useEffect, useState } from "react";
 import { DataResponse, DataSource, SortBy } from "../../utilities/types";
+import {
+  SCHEMA_VERSION,
+  updateCachedOrderMemberContact,
+  writeCachedData,
+} from "../../utilities/dataCache";
 import ErrorState from "../ErrorState/ErrorState";
 import OrderMemberTable from "../OrderMemberTable/OrderMemberTable";
 import MasterDetailTable from "../MasterDetailTable/MasterDetailTable";
@@ -23,8 +28,6 @@ import InfoPage from "../InfoPage/InfoPage";
 import { useCookies } from "react-cookie";
 import NavWrapper from "../NavWrapper/NavWrapper";
 import OrderMemberMap from "../OrderMemberMap/OrderMemberMap";
-
-const SCHEMA_VERSION = "2025-12-30";
 
 function DefaultPage() {
   let navigate = useNavigate();
@@ -199,9 +202,7 @@ function AppMaitrijala() {
           return response.json();
         })
         .then((json) => {
-          localStorage.setItem("cacheData", JSON.stringify(json));
-          localStorage.setItem("cacheTime", new Date().getTime().toString());
-          localStorage.setItem("cacheSchemaVersion", SCHEMA_VERSION);
+          writeCachedData(json);
           setData(json);
         })
         .catch((error) => {
@@ -237,6 +238,11 @@ function AppMaitrijala() {
   const dataContext: DataContextValue = {
     source: "maitrijala",
     authenticatedUser: decodedJwt?.sub as string,
+    updateOrderMemberContact: (name, contact) => {
+      if (data) {
+        setData(updateCachedOrderMemberContact(data, name, contact));
+      }
+    },
     orderMembers: data ? data.orderMembers : {},
     orderMemberRows: data
       ? Object.entries(data.orderMembers).map(([k, v]) =>

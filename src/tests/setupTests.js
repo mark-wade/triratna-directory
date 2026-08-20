@@ -11,3 +11,12 @@ if (!global.TextDecoder) {
 if (!global.structuredClone) {
   global.structuredClone = (obj) => JSON.parse(JSON.stringify(obj));
 }
+
+// jsdom has no ResizeObserver, which Headless UI uses when a listbox option is picked
+if (!global.ResizeObserver) {
+  global.ResizeObserver = class ResizeObserver {
+    observe() { }
+    unobserve() { }
+    disconnect() { }
+  };
+}
