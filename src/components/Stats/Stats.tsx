@@ -1,6 +1,7 @@
 import OrderMembersByAreaChart from "../OrderMembersByAreaChart/OrderMembersByAreaChart";
 import ChartCard from "../ChartCard/ChartCard";
 import OrderMembersOverTimeChart from "../OrderMembersOverTimeChart/OrderMembersOverTimeChart";
+import SadhanaChart from "../SadhanaChart/SadhanaChart";
 
 export default function Stats() {
   return (
@@ -11,6 +12,9 @@ export default function Stats() {
         </ChartCard>
         <ChartCard title="Current Order Members by Area">
           <OrderMembersByAreaChart />
+        </ChartCard>
+        <ChartCard title="Most Given Sadhanas at Ordination">
+          <SadhanaChart />
         </ChartCard>
       </div>
     </div>
