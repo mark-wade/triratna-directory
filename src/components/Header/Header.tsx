@@ -20,7 +20,7 @@ export function Header({
     <div className="sm:flex sm:space-x-5 pb-5 sm:pt-5 items-center">
       {image ? (
         <div className="shrink-0">
-          <div className="relative mx-auto w-40 h-53 sm:w-50 lg:w-40 xl:w-50 xl:h-67">
+          <div className="relative mx-auto w-full aspect-[3/4] sm:w-50 lg:w-40 xl:w-50">
             {!loaded && (
               <div className="absolute inset-0 animate-pulse bg-gray-200 sm:rounded-lg"></div>
             )}
