@@ -193,13 +193,8 @@ export function shouldShowBanner(installState: InstallState) {
   if (installState.isStandalone || installState.justInstalled) {
     return false;
   }
-  // On desktop Chromium, no prompt usually means it's already installed (or can't be)
-  if (
-    !installState.canPrompt &&
-    !["ios-safari", "ios-other-browser", "in-app-browser", "android", "mac-safari"].includes(
-      installState.platform
-    )
-  ) {
+  // Desktop users can install from the menu or the About page, the banner is for phones and tablets
+  if (!installState.isIOS && !installState.isAndroid) {
     return false;
   }
   try {

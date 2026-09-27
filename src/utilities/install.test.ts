@@ -83,25 +83,34 @@ describe("shouldShowBanner", () => {
     expect(shouldShowBanner({ ...iPhone, justInstalled: true })).toBe(false);
   });
 
-  test("only shows on desktop Chromium when the browser offers installation", () => {
-    const chrome: InstallState = {
-      ...detectDevice(USER_AGENTS.macChrome),
-      isStandalone: false,
-      canPrompt: false,
-      justInstalled: false,
-    };
-    expect(shouldShowBanner(chrome)).toBe(false);
-    expect(shouldShowBanner({ ...chrome, canPrompt: true })).toBe(true);
+  test("shows on iPad, Android and in-app browsers", () => {
+    for (const userAgent of [
+      USER_AGENTS.iPadSafari,
+      USER_AGENTS.androidChrome,
+      USER_AGENTS.androidWebView,
+    ]) {
+      expect(
+        shouldShowBanner({
+          ...detectDevice(userAgent, 5),
+          isStandalone: false,
+          canPrompt: false,
+          justInstalled: false,
+        })
+      ).toBe(true);
+    }
   });
 
-  test("is never shown in desktop Firefox", () => {
-    expect(
-      shouldShowBanner({
-        ...detectDevice(USER_AGENTS.windowsFirefox),
+  test.each(["macSafari", "macChrome", "windowsEdge", "windowsFirefox"] as const)(
+    "is never shown on desktop (%s)",
+    (userAgent) => {
+      const desktop: InstallState = {
+        ...detectDevice(USER_AGENTS[userAgent]),
         isStandalone: false,
         canPrompt: false,
         justInstalled: false,
-      })
-    ).toBe(false);
-  });
+      };
+      expect(shouldShowBanner(desktop)).toBe(false);
+      expect(shouldShowBanner({ ...desktop, canPrompt: true })).toBe(false);
+    }
+  );
 });
