@@ -28,6 +28,7 @@ import InfoPage from "../InfoPage/InfoPage";
 import { useCookies } from "react-cookie";
 import NavWrapper from "../NavWrapper/NavWrapper";
 import OrderMemberMap from "../OrderMemberMap/OrderMemberMap";
+import InstallBanner from "../InstallBanner/InstallBanner";
 
 function DefaultPage() {
   let navigate = useNavigate();
@@ -264,6 +265,7 @@ function AppMaitrijala() {
       {data ? (
         <DataContext value={dataContext}>
           <Outlet />
+          <InstallBanner />
         </DataContext>
       ) : (
         <NavWrapper>
