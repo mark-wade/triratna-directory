@@ -8,7 +8,8 @@
     "start": "parcel",
     "build": "parcel build",
     "test": "jest",
-    "upload-photos": "node src/scripts/upload-photos/index.js"
+    "upload-photos": "node src/scripts/upload-photos/index.js",
+    "api": "node src/scripts/local-api/index.js"
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.6.2",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@aws-sdk/client-lambda": "^3.965.0",
     "@aws-sdk/client-s3": "^3.958.0",
+    "@aws-sdk/client-ses": "^3.1152.0",
     "@parcel/packager-raw-url": "^2.16.4",
     "@parcel/resolver-glob": "^2.16.4",
     "@parcel/transformer-webmanifest": "^2.16.4",

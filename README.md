@@ -26,7 +26,17 @@ You will immediately be redirected to the single sign-on provider which will the
 
 ### Lambdas
 
-By default, running the frontend locally will connect to the live backend, and this is sufficient for most development. Working within the backend requires obtaining a number of secrets depending on which part you are working with. Reach out if you want to do something within the backend.
+By default, running the frontend locally will connect to the live backend, and this is sufficient for most development. Working within the backend requires AWS access. Reach out if you want to do something within the backend.
+
+To run the lambdas locally:
+
+1. Run `aws login` (see the Scripts Setup instructions below)
+2. Run `npm run api`. This starts a local API at http://localhost:3001 which runs the lambdas in `src/lambdas` using the environment variables of the deployed functions. Changes to a lambda take effect on the next request, without needing a restart.
+3. Add `API_URL=http://localhost:3001` to `.env` and restart `npm start`
+
+Requests for routes that don't have a lambda in this repo are passed through to the live API. The scheduled refresh can be triggered by hand with `curl -X POST http://localhost:3001/refresh-data`.
+
+Note that the local lambdas use the real production data and services, so for example updating contact details or sending feedback locally really does it. Any environment variable set when starting the API overrides the deployed one, e.g. `DATA_S3_BUCKET=my-test-bucket npm run api`. Logging in and out can't be tested locally because the SSO provider always returns to the live API.
 
 ## Scripts
 
