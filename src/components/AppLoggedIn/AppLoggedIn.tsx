@@ -143,7 +143,7 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
         {
           path: "about",
           element: (
-            <NavWrapper>
+            <NavWrapper className="bg-gray-100">
               <InfoPage />
             </NavWrapper>
           ),
