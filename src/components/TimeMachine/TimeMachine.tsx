@@ -126,14 +126,6 @@ export default function TimeMachine() {
   const omsOrdainedThisYear = getOms();
   const omsDiedThisYear = getEvents(["died"]);
   const omsLeftThisYear = getEvents(["resigned", "removed"]);
-  // Those who've asked not to be shown still count towards the totals, but we don't show that they
-  // died or left
-  const omsShownDiedThisYear = omsDiedThisYear.filter(
-    ({ om }) => om.orderDirectoryConsent !== false
-  );
-  const omsShownLeftThisYear = omsLeftThisYear.filter(
-    ({ om }) => om.orderDirectoryConsent !== false
-  );
 
   const totals = Object.entries(orderMembers).reduce(
     (accumulator, [, om]) => {
@@ -324,32 +316,32 @@ export default function TimeMachine() {
           </div>
         </div>
       )}
-      {omsShownDiedThisYear.length > 0 && (
+      {omsDiedThisYear.length > 0 && (
         <div className="py-5 sm:px-5" id="deaths">
           <h3 className="px-5 sm:px-0 text-3xl font-semibold text-gray-900 mb-5">
-            {omsShownDiedThisYear.length.toLocaleString()} order member
-            {omsShownDiedThisYear.length === 1 ? "" : "s"} died
+            {omsDiedThisYear.length.toLocaleString()} order member
+            {omsDiedThisYear.length === 1 ? "" : "s"} died
           </h3>
           <div className="overflow-hidden sm:rounded-lg bg-white shadow-sm mb-5">
             <div className="bg-white px-4 py-5 sm:px-6">
               <OrderMemberGrid
-                oms={omsShownDiedThisYear}
+                oms={omsDiedThisYear}
                 navTitle={year.toString()}
               />
             </div>
           </div>
         </div>
       )}
-      {omsShownLeftThisYear.length > 0 && (
+      {omsLeftThisYear.length > 0 && (
         <div className="py-5 sm:px-5">
           <h3 className="px-5 sm:px-0 text-3xl font-semibold text-gray-900 mb-5">
-            {omsShownLeftThisYear.length.toLocaleString()}{" "}
-            {omsShownLeftThisYear.length === 1 ? "person" : "people"} left the order
+            {omsLeftThisYear.length.toLocaleString()}{" "}
+            {omsLeftThisYear.length === 1 ? "person" : "people"} left the order
           </h3>
           <div className="overflow-hidden rounded-lg bg-white shadow-sm mb-5">
             <div className="bg-white px-4 py-5 sm:px-6">
               <OrderMemberGrid
-                oms={omsShownLeftThisYear}
+                oms={omsLeftThisYear}
                 navTitle={year.toString()}
               />
             </div>

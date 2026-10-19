@@ -13,21 +13,21 @@ function rowFor(name: string) {
 }
 
 describe("an Order member who has asked not to be shown", () => {
-  test("only shows their name and the year they were ordained", () => {
+  test("only shows their name, status, and the years they were ordained and left", () => {
     const row = rowFor("testordermember");
     const { container } = render(<>{row.description}</>);
 
     expect(row.title).toBe("Test Order member");
-    expect(container).toHaveTextContent(/^2012$/);
+    expect(container).toHaveTextContent(/^2012—2019$/);
     expect(row.image).toBeNull();
-    expect(row.badge).toBeNull();
+    expect(row.badge).toBe("Resigned");
   });
 
-  test("can't be found by filtering on their details or status", () => {
+  test("can only be found by filtering on their status", () => {
     expect(rowFor("testordermember").filterValues).toEqual({
       gender: [],
       area: [],
-      status: [],
+      status: ["Resigned"],
       sadhana: [],
       preceptors: [],
     });

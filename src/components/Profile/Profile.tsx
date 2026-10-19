@@ -41,12 +41,24 @@ export default function Profile({ name }: { name: string }) {
   }, []);
 
   if (om.orderDirectoryConsent === false) {
+    const leftOrderEvent = om.events.findLast((event) =>
+      ["died", "resigned", "removed"].includes(event.type)
+    );
+
     return (
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <Header title={om.name} imageFallback="No photo on file." />
+        <Header title={om.name} imageFallback="No photo on file.">
+          {om.status !== "Active" && (
+            <p className="sm:text-xl font-medium text-gray-600">
+              {om.status === "Deceased" ? "Died" : om.status}
+              {leftOrderEvent?.date && (
+                <> in {dateStringToDate(leftOrderEvent.date).getFullYear()}</>
+              )}
+            </p>
+          )}
+        </Header>
         <p className="text-gray-600 px-4 sm:px-0 mt-10 mb-4">
           This person has asked us to not show their details in the directory.
-          They may or may not still be an Order member.
         </p>
       </div>
     );

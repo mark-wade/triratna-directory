@@ -26,34 +26,44 @@ export function orderMemberToTableRow(
       ? dateStringToDate(lastOrdainedEvent.date)
       : null;
 
-  if (orderMember.orderDirectoryConsent === false) {
-    return {
-      key: name,
-      link: "/order-members/" + name,
-      title: orderMember.name,
-      description: (
-        <>{lastOrdainedDate ? lastOrdainedDate.getFullYear() : "Unknown"}</>
-      ),
-      image: null,
-      date: lastOrdainedDate,
-      badge: null,
-      bubble: [],
-      filterValues: {
-        gender: [],
-        area: [],
-        status: [],
-        sadhana: [],
-        preceptors: [],
-      },
-    };
-  }
-
   const leftOrderEvent = orderMember.events
     .slice(lastOrdainedEventIndex)
     .findLast(
       (event) =>
         event.date && ["died", "resigned", "removed"].includes(event.type)
     );
+
+  if (orderMember.orderDirectoryConsent === false) {
+    return {
+      key: name,
+      link: "/order-members/" + name,
+      title: orderMember.name,
+      description: (
+        <>
+          {lastOrdainedDate ? lastOrdainedDate.getFullYear() : "Unknown"}
+          {leftOrderEvent && (
+            <>
+              &mdash;
+              {leftOrderEvent.date
+                ? dateStringToDate(leftOrderEvent.date).getFullYear()
+                : "Unknown"}
+            </>
+          )}
+        </>
+      ),
+      image: null,
+      date: lastOrdainedDate,
+      badge: orderMember.status === "Active" ? null : orderMember.status,
+      bubble: [],
+      filterValues: {
+        gender: [],
+        area: [],
+        status: [orderMember.status],
+        sadhana: [],
+        preceptors: [],
+      },
+    };
+  }
 
   const orderMemberEvents = Object.values(orderMembers).flatMap(
     (om) => om.events

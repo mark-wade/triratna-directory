@@ -38,10 +38,6 @@ export default function OrderMemberTable() {
     return orderMemberRows
       .filter((row) => row.date && row.date.getFullYear() <= year)
       .map((row) => {
-        if (orderMembers[row.key].orderDirectoryConsent === false) {
-          return row;
-        }
-
         row.filterValues.status = ["Active"];
 
         const diedEvent = orderMembers[row.key].events.find(

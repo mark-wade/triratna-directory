@@ -61,12 +61,16 @@ describe("an Order member who has asked not to be shown", () => {
     expect(screen.queryByText("Give Feedback")).toBeNull();
   });
 
-  test("does not show when they were ordained, their status, preceptor or disciples", () => {
+  test("shows their status and the year they left", () => {
+    renderProfile("testordermember");
+
+    expect(screen.getByText("Resigned in 2019")).toBeInTheDocument();
+  });
+
+  test("does not show when they were ordained, their preceptor or disciples", () => {
     const { container } = renderProfile("testordermember");
 
     expect(container).not.toHaveTextContent("2012");
-    expect(container).not.toHaveTextContent("2019");
-    expect(container).not.toHaveTextContent("Resigned");
     expect(container).not.toHaveTextContent("Test Preceptor");
     expect(container).not.toHaveTextContent("Test Disciple");
   });
@@ -76,8 +80,7 @@ describe("an Order member who has asked not to be shown", () => {
 
     expect(screen.getAllByText("Test Order member").length).toBeGreaterThan(0);
     expect(screen.queryByAltText("Test Order member")).toBeNull();
-    expect(container).toHaveTextContent("2012");
+    expect(container).toHaveTextContent("2012—2019");
     expect(container).not.toHaveTextContent("January 2012");
-    expect(container).not.toHaveTextContent("Resigned");
   });
 });
