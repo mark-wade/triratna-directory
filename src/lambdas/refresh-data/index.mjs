@@ -43,13 +43,17 @@ export const handler = async (event) => {
       }
       return event;
     });
-    data.orderMembers[om.id] = {
+    const orderMember = {
       ...om,
       ...augmentations[om.id] ?? {}
     };
 
+    data.orderMembers[om.id] = om.orderDirectoryConsent === false
+      ? redactOrderMember(orderMember)
+      : orderMember;
+
     // Add any missing locations
-    for (const event of om.events) {
+    for (const event of data.orderMembers[om.id].events) {
       if (
         event.type === "ordained" &&
         event.location &&
@@ -64,9 +68,31 @@ export const handler = async (event) => {
   }
 
   await writeJsonToS3("data.json", data);
-  
+
   return;
 };
+
+export function redactOrderMember(orderMember) {
+  return {
+    name: orderMember.name,
+    orderDirectoryConsent: false,
+    gender: null,
+    area: null,
+    status: orderMember.status,
+    image: null,
+    events: orderMember.events
+      .filter((event) => ["ordained", "died", "resigned", "removed"].includes(event.type))
+      .map((event) => ({
+        type: event.type,
+        date: event.date ? event.date.slice(0, 4) + "-01-01" : undefined,
+        ...(event.type === "ordained" ? {
+          privatePreceptor: event.privatePreceptor,
+          publicPreceptor: event.publicPreceptor,
+          location: null,
+        } : {}),
+      })),
+  };
+}
 
 async function getDataFromMaitrijala() {
   const tokenResponse = await fetch(process.env.ORDER_OFFICE_API_URL + "/token", {

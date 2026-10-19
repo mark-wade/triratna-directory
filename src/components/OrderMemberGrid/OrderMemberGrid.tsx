@@ -42,7 +42,9 @@ export default function OrderMemberGrid({
             <p className="mt-3 text-gray-900">{om.name}</p>
             {event.date && (
               <p className="text-sm/6 text-gray-600">
-                {formatDate(dateStringToDate(event.date))}
+                {om.orderDirectoryConsent === false
+                  ? dateStringToDate(event.date).getFullYear()
+                  : formatDate(dateStringToDate(event.date))}
               </p>
             )}
           </Link>

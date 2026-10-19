@@ -181,6 +181,29 @@ describe("filtering", () => {
     expectNumberOfResults(3);
   });
 
+  describe("a row with no value for a filter", () => {
+    // As for Order members who have asked not to be shown, who have no status
+    const rowWithNoStatus: TableRowData = {
+      ...orderMemberRows[0],
+      key: "testordermember",
+      title: "Test Order member",
+      filterValues: { ...orderMemberRows[0].filterValues, status: [] },
+    };
+
+    test("is shown while that filter is left at its default", () => {
+      renderSearchableTable({ data: [...orderMemberRows, rowWithNoStatus] });
+      expect(screen.getByText("Test Order member")).toBeInTheDocument();
+    });
+
+    test("is not shown once that filter is changed", () => {
+      renderSearchableTable({
+        data: [...orderMemberRows, rowWithNoStatus],
+        queryString: "status=Active&status=Deceased",
+      });
+      expect(screen.queryByText("Test Order member")).toBeNull();
+    });
+  });
+
   test("changing the filter updates the view", async () => {
     // First render with everything
     renderSearchableTable({ defaultSort: SortBy.ALPHABETICAL });
@@ -209,6 +232,7 @@ function expectNumberOfResults(expected: number) {
 }
 
 function renderSearchableTable({
+  data,
   queryString,
   filters,
   sortOptions,
@@ -218,6 +242,7 @@ function renderSearchableTable({
   onFilterOrSearchChange,
   skeleton,
 }: {
+  data?: TableRowData[];
   queryString?: string;
   filters?: boolean;
   sortOptions?: boolean;
@@ -232,7 +257,7 @@ function renderSearchableTable({
       initialEntries={queryString ? [`?${queryString}`] : undefined}
     >
       <SearchableTable
-        data={orderMemberRows}
+        data={data ?? orderMemberRows}
         searchQuery={searchQuery !== undefined ? searchQuery : ""}
         setSearchQuery={setSearchQuery ? setSearchQuery : () => {}}
         sortOptions={

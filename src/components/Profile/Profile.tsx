@@ -40,6 +40,18 @@ export default function Profile({ name }: { name: string }) {
     setTodaysDate(new Date());
   }, []);
 
+  if (om.orderDirectoryConsent === false) {
+    return (
+      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <Header title={om.name} imageFallback="No photo on file." />
+        <p className="text-gray-600 px-4 sm:px-0 mt-10 mb-4">
+          This person has asked us to not show their details in the directory.
+          They may or may not still be an Order member.
+        </p>
+      </div>
+    );
+  }
+
   function getDisciples(
     preceptorName: string,
     type: "privatePreceptor" | "publicPreceptor"

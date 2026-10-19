@@ -101,6 +101,12 @@ export default function SearchableTable({
       for (const filter of filters) {
         if (
           !arraysEqual(filterValues[filter.key], [""]) &&
+          !arraysEqual(
+            filterValues[filter.key],
+            typeof filter.defaultValue === "string"
+              ? [filter.defaultValue]
+              : filter.defaultValue
+          ) &&
           !arrayContainsAny(
             filterValues[filter.key],
             row.filterValues[filter.key]

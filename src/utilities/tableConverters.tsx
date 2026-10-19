@@ -25,6 +25,29 @@ export function orderMemberToTableRow(
     lastOrdainedEvent && lastOrdainedEvent.date
       ? dateStringToDate(lastOrdainedEvent.date)
       : null;
+
+  if (orderMember.orderDirectoryConsent === false) {
+    return {
+      key: name,
+      link: "/order-members/" + name,
+      title: orderMember.name,
+      description: (
+        <>{lastOrdainedDate ? lastOrdainedDate.getFullYear() : "Unknown"}</>
+      ),
+      image: null,
+      date: lastOrdainedDate,
+      badge: null,
+      bubble: [],
+      filterValues: {
+        gender: [],
+        area: [],
+        status: [],
+        sadhana: [],
+        preceptors: [],
+      },
+    };
+  }
+
   const leftOrderEvent = orderMember.events
     .slice(lastOrdainedEventIndex)
     .findLast(

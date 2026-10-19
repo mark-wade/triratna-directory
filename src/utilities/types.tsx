@@ -53,6 +53,7 @@ export interface OrderMember {
   events: OrderMemberEvent[];
   image: string | null;
   contact?: ContactDetails;
+  orderDirectoryConsent?: boolean;
 }
 export type OrderMemberEventType =
   | "ordained"

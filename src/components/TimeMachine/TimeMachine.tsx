@@ -89,13 +89,18 @@ export default function TimeMachine() {
       string,
       Record<string, { event: OrderMemberEvent; om: OrderMember; id: string }[]>
     > = {};
+    // We only know the year that those who've asked not to be shown were ordained
+    const optedOutOms: { event: OrderMemberEvent; om: OrderMember; id: string }[] =
+      [];
 
     const filteredOmsAndEvents = getEvents(["ordained"]).filter(
       ({ om }) => om.name !== "Sangharakshita"
     );
 
     for (const { event, om, id } of filteredOmsAndEvents) {
-      if (event.date) {
+      if (om.orderDirectoryConsent === false) {
+        optedOutOms.push({ event, om, id });
+      } else if (event.date) {
         if (!groupedOms[event.date]) {
           groupedOms[event.date] = {};
         }
@@ -113,6 +118,7 @@ export default function TimeMachine() {
 
     return {
       groupedOms,
+      optedOutOms,
       count: filteredOmsAndEvents.length,
     };
   }
@@ -120,6 +126,14 @@ export default function TimeMachine() {
   const omsOrdainedThisYear = getOms();
   const omsDiedThisYear = getEvents(["died"]);
   const omsLeftThisYear = getEvents(["resigned", "removed"]);
+  // Those who've asked not to be shown still count towards the totals, but we don't show that they
+  // died or left
+  const omsShownDiedThisYear = omsDiedThisYear.filter(
+    ({ om }) => om.orderDirectoryConsent !== false
+  );
+  const omsShownLeftThisYear = omsLeftThisYear.filter(
+    ({ om }) => om.orderDirectoryConsent !== false
+  );
 
   const totals = Object.entries(orderMembers).reduce(
     (accumulator, [, om]) => {
@@ -292,36 +306,50 @@ export default function TimeMachine() {
                   </div>
                 )
               )}
+              {omsOrdainedThisYear.optedOutOms.length > 0 && (
+                <div key="ordained-opted-out">
+                  <h3 className="text-base font-semibold text-gray-900">
+                    {Object.keys(omsOrdainedThisYear.groupedOms).length > 0
+                      ? "Also ordained"
+                      : "Ordained"}{" "}
+                    in {year}
+                  </h3>
+                  <OrderMemberGrid
+                    oms={omsOrdainedThisYear.optedOutOms}
+                    navTitle={year.toString()}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
       )}
-      {omsDiedThisYear.length > 0 && (
+      {omsShownDiedThisYear.length > 0 && (
         <div className="py-5 sm:px-5" id="deaths">
           <h3 className="px-5 sm:px-0 text-3xl font-semibold text-gray-900 mb-5">
-            {omsDiedThisYear.length.toLocaleString()} order member
-            {omsDiedThisYear.length === 1 ? "" : "s"} died
+            {omsShownDiedThisYear.length.toLocaleString()} order member
+            {omsShownDiedThisYear.length === 1 ? "" : "s"} died
           </h3>
           <div className="overflow-hidden sm:rounded-lg bg-white shadow-sm mb-5">
             <div className="bg-white px-4 py-5 sm:px-6">
               <OrderMemberGrid
-                oms={omsDiedThisYear}
+                oms={omsShownDiedThisYear}
                 navTitle={year.toString()}
               />
             </div>
           </div>
         </div>
       )}
-      {omsLeftThisYear.length > 0 && (
+      {omsShownLeftThisYear.length > 0 && (
         <div className="py-5 sm:px-5">
           <h3 className="px-5 sm:px-0 text-3xl font-semibold text-gray-900 mb-5">
-            {omsLeftThisYear.length.toLocaleString()}{" "}
-            {omsLeftThisYear.length === 1 ? "person" : "people"} left the order
+            {omsShownLeftThisYear.length.toLocaleString()}{" "}
+            {omsShownLeftThisYear.length === 1 ? "person" : "people"} left the order
           </h3>
           <div className="overflow-hidden rounded-lg bg-white shadow-sm mb-5">
             <div className="bg-white px-4 py-5 sm:px-6">
               <OrderMemberGrid
-                oms={omsLeftThisYear}
+                oms={omsShownLeftThisYear}
                 navTitle={year.toString()}
               />
             </div>
