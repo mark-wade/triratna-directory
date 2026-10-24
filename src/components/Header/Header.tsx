@@ -17,10 +17,12 @@ export function Header({
   const loaded = loadedSrc === image;
 
   return (
-    <div className="sm:flex sm:space-x-5 pb-5 sm:pt-5 items-center">
+    // Between split and lg the detail pane is narrow, so stack the name below
+    // the photo like on small screens
+    <div className="sm:flex sm:space-x-5 split:block split:space-x-0 lg:flex lg:space-x-5 pb-5 sm:pt-5 items-center">
       {image ? (
         <div className="shrink-0">
-          <div className="relative mx-auto w-full aspect-[3/4] sm:w-50 lg:w-40 xl:w-50">
+          <div className="relative mx-auto w-full aspect-[3/4] sm:w-50 split:w-full split:max-w-[calc((100dvh-2.5rem)*3/4)] lg:w-40 lg:max-w-none xl:w-50">
             {!loaded && (
               <div className="absolute inset-0 animate-pulse bg-gray-200 sm:rounded-lg"></div>
             )}
@@ -42,8 +44,8 @@ export function Header({
       ) : (
         <></>
       )}
-      <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
-        <p className="font-bold text-gray-900 text-2xl sm:text-4xl xl:text-5xl">
+      <div className="min-w-0 mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left split:mt-4 split:pt-0 split:text-center lg:mt-0 lg:pt-1 lg:text-left">
+        <p className="font-bold text-gray-900 text-2xl sm:text-4xl xl:text-5xl break-words">
           {title}
           {subtitle && (
             <span className="text-xl font-normal"> ({subtitle})</span>

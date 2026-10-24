@@ -85,12 +85,12 @@ export function orderMemberToTableRow(
     title: orderMember.name,
     description: (
       <>
-        {lastOrdainedDate ? formatDate(lastOrdainedDate) : "Unknown"}
+        {lastOrdainedDate ? <ResponsiveDate date={lastOrdainedDate} /> : "Unknown"}
         {leftOrderEvent && (
           <>
             &mdash;
             {leftOrderEvent && leftOrderEvent.date
-              ? formatDate(dateStringToDate(leftOrderEvent.date))
+              ? <ResponsiveDate date={dateStringToDate(leftOrderEvent.date)} />
               : "Unknown"}
           </>
         )}
@@ -146,6 +146,19 @@ export function locationToTableRow(
     ],
     filterValues: {},
   };
+}
+
+// The list column is narrow between split and lg, so use short month names
+// there to make it less likely the description gets truncated
+function ResponsiveDate({ date }: { date: Date }) {
+  return (
+    <>
+      <span className="split:hidden lg:inline">{formatDate(date)}</span>
+      <span className="hidden split:inline lg:hidden">
+        {formatDate(date, true, "short")}
+      </span>
+    </>
+  );
 }
 
 function locationDescription(location: OrdinationLocation) {

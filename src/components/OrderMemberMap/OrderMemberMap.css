@@ -2,7 +2,7 @@
   height: 100dvh;
 }
 
-@media (width < 64rem) {
+@media (width < 50rem) {
   .order-member-map {
     height: calc(100dvh - var(--bottom-bar-height) - 64px - env(safe-area-inset-top));
   }

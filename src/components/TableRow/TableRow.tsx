@@ -33,7 +33,7 @@ export default function TableRow({
             loading="lazy"
           />
         ) : (
-          <span className="inline-flex size-12 items-center justify-center rounded-full bg-gray-500">
+          <span className="inline-flex size-12 flex-none items-center justify-center rounded-full bg-gray-500">
             <span className="text-lg font-medium text-white">
               {row.title[0]}
             </span>
@@ -41,7 +41,7 @@ export default function TableRow({
         )}
         <div className="min-w-0 flex-auto">
           <div className="flex items-start gap-x-3">
-            <p className="text-sm/6 font-semibold text-gray-900">
+            <p className="min-w-0 truncate text-sm/6 font-semibold text-gray-900">
               <Link
                 to={row.link + (queryString ? `?${queryString}` : "")}
                 key={row.key}
@@ -58,7 +58,7 @@ export default function TableRow({
               </p>
             )}
           </div>
-          <p className="flex text-xs/5 text-gray-500">{row.description}</p>
+          <p className="truncate text-xs/5 text-gray-500">{row.description}</p>
         </div>
       </div>
       <div className="flex shrink-0 items-center gap-x-4">

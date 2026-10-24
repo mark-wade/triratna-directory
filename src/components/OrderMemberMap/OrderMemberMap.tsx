@@ -44,11 +44,11 @@ export default function OrderMemberMap() {
 
   // TODO: Maybe mapId should be an environment variable?
   return (
-    <div className="order-member-map flex flex-col lg:flex-row">
-      <aside className="order-2 min-h-0 w-full flex-1 overflow-auto border-t border-gray-200 bg-white lg:order-1 lg:w-md lg:flex-none lg:border-t-0 lg:border-r">
+    <div className="order-member-map flex flex-col split:flex-row">
+      <aside className="order-2 min-h-0 w-full flex-1 overflow-auto border-t border-gray-200 bg-white split:order-1 split:w-80 lg:w-md split:flex-none split:border-t-0 split:border-r">
         <VisibleOrderMembersList visibleOrderMembers={orderMembersCurrentlyVisibleOnMap} />
       </aside>
-      <div className="order-1 min-h-0 min-w-0 flex-1 lg:order-2">
+      <div className="order-1 min-h-0 min-w-0 flex-1 split:order-2">
         <GoogleMap mapId="3dbc5b45af95583965fa232e" clusterMarkers={true}>
           {orderMembersToShowOnMap && (
             <>

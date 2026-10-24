@@ -30,7 +30,7 @@ export default function ActiveFiltersBar({
         Filters
       </h2>
       <div className="border-b border-gray-200">
-        <div className="mx-auto max-w-7xl px-4 py-3 sm:flex sm:items-center sm:px-6 lg:block lg:px-4">
+        <div className="mx-auto max-w-7xl px-4 py-3 sm:flex sm:items-center sm:px-6 split:block split:px-4">
           <h3 className="text-sm text-gray-500">
             {resultCount.toLocaleString()} results
           </h3>
@@ -38,9 +38,9 @@ export default function ActiveFiltersBar({
             <>
               <div
                 aria-hidden="true"
-                className="hidden h-5 w-px bg-gray-300 sm:ml-4 sm:block lg:hidden"
+                className="hidden h-5 w-px bg-gray-300 sm:ml-4 sm:block split:hidden"
               />
-              <div className="mt-2 sm:mt-0 sm:ml-4 lg:mt-2 lg:ml-0">
+              <div className="mt-2 sm:mt-0 sm:ml-4 split:mt-2 split:ml-0">
                 <div className="-m-1 flex flex-wrap items-center">
                   {activeFilters.map((activeFilter) =>
                     filterValues[activeFilter.key].map((value) => (

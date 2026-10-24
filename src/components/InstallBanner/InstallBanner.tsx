@@ -40,7 +40,7 @@ export default function InstallBanner() {
 
   return (
     <>
-      <div className="fixed z-30 inset-x-2 bottom-[calc(62px+env(safe-area-inset-bottom))] lg:bottom-4 lg:left-auto lg:right-4 lg:max-w-sm rounded-lg bg-white p-4 shadow-lg outline outline-black/5">
+      <div className="fixed z-30 inset-x-2 bottom-[calc(62px+env(safe-area-inset-bottom))] split:bottom-4 split:left-auto split:right-4 split:max-w-sm rounded-lg bg-white p-4 shadow-lg outline outline-black/5">
         <div className="flex items-start">
           <img
             src="/icons/192.png"

@@ -1,7 +1,11 @@
-export function formatDate(date: Date, withYear: boolean = true): string {
+export function formatDate(
+    date: Date,
+    withYear: boolean = true,
+    month: "long" | "short" = "long",
+): string {
     return date.toLocaleDateString('en-GB', {
         year: withYear ? "numeric" : undefined,
-        month: "long",
+        month,
         day: "numeric",
     });
 }

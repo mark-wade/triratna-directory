@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  /* Where the app switches to the 3 column layout (iPhone Duo landscape is 820px) */
+  --breakpoint-split: 50rem;
+}
+
 /* Horizontal padding on top of the safe area, e.g. the status indicator in landscape on iPhone Duo.
    Adding (rather than taking the max) keeps elements with different gutters aligned. */
 @utility pl-safe-* {
@@ -25,12 +30,12 @@ body {
 .noViewTransition {
   view-transition-name: disabled;
 }
-@media (width > 64rem) {  
+@media (width >= 50rem) {  
   main {
     view-transition-name: disabled;
   }
 }
-@media (width < 64rem) {  
+@media (width < 50rem) {  
   main {
     padding-top: calc(64px + env(safe-area-inset-top));
     padding-bottom: var(--bottom-bar-height);

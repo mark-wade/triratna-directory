@@ -67,7 +67,7 @@ export default function NavBar({ title }: { title?: string }) {
   return (
     <div>
       {/* The sidebar that always shows on larger screens */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-20 lg:flex-col lg:bg-gray-900">
+      <div className="hidden split:fixed split:inset-y-0 split:z-50 split:flex split:w-20 split:flex-col split:bg-gray-900">
         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
             <Logo />
@@ -117,7 +117,7 @@ export default function NavBar({ title }: { title?: string }) {
             : title
             ? "grid-cols-3"
             : "grid-cols-1") +
-          " grid fixed w-full top-0 z-40 bg-gray-900 pt-(--top-bar-padding-top) pb-4 pl-safe-4 pr-safe-4 sm:pl-safe-6 sm:pr-safe-6 shadow-xs lg:hidden"
+          " grid fixed w-full top-0 z-40 bg-gray-900 pt-(--top-bar-padding-top) pb-4 pl-safe-4 pr-safe-4 sm:pl-safe-6 sm:pr-safe-6 shadow-xs split:hidden"
         }
       >
         {backTitle !== undefined && (
@@ -148,7 +148,7 @@ export default function NavBar({ title }: { title?: string }) {
       </div>
 
       {/* The bottom bar that always shows on smaller screens */}
-      <div className="fixed lg:hidden bottom-0 z-40 bg-gray-100 w-full border-t border-gray-200 text-center text-xs pt-2 pb-(--bottom-bar-padding)">
+      <div className="fixed split:hidden bottom-0 z-40 bg-gray-100 w-full border-t border-gray-200 text-center text-xs pt-2 pb-(--bottom-bar-padding)">
         <nav aria-label="Tabs" className="grid grid-cols-4">
           {navigation.map((item) => (
             <NavLink

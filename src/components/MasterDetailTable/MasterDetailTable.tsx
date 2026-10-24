@@ -53,8 +53,8 @@ export default function MasterDetailTable({
     <div className="flex master-detail-table">
       <div
         className={
-          (element ? "flex-0 lg:flex-initial" : "flex-1 lg:flex-initial") +
-          " overflow-auto w-md bg-white"
+          (element ? "flex-0 split:flex-initial" : "flex-1 split:flex-initial") +
+          " overflow-auto w-md split:w-80 lg:w-md bg-white"
         }
       >
         <SearchableTable
@@ -72,7 +72,7 @@ export default function MasterDetailTable({
       <div
         ref={detailView}
         className={
-          (element ? "flex-1" : "flex-0 lg:flex-1") +
+          (element ? "flex-1" : "flex-0 split:flex-1") +
           " overflow-auto bg-gray-100"
         }
       >
