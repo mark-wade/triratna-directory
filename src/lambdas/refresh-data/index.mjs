@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand, NoSuchKey } from "@aws-sdk/client-s3";
 
 const s3 = new S3Client({ region: "eu-west-2" });
 
@@ -67,10 +67,58 @@ export const handler = async (event) => {
     }
   }
 
+  // Geocode where each order member lives, to the town rather than their exact address
+  const geocodes = await readJsonFromS3("geocodes.json", {});
+  const places = Object.values(data.orderMembers).map(getPlace);
+  await geocodePlaces([...new Set(places.filter(Boolean))], geocodes);
+  for (const orderMember of Object.values(data.orderMembers)) {
+    const place = getPlace(orderMember);
+    orderMember.location = place ? geocodes[place] ?? null : null;
+  }
+
+  await writeJsonToS3("geocodes.json", geocodes);
   await writeJsonToS3("data.json", data);
 
   return;
 };
+
+export function getPlace(orderMember) {
+  const address = orderMember.contact?.address;
+  if (orderMember.orderDirectoryConsent === false || !address?.city?.trim()) {
+    return null;
+  }
+  return [address.city, address.state, address.country]
+    .map((part) => part?.trim())
+    .filter(Boolean)
+    .join(", ");
+}
+
+// Looks up any places not already in the cache, adding them to it. Places Google can't find are
+// cached as null so they aren't looked up every time, but other failures are retried next run
+async function geocodePlaces(places, geocodes) {
+  const uncached = places.filter((place) => !geocodes.hasOwnProperty(place));
+  for (let i = 0; i < uncached.length; i += 10) {
+    await Promise.all(uncached.slice(i, i + 10).map(async (place) => {
+      try {
+        const url = "https://maps.googleapis.com/maps/api/geocode/json?" + new URLSearchParams({
+          address: place,
+          key: process.env.GOOGLE_MAPS_SERVER_SIDE_KEY,
+        });
+        const response = await (await fetch(url)).json();
+        if (response.status === "OK") {
+          const { lat, lng } = response.results[0].geometry.location;
+          geocodes[place] = { lat, lng };
+        } else if (response.status === "ZERO_RESULTS") {
+          geocodes[place] = null;
+        } else {
+          console.error(`Failed to geocode "${place}": ${response.status} ${response.error_message ?? ""}`);
+        }
+      } catch (error) {
+        console.error(`Failed to geocode "${place}"`, error);
+      }
+    }));
+  }
+}
 
 export function redactOrderMember(orderMember) {
   return {
@@ -116,11 +164,19 @@ async function getDataFromMaitrijala() {
   return await dataResponse.json();
 }
 
-async function readJsonFromS3(key) {
-  const response = await s3.send(new GetObjectCommand({
-    Bucket: process.env.DATA_S3_BUCKET,
-    Key: key,
-  }));
+async function readJsonFromS3(key, defaultValue) {
+  let response;
+  try {
+    response = await s3.send(new GetObjectCommand({
+      Bucket: process.env.DATA_S3_BUCKET,
+      Key: key,
+    }));
+  } catch (error) {
+    if (error instanceof NoSuchKey && defaultValue !== undefined) {
+      return defaultValue;
+    }
+    throw error;
+  }
   const str = await response.Body.transformToString();
   return JSON.parse(str);
 }

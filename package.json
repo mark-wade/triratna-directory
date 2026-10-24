@@ -9,7 +9,7 @@
     "build": "parcel build",
     "test": "jest",
     "upload-photos": "node src/scripts/upload-photos/index.js",
-    "api": "node src/scripts/local-api/index.js"
+    "api": "node --env-file-if-exists=.env src/scripts/local-api/index.js"
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.6.2",
