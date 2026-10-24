@@ -1,6 +1,6 @@
 import { ContactDetails, DataResponse } from "./types";
 
-export const SCHEMA_VERSION = "2026-10-17";
+export const SCHEMA_VERSION = "2026-10-24";
 
 // Always written together - a cacheData without a matching cacheTime would either be ignored or
 // kept for too long
