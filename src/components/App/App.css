@@ -5,13 +5,14 @@
   --breakpoint-split: 50rem;
 }
 
-/* Horizontal padding on top of the safe area, e.g. the status indicator in landscape on iPhone Duo.
-   Adding (rather than taking the max) keeps elements with different gutters aligned. */
+/* Horizontal padding on top of the safe area for the bars at the top of the screen, e.g. the status
+   indicator in portrait on iPhone Duo. Adding (rather than taking the max) keeps elements with
+   different gutters aligned. */
 @utility pl-safe-* {
-  padding-left: calc(var(--spacing) * --value(integer) + env(safe-area-inset-left));
+  padding-left: calc(var(--spacing) * --value(integer) + var(--top-bar-inset-left));
 }
 @utility pr-safe-* {
-  padding-right: calc(var(--spacing) * --value(integer) + env(safe-area-inset-right));
+  padding-right: calc(var(--spacing) * --value(integer) + var(--top-bar-inset-right));
 }
 
 html,
@@ -37,7 +38,7 @@ body {
 }
 @media (width < 50rem) {  
   main {
-    padding-top: calc(64px + env(safe-area-inset-top));
+    padding-top: var(--top-bar-height);
     padding-bottom: var(--bottom-bar-height);
     view-transition-name: main;
   }

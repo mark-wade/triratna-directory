@@ -67,7 +67,7 @@ export default function NavBar({ title }: { title?: string }) {
   return (
     <div>
       {/* The sidebar that always shows on larger screens */}
-      <div className="hidden split:fixed split:inset-y-0 split:z-50 split:flex split:w-20 split:flex-col split:bg-gray-900">
+      <div className="hidden split:fixed split:inset-y-0 split:z-50 split:flex split:w-(--sidebar-width) split:pl-[env(safe-area-inset-left)] split:flex-col split:bg-gray-900">
         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
             <Logo />
@@ -148,7 +148,7 @@ export default function NavBar({ title }: { title?: string }) {
       </div>
 
       {/* The bottom bar that always shows on smaller screens */}
-      <div className="fixed split:hidden bottom-0 z-40 bg-gray-100 w-full border-t border-gray-200 text-center text-xs pt-2 pb-(--bottom-bar-padding)">
+      <div className="fixed split:hidden bottom-0 z-40 bg-gray-100 w-full border-t border-gray-200 text-center text-xs pt-2 pb-(--bottom-bar-padding) pr-(--bottom-bar-inset-right)">
         <nav aria-label="Tabs" className="grid grid-cols-4">
           {navigation.map((item) => (
             <NavLink

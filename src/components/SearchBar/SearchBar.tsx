@@ -25,7 +25,8 @@ export default function SearchBar({
   }, []);
 
   return (
-    <div className="flex h-14 shrink-0 items-center pl-safe-4 pr-safe-4 border-t border-b border-gray-200">
+    // From split the search bar sits between the sidebar and the detail pane, away from the edges
+    <div className="flex h-14 shrink-0 items-center pl-safe-4 pr-safe-4 split:pl-4 split:pr-4 border-t border-b border-gray-200">
       <div className="flex flex-1 self-stretch">
         <div className="grid flex-1 grid-cols-1">
           <input
