@@ -163,7 +163,7 @@ function VisibleOrderMembersList({
           {visibleOrderMembers.map((om) => {
             return (
               <li key={++keyCounter}>
-                <div className="relative flex justify-between gap-x-6 py-3 pl-safe-3 pr-3 hover:bg-gray-50">
+                <div className="relative flex justify-between gap-x-6 p-3 hover:bg-gray-50">
                   <div className="flex min-w-0 items-center gap-x-4">
                     {orderMembers[om.id]?.image ? (
                       <img

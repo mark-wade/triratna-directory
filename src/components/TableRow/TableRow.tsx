@@ -20,7 +20,7 @@ export default function TableRow({
     <div
       key={row.key}
       className={
-        "relative flex justify-between gap-x-6 py-3 pl-safe-3 pr-3 hover:bg-gray-50" +
+        "relative flex justify-between gap-x-6 p-3 hover:bg-gray-50" +
         (active === row.key ? " bg-gray-100" : "")
       }
     >
@@ -63,7 +63,7 @@ export default function TableRow({
       </div>
       <div className="flex shrink-0 items-center gap-x-4">
         {row.bubble.length > 0 && (
-          <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 mr-[env(safe-area-inset-right)] text-xs font-medium text-gray-600">
+          <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
             {row.bubble.join("+")}
           </span>
         )}
