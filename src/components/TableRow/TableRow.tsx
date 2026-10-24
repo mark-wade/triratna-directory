@@ -20,7 +20,7 @@ export default function TableRow({
     <div
       key={row.key}
       className={
-        "relative flex justify-between gap-x-6 p-3 hover:bg-gray-50" +
+        "relative flex justify-between gap-x-6 py-3 pl-safe-3 pr-safe-3 hover:bg-gray-50" +
         (active === row.key ? " bg-gray-100" : "")
       }
     >

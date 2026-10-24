@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
-/* Horizontal padding that also clears the safe area, e.g. the status indicator in landscape on iPhone Duo */
+/* Horizontal padding on top of the safe area, e.g. the status indicator in landscape on iPhone Duo.
+   Adding (rather than taking the max) keeps elements with different gutters aligned. */
 @utility pl-safe-* {
-  padding-left: max(calc(var(--spacing) * --value(integer)), env(safe-area-inset-left));
+  padding-left: calc(var(--spacing) * --value(integer) + env(safe-area-inset-left));
 }
 @utility pr-safe-* {
-  padding-right: max(calc(var(--spacing) * --value(integer)), env(safe-area-inset-right));
+  padding-right: calc(var(--spacing) * --value(integer) + env(safe-area-inset-right));
 }
 
 html,
