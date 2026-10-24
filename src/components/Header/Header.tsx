@@ -22,7 +22,8 @@ export function Header({
     <div className="sm:flex sm:space-x-5 split:block split:space-x-0 lg:flex lg:space-x-5 pb-5 sm:pt-5 items-center">
       {image ? (
         <div className="shrink-0">
-          <div className="relative mx-auto w-full aspect-[3/4] sm:w-50 split:w-full split:max-w-[calc((100dvh-2.5rem)*3/4)] lg:w-40 lg:max-w-none xl:w-50">
+          {/* Cap the width at 60dvh so the 3:4 photo is never taller than 80% of the screen */}
+          <div className="relative mx-auto w-full max-w-[60dvh] aspect-[3/4] sm:w-50 split:w-full lg:w-40 xl:w-50">
             {!loaded && (
               <div className="absolute inset-0 animate-pulse bg-gray-200 sm:rounded-lg"></div>
             )}
