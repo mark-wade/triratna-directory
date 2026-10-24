@@ -6,6 +6,7 @@ import LocationProfile from "../LocationProfile/LocationProfile";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import MasterDetailTable from "../MasterDetailTable/MasterDetailTable";
 import NavWrapper from "../NavWrapper/NavWrapper";
+import OrderViewToggle from "../OrderViewToggle/OrderViewToggle";
 
 export default function LocationTable() {
   const { locations, locationRows } = useContext(DataContext);
@@ -35,6 +36,11 @@ export default function LocationTable() {
         ]}
         defaultSort={SortBy.ALPHABETICAL}
         filters={[]}
+        footer={
+          <div className="flex justify-center border-t border-gray-200 bg-white px-4 py-3">
+            <OrderViewToggle />
+          </div>
+        }
       />
     </NavWrapper>
   );

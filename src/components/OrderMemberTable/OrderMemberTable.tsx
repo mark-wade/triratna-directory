@@ -6,6 +6,7 @@ import { DataContext } from "../DataContext/DataContext";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import MasterDetailTable from "../MasterDetailTable/MasterDetailTable";
 import NavWrapper from "../NavWrapper/NavWrapper";
+import OrderViewToggle from "../OrderViewToggle/OrderViewToggle";
 import { dateStringToDate } from "../../utilities/dates";
 import { normaliseSadhanaName } from "../../utilities/sadhanas";
 
@@ -223,6 +224,11 @@ export default function OrderMemberTable() {
         ]}
         defaultSort={SortBy.ALPHABETICAL}
         filters={filters}
+        footer={
+          <div className="flex justify-center border-t border-gray-200 bg-white px-4 py-3">
+            <OrderViewToggle />
+          </div>
+        }
       />
     </NavWrapper>
   );

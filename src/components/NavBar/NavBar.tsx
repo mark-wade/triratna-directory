@@ -1,15 +1,15 @@
 import {
   ChartBarIcon,
   ClockIcon,
+  ListBulletIcon,
   MapIcon,
-  UsersIcon,
 } from "@heroicons/react/24/solid";
 import {
   ChartBarIcon as ChartBarIconOutline,
   ChevronLeftIcon,
   ClockIcon as ClockIconOutline,
+  ListBulletIcon as ListBulletIconOutline,
   MapIcon as MapIconOutline,
-  UsersIcon as UsersIconOutline,
 } from "@heroicons/react/24/outline";
 import { Logo } from "../Logo/Logo";
 import { NavLink, useLocation, useNavigate } from "react-router";
@@ -20,11 +20,13 @@ const navigation = [
   {
     name: "Order",
     href: "/order-members",
-    icon: { solid: UsersIcon, outline: UsersIconOutline },
+    // Ordination locations are shown as a view within the Order tab
+    otherPaths: ["/locations"],
+    icon: { solid: ListBulletIcon, outline: ListBulletIconOutline },
   },
   {
-    name: "Locations",
-    href: "/locations",
+    name: "Map",
+    href: "/map",
     icon: { solid: MapIcon, outline: MapIconOutline },
   },
   {
@@ -46,6 +48,12 @@ function classNames(...classes: string[]) {
 export default function NavBar({ title }: { title?: string }) {
   const location = useLocation();
   const navigate = useNavigate();
+
+  function isItemActive(item: typeof navigation[number], isActive: boolean) {
+    return isActive || (item.otherPaths ?? []).some((path) =>
+      location.pathname === path || location.pathname.startsWith(path + "/")
+    );
+  }
 
   function handleBackClick() {
     document.documentElement.classList.add("back-transition");
@@ -82,7 +90,7 @@ export default function NavBar({ title }: { title?: string }) {
                         to={item.href}
                         className={({ isActive }) =>
                           classNames(
-                            isActive
+                            isItemActive(item, isActive)
                               ? "bg-gray-800 text-white"
                               : "text-gray-400 hover:bg-gray-800 hover:text-white",
                             "group flex gap-x-3 rounded-md p-3 text-sm/6 font-semibold"
@@ -156,7 +164,7 @@ export default function NavBar({ title }: { title?: string }) {
               to={item.href}
               className={({ isActive }) =>
                 classNames(
-                  isActive
+                  isItemActive(item, isActive)
                     ? "text-indigo-600"
                     : "text-gray-500 hover:border-gray-300 hover:text-gray-700"
                 )

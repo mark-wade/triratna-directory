@@ -16,6 +16,7 @@ export default function MasterDetailTable({
   defaultSort,
   filters,
   skeleton,
+  footer,
 }: {
   active?: string;
   data: TableRowData[];
@@ -24,6 +25,7 @@ export default function MasterDetailTable({
   defaultSort: SortBy;
   filters: Filter[];
   skeleton?: boolean;
+  footer?: React.ReactNode;
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [scrolledTo, setScrolledTo] = useState<string | undefined>(undefined);
@@ -54,20 +56,24 @@ export default function MasterDetailTable({
       <div
         className={
           (element ? "flex-0 split:flex-initial" : "flex-1 split:flex-initial") +
-          " overflow-auto w-md split:w-80 lg:w-md bg-white"
+          " flex flex-col overflow-hidden w-md split:w-80 lg:w-md bg-white"
         }
       >
-        <SearchableTable
-          data={data}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          sortOptions={sortOptions}
-          defaultSort={defaultSort}
-          filters={filters}
-          onFilterOrSearchChange={resetScroll}
-          scrolledTo={scrolledTo}
-          skeleton={skeleton}
-        />
+        {/* The table sizes itself to fill its parent, so it gets its own to leave room for the footer */}
+        <div className="min-h-0 flex-1 overflow-auto">
+          <SearchableTable
+            data={data}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            sortOptions={sortOptions}
+            defaultSort={defaultSort}
+            filters={filters}
+            onFilterOrSearchChange={resetScroll}
+            scrolledTo={scrolledTo}
+            skeleton={skeleton}
+          />
+        </div>
+        {footer}
       </div>
       <div
         ref={detailView}
