@@ -64,9 +64,6 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
     );
   });
 
-  const dfString = localStorage.getItem("darkFeatures");
-  const df = dfString ? JSON.parse(dfString) : {};
-
   const router = createBrowserRouter([
     {
       Component: AppMaitrijala,
@@ -88,11 +85,11 @@ export default function AppLoggedIn({ source }: { source: DataSource }) {
         },
         {
           path: "map",
-          element: df.map ? (
+          element: (
             <NavWrapper className="bg-gray-100">
               <OrderMemberMap />
             </NavWrapper>
-          ) : <PageNotFound />,
+          ),
           errorElement: <RouterError />,
         },
         {

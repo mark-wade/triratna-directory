@@ -6,6 +6,7 @@ import { InformationTableRow } from "../InformationTableRow/InformationTableRow"
 import { InformationTable } from "../InformationTable/InformationTable";
 import { useEffect, useState } from 'react';
 import { countryToCountryCode } from '../../utilities/geolocation';
+import { Link, useLocation } from 'react-router';
 
 export function ProfileContactDetails({ om }: { om: OrderMember }) {
   if (!om.contact) {
@@ -43,7 +44,7 @@ export function ProfileContactDetails({ om }: { om: OrderMember }) {
         {om.contact.address && (
           <InformationTableRow label="Address">
             <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY ?? ''}>
-              <AddressDisplay address={om.contact.address} />
+              <AddressDisplay address={om.contact.address} om={om} />
             </APIProvider>
           </InformationTableRow>
         )}
@@ -68,7 +69,12 @@ function PhoneNumberDisplay({ phoneNumber, country }: { phoneNumber: string, cou
   };
 }
 
-function AddressDisplay({ address }: { address: Address }) {
+const PROFILE_TO_MAP_ZOOM = 12;
+
+function AddressDisplay({ address, om }: { address: Address, om: OrderMember }) {
+  const location = useLocation();
+  const previousNavs = location.state ?? [];
+
   const formattedAddress = formatAddress({
     postalCountry: address.country ? countryToCountryCode(address.country) : undefined,
     administrativeArea: address.state ?? undefined,
@@ -97,17 +103,28 @@ function AddressDisplay({ address }: { address: Address }) {
   return coordinates ? (
     <>
       <div style={{ whiteSpace: "pre-wrap" }}>{addressString}</div>
-      <div className="pt-3">
+      <Link
+        className="block pt-3 cursor-pointer"
+        // Prefer the town-level location, as that's where their marker is on the map page
+        to={"/map?" + new URLSearchParams({
+          lat: String((om.location ?? coordinates).lat),
+          lng: String((om.location ?? coordinates).lng),
+          zoom: String(PROFILE_TO_MAP_ZOOM),
+        })}
+        viewTransition
+        state={[...previousNavs, om.name]}
+      >
         <Map
           style={{ width: '100%', height: 300 }}
           center={coordinates}
           defaultZoom={6}
           gestureHandling='none'
+          draggableCursor='pointer'
           disableDefaultUI
         >
           <Marker position={coordinates} />
         </Map>
-      </div>
+      </Link>
     </>
   ) : (
     <div style={{ whiteSpace: "pre-wrap" }}>{addressString}</div>

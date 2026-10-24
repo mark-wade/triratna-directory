@@ -54,6 +54,7 @@ export interface OrderMember {
   image: string | null;
   contact?: ContactDetails;
   orderDirectoryConsent?: boolean;
+  location?: Position | null;
 }
 export type OrderMemberEventType =
   | "ordained"
@@ -99,7 +100,6 @@ export interface Address {
   state: string | null;
   postcode: string | null;
   country: string | null;
-  position?: Position;
 }
 
 export interface Position {

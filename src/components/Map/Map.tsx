@@ -7,6 +7,8 @@ import { Marker, MarkerClusterer } from "@googlemaps/markerclusterer";
 type MapProps = {
   mapId: string;
   clusterMarkers: boolean;
+  defaultCenter?: google.maps.LatLngLiteral;
+  defaultZoom?: number;
   children: ReactNode
 }
 
@@ -18,7 +20,7 @@ export default function Map({ children, ...props }: MapProps) {
   )
 }
 
-function MapWithApiKeyProvided({ mapId, clusterMarkers, children }: MapProps) {
+function MapWithApiKeyProvided({ mapId, clusterMarkers, defaultCenter, defaultZoom, children }: MapProps) {
   const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
 
   const setMarkerRef = useCallback((marker: Marker | null, key: string) => {
@@ -46,7 +48,7 @@ function MapWithApiKeyProvided({ mapId, clusterMarkers, children }: MapProps) {
   }, [clusterer, markers]);
 
   return (
-    <GoogleMap mapId={mapId} style={{ width: '100%', height: '100%' }} defaultCenter={{ lat: 0, lng: 0 }} defaultZoom={3} maxZoom={15}>
+    <GoogleMap mapId={mapId} style={{ width: '100%', height: '100%' }} defaultCenter={defaultCenter ?? { lat: 0, lng: 0 }} defaultZoom={defaultZoom ?? 3} maxZoom={15}>
       <MapContext value={{ markers, setMarkerRef }}>
         {children}
       </MapContext>

@@ -1,11 +1,11 @@
-import { ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import GoogleMap from "../Map/Map";
 import MapMarker from "../MapMarker/MapMarker";
 import "./OrderMemberMap.css";
-import { Link, useLocation } from "react-router";
-import { useCookies } from "react-cookie";
+import { Link, useLocation, useSearchParams } from "react-router";
 import { useMap } from "@vis.gl/react-google-maps";
 import { DataContext } from "../DataContext/DataContext";
+import SkeletonTable from "../SkeletonTable/SkeletonTable";
 
 type OrderMemberWithGeoLocation = {
   id: string;
@@ -14,33 +14,24 @@ type OrderMemberWithGeoLocation = {
 
 export default function OrderMemberMap() {
   const { orderMembers } = useContext(DataContext);
-  const [cookies] = useCookies(["jwt"]);
-  const [orderMembersToShowOnMap, setOrderMembersToShowOnMap] = useState<OrderMemberWithGeoLocation[] | null>(null);
-  const [orderMembersCurrentlyVisibleOnMap, setOrderMembersCurrentlyVisibleOnMap] = useState<OrderMemberWithGeoLocation[]>([]);
+  const [searchParams] = useSearchParams();
+  const [orderMembersCurrentlyVisibleOnMap, setOrderMembersCurrentlyVisibleOnMap] = useState<OrderMemberWithGeoLocation[] | null>(null);
 
-  useEffect(() => {
-    fetch(
-      (process.env.API_URL
-        ? process.env.API_URL
-        : "https://api.triratna.directory") + "/map",
-      {
-        headers: {
-          Authorization: `Bearer ${cookies.jwt}`,
-        },
-      }
-    ).then((response) => {
-      if (response.status !== 200) {
-        throw new Error(`Bad response: ${response.status}`);
-      }
-      return response.json();
-    }).then((json) => {
-      setOrderMembersToShowOnMap(json.filter(om => {
-        return om !== null && orderMembers[om.id]?.status === "Active";
-      }).sort((a, b) => a.id.localeCompare(b.id)) as OrderMemberWithGeoLocation[]);
-    });
-  }, [cookies.jwt]);
+  const orderMembersToShowOnMap = useMemo(() => {
+    return Object.entries(orderMembers)
+      .flatMap(([id, om]): OrderMemberWithGeoLocation[] => (
+        om.location && om.status === "Active" ? [{ id, location: om.location }] : []
+      ))
+      .sort((a, b) => a.id.localeCompare(b.id));
+  }, [orderMembers]);
 
-  let keyCounter = 0;
+
+  // Other pages can link to a particular place with ?lat=...&lng=...&zoom=...
+  const lat = parseFloat(searchParams.get("lat") ?? "");
+  const lng = parseFloat(searchParams.get("lng") ?? "");
+  const zoom = parseFloat(searchParams.get("zoom") ?? "");
+  const defaultCenter = isNaN(lat) || isNaN(lng) ? undefined : { lat, lng };
+  const defaultZoom = isNaN(zoom) ? undefined : zoom;
 
   // TODO: Maybe mapId should be an environment variable?
   return (
@@ -49,24 +40,22 @@ export default function OrderMemberMap() {
         <VisibleOrderMembersList visibleOrderMembers={orderMembersCurrentlyVisibleOnMap} />
       </aside>
       <div className="order-1 min-h-0 min-w-0 flex-1 split:order-2">
-        <GoogleMap mapId="3dbc5b45af95583965fa232e" clusterMarkers={true}>
-          {orderMembersToShowOnMap && (
-            <>
-              <MapViewportListener
-                orderMembers={orderMembersToShowOnMap}
-                onVisibleChange={setOrderMembersCurrentlyVisibleOnMap}
-              />
-              {orderMembersToShowOnMap.map((om) => (
-                <ZoomableMapMarker
-                  key={++keyCounter}
-                  id={om.id}
-                  position={om.location}
-                >
-                  <div className="h-6 w-6 leading-6 rounded-full bg-gray-600 text-center text-white" />
-                </ZoomableMapMarker>
-              ))}
-            </>
-          )}
+        <GoogleMap mapId="3dbc5b45af95583965fa232e" clusterMarkers={true} defaultCenter={defaultCenter} defaultZoom={defaultZoom}>
+          <>
+            <MapViewportListener
+              orderMembers={orderMembersToShowOnMap}
+              onVisibleChange={setOrderMembersCurrentlyVisibleOnMap}
+            />
+            {orderMembersToShowOnMap.map((om) => (
+              <ZoomableMapMarker
+                key={om.id}
+                id={om.id}
+                position={om.location}
+              >
+                <div className="h-6 w-6 leading-6 rounded-full bg-gray-600 text-center text-white" />
+              </ZoomableMapMarker>
+            ))}
+          </>
         </GoogleMap>
       </div>
     </div>
@@ -116,9 +105,9 @@ function MapViewportListener({
     if (!map) return;
 
     const updateVisible = () => {
+      // Bounds aren't known until the map has rendered, so wait for the next idle event
       const bounds = map.getBounds();
       if (!bounds) {
-        onVisibleChange([]);
         return;
       }
       onVisibleChange(orderMembers.filter((m) => bounds.contains(m.location)));
@@ -135,26 +124,29 @@ function MapViewportListener({
 function VisibleOrderMembersList({
   visibleOrderMembers,
 }: {
-  visibleOrderMembers: OrderMemberWithGeoLocation[];
+  visibleOrderMembers: OrderMemberWithGeoLocation[] | null;
 }) {
   const { orderMembers } = useContext(DataContext);
   const location = useLocation();
   const previousNavs = location.state ?? [];
-  let keyCounter = 0;
 
   return (
     <div className="flex h-full flex-col">
       <div className="sticky top-0 z-10 border-b border-gray-200 bg-white px-4 py-3">
         <h2 className="text-sm font-semibold text-gray-900">In view</h2>
         <p className="text-xs text-gray-500">
-          {visibleOrderMembers.length === 1
+          {visibleOrderMembers === null
+            ? <span className="inline-block h-2 w-32 animate-pulse rounded bg-gray-200" />
+            : visibleOrderMembers.length === 1
             ? "1 order member in this area"
             : `${new Intl.NumberFormat("en-GB").format(
               visibleOrderMembers.length
             )} order members in this area`}
         </p>
       </div>
-      {visibleOrderMembers.length === 0 ? (
+      {visibleOrderMembers === null ? (
+        <SkeletonTable />
+      ) : visibleOrderMembers.length === 0 ? (
         <p className="px-4 py-6 text-sm text-gray-500">
           No order members in this area.
         </p>
@@ -162,7 +154,7 @@ function VisibleOrderMembersList({
         <ul className="divide-y divide-gray-100">
           {visibleOrderMembers.map((om) => {
             return (
-              <li key={++keyCounter}>
+              <li key={om.id}>
                 <div className="relative flex justify-between gap-x-6 p-3 hover:bg-gray-50">
                   <div className="flex min-w-0 items-center gap-x-4">
                     {orderMembers[om.id]?.image ? (
