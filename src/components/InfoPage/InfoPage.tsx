@@ -5,19 +5,35 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
 import {
+  ArrowRightStartOnRectangleIcon,
   ChatBubbleLeftRightIcon,
   CodeBracketIcon,
   DevicePhoneMobileIcon,
   ShareIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
+import { useContext } from "react";
 import { useInstallState } from "../../utilities/install";
+import { samlLogout } from "../../utilities/saml";
+import { DataContext } from "../DataContext/DataContext";
 import Feedback from "../Feedback/Feedback";
 import InstallInstructions from "../InstallInstructions/InstallInstructions";
 import ShareApp from "../ShareApp/ShareApp";
 
 export default function InfoPage() {
   const installState = useInstallState();
+  const { authenticatedUser } = useContext(DataContext);
+
+  function signOut() {
+    document.cookie = "jwt=;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    samlLogout(authenticatedUser ?? "", (error, logout_url) => {
+      if (error) {
+        window.location.href = "https://thebuddhistcentre.com"; // We have to send them somewhere otherwise it'll just try to log them back in
+      } else {
+        window.location.href = logout_url;
+      }
+    });
+  }
 
   return (
     <div className="mx-auto max-w-2xl p-5 space-y-5">
@@ -106,6 +122,23 @@ export default function InfoPage() {
             ))}
           </dl>
         </Section>
+      </div>
+      <div className="overflow-hidden rounded-lg bg-white shadow-sm">
+        <button
+          type="button"
+          onClick={signOut}
+          className={ROW_CLASSES + " cursor-pointer"}
+        >
+          <RowLabel
+            icon={ArrowRightStartOnRectangleIcon}
+            title="Sign out"
+            detail={
+              authenticatedUser
+                ? `Signed in as ${authenticatedUser}`
+                : "Sign out of the app"
+            }
+          />
+        </button>
       </div>
     </div>
   );

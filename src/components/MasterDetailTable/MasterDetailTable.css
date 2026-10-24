@@ -1,10 +1,3 @@
 .master-detail-table {
   height: var(--main-height);
 }
-
-/* The table fills the screen and scrolls within itself, so the page never needs to. After
-   rotating, iOS can leave the page a little shorter than the viewport (21px on iPhone Duo), which
-   would otherwise make the page scrollable by the difference */
-:root:has(.master-detail-table) {
-  overflow: hidden;
-}

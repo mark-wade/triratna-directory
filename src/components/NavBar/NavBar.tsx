@@ -14,7 +14,7 @@ import {
 import { Logo } from "../Logo/Logo";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import "./NavBar.css";
-import { ProfileDropdown } from "../ProfileDropdown/ProfileDropdown";
+import { ProfileLink } from "../ProfileLink/ProfileLink";
 
 const navigation = [
   {
@@ -99,8 +99,8 @@ export default function NavBar({ title }: { title?: string }) {
                   ))}
                 </ul>
               </li>
-              <li className="-mx-3 pb-1 mt-auto">
-                <ProfileDropdown menuAnchor="top start" />
+              <li className="flex justify-center pb-1 mt-auto">
+                <ProfileLink />
               </li>
             </ul>
           </nav>
@@ -143,7 +143,7 @@ export default function NavBar({ title }: { title?: string }) {
           </div>
         )}
         <div className="flex justify-end">
-          <ProfileDropdown menuAnchor="bottom end" />
+          <ProfileLink />
         </div>
       </div>
 

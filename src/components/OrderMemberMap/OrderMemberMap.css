@@ -1,8 +1,3 @@
 .order-member-map {
   height: var(--main-height);
 }
-
-/* See .master-detail-table */
-:root:has(.order-member-map) {
-  overflow: hidden;
-}
