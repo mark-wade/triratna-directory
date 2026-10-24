@@ -1,15 +1,7 @@
 :root {
-  --top-bar-gutter: calc(var(--spacing) * 4);
   --top-bar-padding-top: calc((var(--spacing) * 4) + env(safe-area-inset-top));
-  --top-bar-padding-left: max(var(--top-bar-gutter), env(safe-area-inset-left));
-  --top-bar-padding-right: max(var(--top-bar-gutter), env(safe-area-inset-right));
   /* The home indicator sits inside the inset, so the inset alone is enough padding */
   --bottom-bar-padding: max(var(--spacing) * 2, env(safe-area-inset-bottom));
   /* pt-2 + icon + mb-1 + label, plus the bottom padding */
   --bottom-bar-height: calc(48px + var(--bottom-bar-padding));
-}
-@media (width >= 40rem) {
-  :root {
-    --top-bar-gutter: calc(var(--spacing) * 6);
-  }
 }

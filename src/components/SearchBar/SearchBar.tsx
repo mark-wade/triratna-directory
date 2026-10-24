@@ -25,7 +25,7 @@ export default function SearchBar({
   }, []);
 
   return (
-    <div className="flex h-14 shrink-0 items-center px-4 border-t border-b border-gray-200">
+    <div className="flex h-14 shrink-0 items-center pl-safe-4 pr-safe-4 border-t border-b border-gray-200">
       <div className="flex flex-1 self-stretch">
         <div className="grid flex-1 grid-cols-1">
           <input

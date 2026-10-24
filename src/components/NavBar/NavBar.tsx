@@ -117,7 +117,7 @@ export default function NavBar({ title }: { title?: string }) {
             : title
             ? "grid-cols-3"
             : "grid-cols-1") +
-          " grid fixed w-full top-0 z-40 bg-gray-900 pt-(--top-bar-padding-top) pb-4 pl-(--top-bar-padding-left) pr-(--top-bar-padding-right) shadow-xs lg:hidden"
+          " grid fixed w-full top-0 z-40 bg-gray-900 pt-(--top-bar-padding-top) pb-4 pl-safe-4 pr-safe-4 sm:pl-safe-6 sm:pr-safe-6 shadow-xs lg:hidden"
         }
       >
         {backTitle !== undefined && (

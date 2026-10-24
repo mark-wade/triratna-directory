@@ -6,7 +6,7 @@ exports[`shows the items 1`] = `
     class="sticky top-0 z-40 bg-white shadow-xs"
   >
     <div
-      class="flex h-14 shrink-0 items-center px-4 border-t border-b border-gray-200"
+      class="flex h-14 shrink-0 items-center pl-safe-4 pr-safe-4 border-t border-b border-gray-200"
     >
       <div
         class="flex flex-1 self-stretch"

@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Horizontal padding that also clears the safe area, e.g. the status indicator in landscape on iPhone Duo */
+@utility pl-safe-* {
+  padding-left: max(calc(var(--spacing) * --value(integer)), env(safe-area-inset-left));
+}
+@utility pr-safe-* {
+  padding-right: max(calc(var(--spacing) * --value(integer)), env(safe-area-inset-right));
+}
+
 html,
 body {
   height: 100%;
