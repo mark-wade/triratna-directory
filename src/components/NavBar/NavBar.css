@@ -10,6 +10,10 @@
   --main-height: calc(100dvh - var(--top-bar-height) - var(--bottom-bar-height));
   /* Wide enough to keep the icons clear of the camera when it's on the left in landscape */
   --sidebar-width: calc(5rem + env(safe-area-inset-left));
+  /* Room for the camera on the right of the split layout. On iPhones it's halfway down the side and
+     iOS reports the same inset on both sides, but iPhone Duo's is in a corner (reported on that side
+     only) that the content doesn't reach */
+  --split-inset-right: min(env(safe-area-inset-left), env(safe-area-inset-right));
 
   /* iOS reports a camera in a corner of the screen (iPhone Duo's outer screen) as an inset along
      that whole side, so the bars only make room for it when they are at the camera's end */

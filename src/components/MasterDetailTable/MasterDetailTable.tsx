@@ -73,7 +73,7 @@ export default function MasterDetailTable({
         ref={detailView}
         className={
           (element ? "flex-1" : "flex-0 split:flex-1") +
-          " overflow-auto bg-gray-100 split:pr-[env(safe-area-inset-right)]"
+          " overflow-auto bg-gray-100"
         }
       >
         {element}
